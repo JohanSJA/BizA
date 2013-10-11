@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     
     url(r'^$', 'django.contrib.auth.views.login'),
     url(r'accounts/profile/$', TemplateView.as_view(template_name="profile.html")),
+    
+    url(r'stocks/', include('stocks.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

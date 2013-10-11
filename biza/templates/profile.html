@@ -4,6 +4,15 @@
   <div class="row">
     <div class="col-lg-4 col-lg-offset-4">
       <h1 class="text-center">Hello, {{ user }}!</h1>
+      <p>
+        You are working at 
+        {% if user.employee.store %}
+          {{ user.employee.store }}.
+        {% else %}
+          HQ.
+        {% endif %}
+      </p>
+      
     </div>
   </div>
 {% endblock %}

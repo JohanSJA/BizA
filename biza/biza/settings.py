@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     # Apps
     'stocks',
     'retails',
+    'employees'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
