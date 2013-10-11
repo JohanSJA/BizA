@@ -4,10 +4,15 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
+from django.views.generic import TemplateView
+
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'biza.views.home', name='home'),
     # url(r'^biza/', include('biza.foo.urls')),
+    
+    url(r'^$', 'django.contrib.auth.views.login'),
+    url(r'accounts/profile/$', TemplateView.as_view(template_name="profile.html")),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

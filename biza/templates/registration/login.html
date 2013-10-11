@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-lg-4 col-lg-offset-4">
+      {% if form.errors %}
+        <div class="alert alert-danger">Your username and password didn't match. Please try again.</div>
+      {% endif %}
+      
+      <form role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.username.label_tag }}
+          {% render_field form.username class+="form-control" %}
+        </div>
+        <div class="form-group">
+          {{ form.password.label_tag }}
+          {% render_field form.password class+="form-control" %}
+        </div>
+        
+        <input class="btn btn-default" type="submit" value="login" />
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+    </div>
+  </div>
+{% endblock %}
