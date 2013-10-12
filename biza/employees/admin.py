@@ -11,7 +11,10 @@ class EmployeeInline(admin.StackedInline):
 
 class UserAdmin(UserAdmin):
     inlines = (EmployeeInline, )
+    
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = ['user', 'store']
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-admin.site.register(Employee)
+admin.site.register(Employee, EmployeeAdmin)

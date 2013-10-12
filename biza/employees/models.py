@@ -6,3 +6,12 @@ from retails.models import Store
 class Employee(models.Model):
     user = models.OneToOneField(User)
     store = models.ForeignKey(Store, null=True, blank=True)
+    
+    def __unicode__(self):
+        return self.user.get_username()
+    
+    def work_in_hq(self):
+        if self.store:
+            return False
+        else:
+            return True

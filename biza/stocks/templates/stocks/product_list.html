@@ -9,16 +9,16 @@
           <th>Name</th>
           <th>Barcode</th>
           <th>Retail Price</th>
-          {% if not user.employee.store %}
+          {% if user.employee.work_in_hq %}
             <th>Wholesale Price</th>
           {% endif %}
         </tr>
         {% for obj in object_list %}
           <tr>
-            <td>{{ obj.name }}</td>
+            <td><a href="{% url 'stocks_product_detail' obj.id %}">{{ obj.name }}</a></td>
             <td>{{ obj.barcode }}</td>
             <td>{{ obj.retail_price }}</td>
-            {% if not user.employee.store %}
+            {% if user.employee.work_in_hq %}
               <td>{{ obj.wholesale_price }}</td>
             {% endif %}
           </tr>

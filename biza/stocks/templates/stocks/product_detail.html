@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-lg-6">
+      <h1>{{ object.name }}</h1>
+      <dl class="dl-horizontal">
+        <dt>Barcode</dt>
+        <dd>{{ object.barcode }}</dd>
+        <dt>Retail Price</dt>
+        <dd>{{ object.retail_price|floatformat:"2" }}</dd>
+        {% if user.employee.work_in_hq %}
+          <dt>Wholesale Price</dt>
+          <dd>{{ object.wholesale_price|floatformat:"2" }}</dd>
+        {% endif %}
+      </dl>
+    </div>
+    
+    <div class="col-lg-6">
+      {% if quantities %}
+        <h2>Stocks</h2>
+        <table class="table">
+          <tr>
+            {% if user.employee.work_in_hq %}
+              <th>Warehouse</th>
+            {% endif %}
+            <th>Time</th>
+            <th>Quantity</th>
+          </tr>
+          {% for obj in quantities %}
+            <tr>
+              {% if user.employee.work_in_hq %}
+                <td>{{ obj.warehouse }}</td>
+              {% endif %}
+              <td>{{ obj.datetime }}</td>
+              <td>{{ obj.quantity }}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
