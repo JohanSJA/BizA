@@ -1,0 +1,22 @@
+<form method="post" class="form-horizontal" role="form">
+  {% csrf_token %}
+
+  {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+      <strong>Something is wrong!</strong><br />
+      <ul>
+        {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% include "form_horizontal_field.html" %}
+
+  <div class="form-group">
+    <div class="col-lg-8 col-lg-offset-4">
+      <input type="submit" value="Submit" class="btn btn-default" />
+    </div>
+  </div>
+</form>

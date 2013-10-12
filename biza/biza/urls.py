@@ -11,12 +11,13 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'biza.views.home', name='home'),
     # url(r'^biza/', include('biza.foo.urls')),
-    
+
     url(r'^$', 'django.contrib.auth.views.login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout_then_login'),
-    url(r'accounts/profile/$', login_required(TemplateView.as_view(template_name="profile.html"))),
-    
-    url(r'stocks/', include('stocks.urls')),
+    url(r'^accounts/profile/$', login_required(TemplateView.as_view(template_name="profile.html"))),
+
+    url(r'^stocks/', include('stocks.urls')),
+    url(r'^retails/', include('retails.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

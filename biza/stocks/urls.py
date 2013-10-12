@@ -7,6 +7,6 @@ urlpatterns = patterns('stocks.views',
     # Examples:
     # url(r'^$', 'biza.views.home', name='home'),
     # url(r'^biza/', include('biza.foo.urls')),
-    url(r'^$', login_required(ProductList.as_view()), name='stocks_product_list'),
-    url(r'^(?P<pk>\d+)/$', login_required(ProductDetail.as_view()), name='stocks_product_detail')
+    url(r'^product/$', login_required(ProductListView.as_view()), name='stocks_product_list'),
+    url(r'^product/(?P<pk>\d+)/$', login_required(ProductDetailView.as_view()), name='stocks_product_detail')
 )

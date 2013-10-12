@@ -1,16 +1,15 @@
 from django.views.generic import ListView, DetailView
-from  django.shortcuts import render
 
 from .models import *
 
-class ProductList(ListView):
+class ProductListView(ListView):
     model = Product
 
-class ProductDetail(DetailView):
+class ProductDetailView(DetailView):
     model = Product
-    
+
     def get_context_data(self, **kwargs):
-        context = super(ProductDetail, self).get_context_data(**kwargs)
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
         product = self.get_object()
         try:
           employee = self.request.user.employee
