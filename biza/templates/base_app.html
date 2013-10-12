@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block css %}
+  body {
+    padding-top: 50px;
+  }
+{% endblock %}
+
+{% block navbar %}
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nvabar-exl-collapse">
+        <span class="src-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'employees_dashboard' %}">BizA</a>
+    </div>
+
+    <div class="collapse navbar-collapse navbar-exl-collapse">
+      <ul class="nav navbar-nav">
+      </ul>
+      <div class="navbar-right">
+        <p class="navbar-text">Signed in as {{ user.get_username }}</p>
+        <a href="{% url 'logout' %}" class="btn btn-default navbar-btn">Logout</a>
+      </div>
+    </div>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  {% block content_app %}
+  {% endblock %}
+
+  <hr />
+
+  <footer>
+    <p>By Johan for CESB</p>
+  </footer>
+{% endblock %}

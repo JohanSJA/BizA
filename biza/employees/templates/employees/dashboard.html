@@ -1,0 +1,20 @@
+{% extends "base_app.html" %}
+
+{% block content_app %}
+  <div class="row">
+    <div class="col-lg-12">
+      {% include "page_header.html" with page_header="Dashboard" %}
+      <h2 class="text-center">Hello, {{ user }}!</h1>
+      <p class="text-center">{% now "jS F Y H:i" %}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3">
+        <p><a href="{% url 'stocks_product_list' %}" class="btn btn-default col-lg-12">Products</a></p>
+    </div>
+    <div class="col-lg-3">
+        <p><a href="{% url 'retails_sale_list' %}" class="btn btn-default col-lg-12">Sales</a></p>
+    </div>
+  </div>
+{% endblock %}

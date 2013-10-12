@@ -1,9 +1,12 @@
-{% extends "base.html" %}
+{% extends "base_app.html" %}
 
-{% block content %}
+{% block content_app %}
   <div class="row">
     <div class="col-lg-12">
-      <h1>Sale Line {{ object.id }}</h1>
+      <div class="page-header">
+        <h1>Sale Line {{ object.id }}</h1>
+      </div>
+
       <dl class="dl-horizontal">
         <dt>Sale</dt>
         <dd><a href="{% url 'retails_sale_detail' object.sale.id %}">{{ object.sale }}</a></dd>

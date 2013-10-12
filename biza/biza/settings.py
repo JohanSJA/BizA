@@ -171,3 +171,4 @@ LOGGING = {
 }
 
 LOGIN_URL = '/'
+LOGIN_REDIRECT_URL = '/employees/dashboard/'

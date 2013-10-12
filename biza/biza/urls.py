@@ -4,17 +4,14 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-from django.views.generic import TemplateView
-from django.contrib.auth.decorators import login_required
-
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'biza.views.home', name='home'),
     # url(r'^biza/', include('biza.foo.urls')),
 
-    url(r'^$', 'django.contrib.auth.views.login'),
-    url(r'^logout/$', 'django.contrib.auth.views.logout_then_login'),
-    url(r'^accounts/profile/$', login_required(TemplateView.as_view(template_name="profile.html"))),
+    url(r'^$', 'django.contrib.auth.views.login', name='login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout_then_login', name='logout'),
+    url(r'^employees/', include('employees.urls')),
 
     url(r'^stocks/', include('stocks.urls')),
     url(r'^retails/', include('retails.urls')),
