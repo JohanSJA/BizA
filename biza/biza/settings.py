@@ -133,6 +133,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     # Third-party
     'widget_tweaks',
+    'south',
     # Apps
     'stocks',
     'retails',
