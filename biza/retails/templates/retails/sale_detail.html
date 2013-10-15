@@ -41,9 +41,10 @@
       <table class="table table-striped table-responsive">
         <tr>
           <th>Product</th>
-          <th class="text-right">Unit Price (RM)</th>
+          <th class="text-right">Unit Price<br />(RM)</th>
           <th class="text-right">Quantity</th>
-          <th class="text-right">Discount</th>
+          <th class="text-right">Discount<br />(RM)</th>
+          <th class="text-right">Subtotal<br />(RM)</th>
           {% if not object.closed %}
             <th>&nbsp;</th>
           {% endif %}
@@ -53,7 +54,8 @@
             <td>{{ line.product }}</td>
             <td class="text-right">{{ line.product.retail_price|floatformat:"2" }}</td>
             <td class="text-right">{{ line.quantity }}</td>
-            <td class="text-right">{{ line.discount|default:"-" }}</td>
+            <td class="text-right">{{ line.discount|floatformat:"2"|default:"-" }}</td>
+            <td class="text-right">{{ line.total_amount|floatformat:"2" }}</td>
             {% if not object.closed %}
               <td>
                 <a href="{% url 'retails_saleline_edit' line.id %}">
@@ -65,10 +67,14 @@
         {% endfor %}
       </table>
 
-      <h2>Total</h2>
-      <dl class="dl-horizontal">
-        <dt>Amount</dt>
-        <dd>RM {{ object.total_amount|floatformat:"2" }}</dd>
+      <h2>Summary</h2>
+      <dl class="dl-horizontal pull-right">
+        <dt>Quantity</dt>
+        <dd class="text-right" style="font-size:1.6em;">{{ object.total_quantity }}</dd>
+        <dt>Discount (RM)</dt>
+        <dd class="text-right" style="font-size:1.6em;">{{ object.total_discount|floatformat:"2"|default:"-" }}</dd>
+        <dt>Total (RM)</dt>
+        <dd class="text-right" style="font-size: 2em;">{{ object.total_amount|floatformat:"2" }}</dd>
       </dl>
     </div>
   </div>

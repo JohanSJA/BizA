@@ -2,8 +2,8 @@ from django.db import models
 
 class Warehouse(models.Model):
     name = models.CharField(max_length=32)
-    location = models.TextField(unique=True)
-    
+    location = models.TextField()
+
     def __unicode__(self):
         return self.name
 
@@ -14,7 +14,7 @@ class Product(models.Model):
     lowest_retail_price = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
     wholesale_price = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
     lowest_wholesale_price = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
-    
+
     def __unicode__(self):
         return self.name
 
@@ -26,27 +26,27 @@ class ItemQuantity(models.Model):
     warehouse = models.ForeignKey(Warehouse)
     quantity = models.IntegerField()
     datetime = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         verbose_name_plural = 'item quantities'
-    
+
     def __unicode__(self):
         return '{} {} at {} on {}'.format(self.quantity, self.item, self.warehouse, self.datetime)
 
 class Package(Product):
-    
+
     def cost_price(self):
         cost = 0
         for pkgitem in self.packageitem_set.all():
             cost += pkgitem.quantity * pkgitem.item.cost_price
         return cost
-    
+
     def separate_retail_price(self):
         price = 0
         for pkgitem in self.packageitem_set.all():
             price += pkgitem.quantity * pkgitem.item.retail_price
         return price
-    
+
     def separate_wholesale_price(self):
         price = 0
         for pkgitem in self.packageitem_set.all():
@@ -57,6 +57,6 @@ class PackageItem(models.Model):
     package = models.ForeignKey(Package)
     item = models.ForeignKey(Item)
     quantity = models.IntegerField()
-    
+
     class Meta:
         unique_together = ['package', 'item']

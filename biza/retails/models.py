@@ -5,7 +5,7 @@ from stocks.models import Warehouse, Product
 
 class Store(models.Model):
     name = models.CharField(max_length=32)
-    location = models.TextField(unique=True)
+    location = models.TextField()
     warehouse = models.ForeignKey(Warehouse)
 
     def __unicode__(self):
@@ -33,8 +33,19 @@ class Sale(models.Model):
         amount = 0
         for line in self.saleline_set.all():
             amount += line.total_amount()
-        print amount
         return amount
+
+    def total_discount(self):
+        discount = 0
+        for line in self.saleline_set.all():
+            discount += line.total_discount()
+        return discount
+
+    def total_quantity(self):
+        quantity = 0
+        for line in self.saleline_set.all():
+            quantity += line.quantity
+        return quantity
 
     def closed(self):
         if self.closing_time:
@@ -62,3 +73,9 @@ class SaleLine(models.Model):
             return self.quantity * (self.product.retail_price - self.discount)
         else:
             return self.quantity * self.product.retail_price
+
+    def total_discount(self):
+        if self.discount:
+            return self.quantity * self.discount
+        else:
+            return 0
