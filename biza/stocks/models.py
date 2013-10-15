@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 class Warehouse(models.Model):
     name = models.CharField(max_length=32)
@@ -17,6 +18,9 @@ class Product(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('stocks_product_detail', kwargs={'pk': self.pk})
 
 class Item(Product):
     cost_price = models.DecimalField(max_digits=12, decimal_places=4)
