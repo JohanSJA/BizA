@@ -27,3 +27,9 @@ class ItemCreateView(CreateView):
 
 class ItemUpdateView(UpdateView):
     model = Item
+
+class PackageCreateView(CreateView):
+    model = Package
+
+class PackageUpdateView(UpdateView):
+    model = Package

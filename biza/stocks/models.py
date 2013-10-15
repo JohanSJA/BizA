@@ -22,6 +22,13 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('stocks_product_detail', kwargs={'pk': self.pk})
 
+    def is_package(self):
+        try:
+            self.package
+            return True
+        except Package.DoesNotExist, e:
+            return False
+
 class Item(Product):
     cost_price = models.DecimalField(max_digits=12, decimal_places=4)
 

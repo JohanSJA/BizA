@@ -8,6 +8,7 @@
       <p>
         {% if user.employee.hq %}
           <a href="{% url 'stocks_item_new' %}" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> New Item</a>
+          <a href="{% url 'stocks_package_new' %}" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> New Package</a>
         {% endif %}
       </p>
 
@@ -28,7 +29,13 @@
             <td class="text-right">{{ obj.retail_price|floatformat:"2" }}</td>
             {% if user.employee.hq %}
               <td class="text-right">{{ obj.wholesale_price|floatformat:"2" }}</td>
-              <td><a href="{% url 'stocks_item_edit' obj.id %}"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>
+              <td>
+                {% if obj.is_package %}
+                  <a href="{% url 'stocks_package_edit' obj.id %}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                {% else %}
+                  <a href="{% url 'stocks_item_edit' obj.id %}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                {% endif %}
+              </td>
             {% endif %}
           </tr>
         {% endfor %}
