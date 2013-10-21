@@ -1,11 +1,12 @@
 {% extends "base_app.html" %}
 
+{% block breadcrumb %}
+  <li><a href="{% url 'employees_dashboard' %}">Home</a></li>
+  <li><a href="{% url 'stocks_product_list' %}">Products</a></li>
+  <li class="active">{{ object.name }}</li>
+{% endblock %}
+
 {% block content_app %}
-  <div class="row">
-    <div class="col-lg-12">
-      {% include "page_header.html" with page_header=object.name %}
-    </div>
-  </div>
   <div class="row">
     <div class="col-lg-6">
       <h2>Infos</h2>

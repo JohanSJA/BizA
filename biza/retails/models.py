@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.utils import timezone
 
 from stocks.models import Warehouse, Product
 
@@ -24,7 +25,7 @@ class Sale(models.Model):
     closing_time = models.DateTimeField(null=True, blank=True)
 
     def __unicode__(self):
-        return '{} at {}'.format(self.opening_time, self.store)
+        return '{:%c} at {}'.format(timezone.localtime(self.opening_time), self.store)
 
     def get_absolute_url(self):
         return reverse('retails_sale_detail', kwargs={'pk': self.pk})

@@ -1,11 +1,7 @@
-{% extends "base_app.html" %}
+{% extends "generic_form.html" %}
 
-{% block content_app %}
-  <div class="row">
-    <div class="col-lg-12">
-      {% include "page_header.html" with page_header="Package" %}
-
-      {% include "form_horizontal.html" %}
-    </div>
-  </div>
+{% block breadcrumb %}
+  <li><a href="{% url 'employees_dashboard' %}">Home</a></li>
+  <li><a href="{% url 'stocks_product_list' %}">Products</a></li>
+  <li class="active">Package</li>
 {% endblock %}
