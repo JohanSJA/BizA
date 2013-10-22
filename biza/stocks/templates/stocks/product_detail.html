@@ -13,10 +13,10 @@
       <dl class="dl-horizontal">
         <dt>Barcode</dt>
         <dd><object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object></dd>
-        <dt>Retail Price</dt>
+        <dt>Retail Price (RM)</dt>
         <dd>{{ object.retail_price|floatformat:"2" }}</dd>
         {% if user.employee.work_in_hq %}
-          <dt>Wholesale Price</dt>
+          <dt>Wholesale Price (RM)</dt>
           <dd>{{ object.wholesale_price|floatformat:"2" }}</dd>
         {% endif %}
       </dl>
@@ -25,13 +25,13 @@
     <div class="col-lg-6">
       {% if quantities %}
         <h2>Stocks</h2>
-        <table class="table">
+        <table class="table table-striped table-responsive">
           <tr>
             {% if user.employee.work_in_hq %}
               <th>Warehouse</th>
             {% endif %}
             <th>Time</th>
-            <th>Quantity</th>
+            <th class="text-right">Quantity</th>
           </tr>
           {% for obj in quantities %}
             <tr>
@@ -39,7 +39,7 @@
                 <td>{{ obj.warehouse }}</td>
               {% endif %}
               <td>{{ obj.datetime }}</td>
-              <td>{{ obj.quantity }}</td>
+              <td class="text-right">{{ obj.quantity }}</td>
             </tr>
           {% endfor %}
         </table>
