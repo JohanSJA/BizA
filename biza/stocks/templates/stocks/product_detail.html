@@ -12,7 +12,7 @@
       <h2>Infos</h2>
       <dl class="dl-horizontal">
         <dt>Barcode</dt>
-        <dd>{{ object.barcode }}</dd>
+        <dd><object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object></dd>
         <dt>Retail Price</dt>
         <dd>{{ object.retail_price|floatformat:"2" }}</dd>
         {% if user.employee.work_in_hq %}

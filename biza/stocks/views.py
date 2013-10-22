@@ -1,5 +1,9 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
+from django.http import HttpResponse
+
+from cStringIO import StringIO
+import barcode
 
 from .models import *
 
@@ -21,6 +25,15 @@ class ProductDetailView(DetailView):
         except Product.DoesNotExist:
           pass
         return context
+
+def product_barcode_svg(request, pk):
+    p = Product.objects.get(pk=pk)
+    bc = p.barcode
+
+    io = StringIO()
+    code = barcode.get('code39', bc)
+    code.write(io)
+    return HttpResponse(io.getvalue(), mimetype='image/svg+xml')
 
 class ItemCreateView(CreateView):
     model = Item
