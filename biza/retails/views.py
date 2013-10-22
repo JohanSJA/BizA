@@ -1,13 +1,20 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
+from django.core.urlresolvers import reverse_lazy
 
 from .models import *
+from .forms import *
 
 class SaleListView(ListView):
     model = Sale
 
 class SaleCreateView(CreateView):
-    model = Sale
+    form_class = SaleForm
+    template_name = 'retails/sale_form.html'
+
+    def form_valid(self, form):
+        form.instance.store = self.request.user.employee.store
+        return super(SaleCreateView, self).form_valid(form)
 
 class SaleDetailView(DetailView):
     model = Sale
@@ -18,7 +25,11 @@ class SaleDetailView(DetailView):
         return context
 
 class SaleUpdateView(UpdateView):
-    model = Sale
+    form_class = SaleForm
+    template_name = 'retails/sale_form.html'
+
+    def get_object(self, queryset=None):
+        return Sale.objects.get(pk=self.kwargs['pk'])
 
 class SaleLineListView(ListView):
     model = SaleLine
