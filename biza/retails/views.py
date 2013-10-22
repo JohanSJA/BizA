@@ -37,8 +37,14 @@ class SaleLineListView(ListView):
 class SaleLineCreateView(CreateView):
     model = SaleLine
 
+    def get_success_url(self):
+        return self.object.sale.get_absolute_url()
+
 class SaleLineDetailView(DetailView):
     model = SaleLine
 
 class SaleLineUpdateView(UpdateView):
     model = SaleLine
+
+    def get_success_url(self):
+        return self.object.sale.get_absolute_url()
