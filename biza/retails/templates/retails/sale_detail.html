@@ -44,32 +44,36 @@
         <a href="{% url 'retails_saleline_new' %}" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add</a>
       </p>
       <table class="table table-striped table-responsive">
-        <tr>
-          <th>Product</th>
-          <th class="text-right">Unit Price<br />(RM)</th>
-          <th class="text-right">Quantity</th>
-          <th class="text-right">Discount<br />(RM)</th>
-          <th class="text-right">Subtotal<br />(RM)</th>
-          {% if not object.closed %}
-            <th>&nbsp;</th>
-          {% endif %}
-        </tr>
-        {% for line in lines %}
+        <thead>
           <tr>
-            <td>{{ line.product }}</td>
-            <td class="text-right">{{ line.product.retail_price|floatformat:"2" }}</td>
-            <td class="text-right">{{ line.quantity }}</td>
-            <td class="text-right">{{ line.discount|floatformat:"2"|default:"-" }}</td>
-            <td class="text-right">{{ line.total_amount|floatformat:"2" }}</td>
+            <th>Product</th>
+            <th class="text-right">Unit Price<br />(RM)</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-right">Discount<br />(RM)</th>
+            <th class="text-right">Subtotal<br />(RM)</th>
             {% if not object.closed %}
-              <td>
-                <a href="{% url 'retails_saleline_edit' line.id %}">
-                  <span class="glyphicon glyphicon-edit"></span> Edit
-                </a>
-              </td>
+              <th>&nbsp;</th>
             {% endif %}
           </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+          {% for line in lines %}
+            <tr>
+              <td>{{ line.product }}</td>
+              <td class="text-right">{{ line.product.retail_price|floatformat:"2" }}</td>
+              <td class="text-right">{{ line.quantity }}</td>
+              <td class="text-right">{{ line.discount|floatformat:"2"|default:"-" }}</td>
+              <td class="text-right">{{ line.total_amount|floatformat:"2" }}</td>
+              {% if not object.closed %}
+                <td>
+                  <a href="{% url 'retails_saleline_edit' line.id %}">
+                    <span class="glyphicon glyphicon-edit"></span> Edit
+                  </a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
       </table>
 
       <h2>Summary</h2>
