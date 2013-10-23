@@ -24,6 +24,9 @@ class SaleDetailView(DetailView):
         context['lines'] = self.get_object().saleline_set.all()
         return context
 
+class SalePrintView(SaleDetailView):
+    template_name = 'retails/sale_print.html'
+
 class SaleUpdateView(UpdateView):
     form_class = SaleForm
     template_name = 'retails/sale_form.html'

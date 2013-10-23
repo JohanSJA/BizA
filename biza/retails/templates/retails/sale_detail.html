@@ -9,15 +9,7 @@
 {% block content_app %}
   <div class="row">
     <div class="col-lg-4">
-      <h2>Infos
-        {% if not object.closed %}
-          <small>
-            <a href="{% url 'retails_sale_edit' object.id %}">
-              <span class="glyphicon glyphicon-edit"></span> Edit
-            </a>
-          </small>
-        {% endif %}
-      </h2>
+      <h2>Infos</h2>
 
       <dl class="dl-horizontal">
         <dt>Status</dt>
@@ -33,6 +25,17 @@
           <dd>{{ object.closing_time }}</dd>
         {% endif %}
       </dl>
+
+      <p>
+        {% if not object.closed %}
+          <a href="{% url 'retails_sale_edit' object.id %}" class="btn btn-default">
+            <span class="glyphicon glyphicon-edit"></span> Edit
+          </a>
+        {% endif %}
+        <a href="{% url 'retails_sale_print' object.id %}" class="btn btn-default" target="_blank">
+          <span class="glyphicon glyphicon-print"></span> Print
+        </a>
+      </p>
     </div>
 
     <div class="col-lg-8">
