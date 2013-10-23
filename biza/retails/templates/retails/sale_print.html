@@ -6,6 +6,10 @@
   .table>tfoot>tr>td {
     font-weight: bold;
   }
+
+  .small-text {
+    font-size: 0.8em;
+  }
 {% endblock %}
 
 {% block content %}
@@ -65,6 +69,15 @@
           {% endfor %}
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <div class="row small-text">
+    <div class="col-lg-12">
+      <h3>Notes</h3>
+      <ul>
+        <li>Goods sold are not returnable.</li>
+      </ul>
     </div>
   </div>
 {% endblock %}
