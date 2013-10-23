@@ -18,6 +18,7 @@
           <th>Saleperson</th>
           <th>Opening Time</th>
           <th>Closing Time</th>
+          <th class="text-right">Total (RM)</th>
         </tr>
         {% for obj in object_list %}
           <tr>
@@ -25,6 +26,7 @@
             <td>{{ obj.saleperson }}</td>
             <td>{{ obj.opening_time }}</td>
             <td>{{ obj.closing_time }}</td>
+            <td class="text-right">{{ obj.total_amount|floatformat:"2" }}</td>
           </tr>
         {% endfor %}
       </table>
