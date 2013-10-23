@@ -1,5 +1,13 @@
 {% extends "base_app.html" %}
 
+{% block css %}
+  {{ block.super }}
+
+  .big-text {
+    font-size: 4em;
+  }
+{% endblock %}
+
 {% block breadcrumb %}
   <li class="active">Home</li>
 {% endblock %}
@@ -14,10 +22,10 @@
 
   <div class="row">
     <div class="col-lg-3">
-        <p><a href="{% url 'stocks_product_list' %}" class="btn btn-default col-lg-12">Products</a></p>
+        <p><a href="{% url 'stocks_product_list' %}" class="btn btn-default col-lg-12 col-xs-12 big-text">Products</a></p>
     </div>
     <div class="col-lg-3">
-        <p><a href="{% url 'retails_sale_list' %}" class="btn btn-default col-lg-12">Sales</a></p>
+        <p><a href="{% url 'retails_sale_list' %}" class="btn btn-default col-lg-12 col-xs-12 big-text">Sales</a></p>
     </div>
   </div>
 {% endblock %}
