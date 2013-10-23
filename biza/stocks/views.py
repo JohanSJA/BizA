@@ -3,7 +3,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.http import HttpResponse
 
 from cStringIO import StringIO
-import barcode
+from barcode.codex import Code39
 
 from .models import *
 
@@ -28,10 +28,10 @@ class ProductDetailView(DetailView):
 
 def product_barcode_svg(request, pk):
     p = Product.objects.get(pk=pk)
-    bc = p.barcode
+    bc = '{:0^12}'.format(p.barcode)
 
     io = StringIO()
-    code = barcode.get('code39', bc)
+    code = Code39(bc, add_checksum=False)
     code.write(io)
     return HttpResponse(io.getvalue(), mimetype='image/svg+xml')
 
