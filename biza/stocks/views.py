@@ -35,6 +35,12 @@ def product_barcode_svg(request, pk):
     code.write(io)
     return HttpResponse(io.getvalue(), mimetype='image/svg+xml')
 
+
+class ProductPrintingView(DetailView):
+    model = Product
+    template_name = 'stocks/product_printing.html'
+
+
 class ItemCreateView(CreateView):
     model = Item
 
