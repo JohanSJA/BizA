@@ -6,6 +6,16 @@
     width: 1140px;
   }
 
+  table {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  td {
+    height: 130px;
+    max-height: 130px;
+  }
+
   p {
     font-size: 0.8em;
   }
@@ -13,37 +23,53 @@
 
 {% block content %}
   <div class="row">
-    <div class="col-xs-1 hidden-print"></div>
-    <div class="col-xs-2">
-      <p class="text-center">
-        Cheantar Electronics<br />
-        <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-      </p>
+    <div class="col-xs-12">
+      <table>
+        <tr>
+          <td class="text-center">
+            Cheantar Electronics<br />
+            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
+          </td>
+          <td class="text-center">
+            Cheantar Electronics<br />
+            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
+          </td>
+          <td class="text-center">
+            Cheantar Electronics<br />
+            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
+          </td>
+          <td class="text-center">
+            Cheantar Electronics<br />
+            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
+          </td>
+          <td class="text-center">
+            Cheantar Electronics<br />
+            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-center">
+            Cheantar Electronics<br />
+            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
+          </td>
+          <td class="text-center">
+            Cheantar Electronics<br />
+            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
+          </td>
+          <td class="text-center">
+            Cheantar Electronics<br />
+            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
+          </td>
+          <td class="text-center">
+            Cheantar Electronics<br />
+            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
+          </td>
+          <td class="text-center">
+            Cheantar Electronics<br />
+            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
+          </td>
+        </tr>
+      </table>
     </div>
-    <div class="col-xs-2">
-      <p class="text-center">
-        Cheantar Electronics<br />
-        <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-      </p>
-    </div>
-    <div class="col-xs-2">
-      <p class="text-center">
-        Cheantar Electronics<br />
-        <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-      </p>
-    </div>
-    <div class="col-xs-2">
-      <p class="text-center">
-        Cheantar Electronics<br />
-        <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-      </p>
-    </div>
-    <div class="col-xs-2">
-      <p class="text-center">
-        Cheantar Electronics<br />
-        <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-      </p>
-    </div>
-    <div class="col-xs-1 hidden-print"></div>
   </div>
 {% endblock %}
