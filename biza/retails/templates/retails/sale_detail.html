@@ -31,6 +31,9 @@
           <a href="{% url 'retails_sale_edit' object.id %}" class="btn btn-default">
             <span class="glyphicon glyphicon-edit"></span> Edit
           </a>
+          <a href="{% url 'retails_sale_edit' object.id %}" class="btn btn-default">
+            <span class="glyphicon glyphicon-shopping-cart"></span> Close
+          </a>
         {% endif %}
         <a href="{% url 'retails_sale_print' object.id %}" class="btn btn-default" target="_blank">
           <span class="glyphicon glyphicon-print"></span> Print
@@ -83,7 +86,9 @@
         <dt>Discount (RM)</dt>
         <dd class="text-right" style="font-size:1.6em;">{{ object.total_discount|floatformat:"2"|default:"-" }}</dd>
         <dt>Total (RM)</dt>
-        <dd class="text-right" style="font-size: 2em;">{{ object.total_amount|floatformat:"2" }}</dd>
+        <dd class="text-right" style="font-size: 2em;">
+          <b>{{ object.total_amount|floatformat:"2" }}</b>
+        </dd>
       </dl>
     </div>
   </div>

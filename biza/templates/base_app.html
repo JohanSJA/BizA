@@ -23,7 +23,9 @@
       </ul>
       <div class="navbar-right">
         <p class="navbar-text">Signed in as {{ user.get_username }}</p>
-        <a href="{% url 'logout' %}" class="btn btn-default navbar-btn">Logout</a>
+        <a href="{% url 'logout' %}" class="btn btn-default navbar-btn">
+          <span class="glyphicon glyphicon-log-out"></span> Logout
+        </a>
       </div>
     </div>
   </nav>
