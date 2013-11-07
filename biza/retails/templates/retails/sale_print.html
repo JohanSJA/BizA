@@ -14,12 +14,12 @@
 
 {% block content %}
   <div class="row">
-    <div class="col-lg-6 col-xs-6">
+    <div class="col-xs-6">
       <h2>Cheantar Electronics Sdn. Bhd.</h2>
       <p>{{ object.store.location }}</p>
     </div>
 
-    <div class="col-lg-6 col-xs-6">
+    <div class="col-xs-6">
       <h1 class="text-right">
         {% if object.closed %}
           Official Receipt
@@ -27,7 +27,7 @@
           Invoice
         {% endif %}
       </h1>
-      <dl class="dl-horizontal">
+      <dl class="dl-horizontal pull-right">
         <dt>Saleperson</dt>
         <dd>{{ object.saleperson }}</dd>
         {% if object.closed %}
