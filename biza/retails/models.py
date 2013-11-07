@@ -7,6 +7,7 @@ from stocks.models import Warehouse, Product
 class Store(models.Model):
     name = models.CharField(max_length=32)
     location = models.TextField()
+    telephone = models.CharField(max_length=16)
     warehouse = models.ForeignKey(Warehouse)
 
     def __unicode__(self):
@@ -69,11 +70,14 @@ class SaleLine(models.Model):
     def get_absolute_url(self):
         return reverse('retails_saleline_detail', kwargs={'pk': self.pk})
 
-    def total_amount(self):
+    def price_after_discount(self):
         if self.discount:
-            return self.quantity * (self.product.retail_price - self.discount)
+            return self.product.retail_price - self.discount
         else:
-            return self.quantity * self.product.retail_price
+            return self.product.retail_price
+
+    def total_amount(self):
+        return self.quantity * self.price_after_discount()
 
     def total_discount(self):
         if self.discount:
