@@ -12,5 +12,8 @@
 {% block js %}
   $( window ).load(function() {
     window.print();
+    window.onfocus=function(){
+      window.close();
+    }
   });
 {% endblock %}
