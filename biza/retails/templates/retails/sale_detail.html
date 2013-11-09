@@ -49,7 +49,9 @@
       <table class="table table-striped table-responsive">
         <thead>
           <tr>
-            <th>Product</th>
+            <th>No</th>
+            <th>Model</th>
+            <th>Name</th>
             <th class="text-right">Unit Price<br />(RM)</th>
             <th class="text-right">Quantity</th>
             <th class="text-right">Discount<br />(RM)</th>
@@ -62,7 +64,9 @@
         <tbody>
           {% for line in lines %}
             <tr>
+              <td>{{ forloop.counter }}</td>
               <td>{{ line.product }}</td>
+              <td>{{ line.product.name }}</td>
               <td class="text-right">{{ line.product.retail_price|floatformat:"2" }}</td>
               <td class="text-right">{{ line.quantity }}</td>
               <td class="text-right">{{ line.discount|floatformat:"2"|default:"-" }}</td>

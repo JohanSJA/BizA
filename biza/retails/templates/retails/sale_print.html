@@ -49,7 +49,9 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Product</th>
+            <th>No</th>
+            <th>Model</th>
+            <th>Name</th>
             <th class="text-right">Quantity</th>
             <th class="text-right">Unit Price<br />(RM)</th>
             <th class="text-right">Subtotal<br />(RM)</th>
@@ -57,14 +59,16 @@
         </thead>
         <tfoot>
           <tr>
-            <td colspan="3">Grand Total</td>
+            <td colspan="5">Grand Total</td>
             <td class="text-right">{{ object.total_amount|floatformat:"2" }}</td>
           </tr>
         </tfoot>
         <tbody>
           {% for line in lines %}
             <tr>
+              <td>{{ forloop.counter }}</td>
               <td>{{ line.product }}</td>
+              <td>{{ line.product.name }}</td>
               <td class="text-right">{{ line.quantity }}</td>
               <td class="text-right">{{ line.price_after_discount|floatformat:"2" }}</td>
               <td class="text-right">{{ line.total_amount|floatformat:"2" }}</td>

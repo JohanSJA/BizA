@@ -9,7 +9,8 @@ class Warehouse(models.Model):
         return self.name
 
 class Product(models.Model):
-    name = models.CharField(max_length=32, unique=True)
+    model = models.CharField(max_length=12, unique=True)
+    name = models.CharField(max_length=100)
     barcode = models.CharField(max_length=12, unique=True)
     retail_price = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
     lowest_retail_price = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
@@ -17,7 +18,7 @@ class Product(models.Model):
     lowest_wholesale_price = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
 
     def __unicode__(self):
-        return self.name
+        return self.model
 
     def get_absolute_url(self):
         return reverse('stocks_product_detail', kwargs={'pk': self.pk})
