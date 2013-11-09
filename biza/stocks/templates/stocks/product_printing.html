@@ -12,8 +12,8 @@
   }
 
   td {
-    height: 130px;
-    max-height: 130px;
+    height: 155px;
+    max-height: 155px;
   }
 
   p {
@@ -25,50 +25,16 @@
   <div class="row">
     <div class="col-xs-12">
       <table>
-        <tr>
-          <td class="text-center">
-            Cheantar Electronics<br />
-            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-          </td>
-          <td class="text-center">
-            Cheantar Electronics<br />
-            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-          </td>
-          <td class="text-center">
-            Cheantar Electronics<br />
-            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-          </td>
-          <td class="text-center">
-            Cheantar Electronics<br />
-            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-          </td>
-          <td class="text-center">
-            Cheantar Electronics<br />
-            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-          </td>
-        </tr>
-        <tr>
-          <td class="text-center">
-            Cheantar Electronics<br />
-            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-          </td>
-          <td class="text-center">
-            Cheantar Electronics<br />
-            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-          </td>
-          <td class="text-center">
-            Cheantar Electronics<br />
-            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-          </td>
-          <td class="text-center">
-            Cheantar Electronics<br />
-            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-          </td>
-          <td class="text-center">
-            Cheantar Electronics<br />
-            <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
-          </td>
-        </tr>
+        {% for i in "12345" %}
+          <tr>
+            {% for i in "12345" %}
+              <td class="text-center">
+                Cheantar Electronics<br />
+                <object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object>
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
       </table>
     </div>
   </div>

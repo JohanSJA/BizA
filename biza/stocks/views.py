@@ -28,7 +28,7 @@ class ProductDetailView(DetailView):
 
 def product_barcode_svg(request, pk):
     p = Product.objects.get(pk=pk)
-    bc = '{:0^12}'.format(p.barcode)
+    bc = p.barcode
 
     io = StringIO()
     code = Code39(bc, add_checksum=False)
