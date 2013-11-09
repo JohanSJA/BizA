@@ -17,9 +17,13 @@
         <dd><object data="{% url 'stocks_product_barcode' object.id %}" type="image/svg+xml"></object></dd>
         <dt>Retail Price (RM)</dt>
         <dd>{{ object.retail_price|floatformat:"2" }}</dd>
+        <dt>Lowest Retail Price (RM)</dt>
+        <dd>{{ object.retail_price|floatformat:"2" }}</dd>
         {% if user.employee.work_in_hq %}
           <dt>Wholesale Price (RM)</dt>
           <dd>{{ object.wholesale_price|floatformat:"2" }}</dd>
+          <dt>Lowest Wholesale Price (RM)</dt>
+          <dd>{{ object.lowest_wholesale_price|floatformat:"2" }}</dd>
         {% endif %}
       </dl>
 

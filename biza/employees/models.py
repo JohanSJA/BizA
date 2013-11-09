@@ -12,7 +12,4 @@ class Employee(models.Model):
         return self.user.get_username()
 
     def work_in_hq(self):
-        if self.store:
-            return False
-        else:
-            return True
+        return self.hq
