@@ -17,8 +17,11 @@
     <div class="col-xs-6">
       <h2>Cheantar Electronics Sdn. Bhd.</h2>
       <p>
-        {{ object.store.location }}<br />
-        Tel: {{ object.store.telephone|default:"(+60)4-3318388" }}
+        <strong>HQ:</strong> 4388, Jalan Heng Choon Thian, 12000 Butterworth<br />
+        <em>Tel:</em> (+60)4-3334645 &nbsp;&nbsp; <em>Email:</em> sales@cheantar.com<br />
+        <strong>Branch:</strong> {{ object.store.location }}<br />
+        <em>Tel:</em> {{ object.store.telephone|default:"(+60)4-3318388" }} &nbsp;&nbsp;
+        <em>E-mail:</em> {{ object.store.email|default:"sales@cheantar.com" }}
       </p>
     </div>
 

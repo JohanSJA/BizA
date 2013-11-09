@@ -8,6 +8,7 @@ class Store(models.Model):
     name = models.CharField(max_length=32)
     location = models.TextField()
     telephone = models.CharField(max_length=16)
+    email = models.EmailField(blank=True)
     warehouse = models.ForeignKey(Warehouse)
 
     def __unicode__(self):
