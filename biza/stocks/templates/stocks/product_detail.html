@@ -8,7 +8,7 @@
 
 {% block content_app %}
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-5">
       <h2>Infos</h2>
       <dl class="dl-horizontal">
         <dt>Name</dt>
@@ -18,7 +18,7 @@
         <dt>Retail Price (RM)</dt>
         <dd>{{ object.retail_price|floatformat:"2" }}</dd>
         <dt>Lowest Retail Price (RM)</dt>
-        <dd>{{ object.retail_price|floatformat:"2" }}</dd>
+        <dd>{{ object.lowest_retail_price|floatformat:"2" }}</dd>
         {% if user.employee.work_in_hq %}
           <dt>Wholesale Price (RM)</dt>
           <dd>{{ object.wholesale_price|floatformat:"2" }}</dd>
@@ -34,7 +34,34 @@
       </p>
     </div>
 
-    <div class="col-lg-6">
+    <div class="col-lg-7">
+      {% if object.is_package %}
+        <h2>Content</h2>
+        <table class="table table-striped table-responsive">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Model</th>
+              <th>Name</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for packitem in object.package.packageitem_set.all %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ packitem.item }}</td>
+                <td>{{ packitem.item.name }}</td>
+                <td>{{ packitem.quantity }}</td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="4">Empty</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
       {% if quantities %}
         <h2>Stocks</h2>
         <table class="table table-striped table-responsive">

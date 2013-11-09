@@ -6,7 +6,12 @@ from .models import *
 from .forms import *
 
 class SaleListView(ListView):
-    model = Sale
+    def get_queryset(self):
+        emp = self.request.user.employee
+        if emp.hq:
+            return Sale.objects.all()
+        else:
+            return Sale.objects.filter(store=emp.store)
 
 class SaleCreateView(CreateView):
     form_class = SaleForm

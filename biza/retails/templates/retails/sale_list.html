@@ -15,7 +15,10 @@
       <table class="table table-striped table-responsive">
         <thead>
           <tr>
-            <th>Store</th>
+            <th>No</th>
+            {% if user.employee.hq %}
+              <th>Store</th>
+            {% endif %}
             <th>Saleperson</th>
             <th>Opening Time</th>
             <th>Closing Time</th>
@@ -25,7 +28,10 @@
         <tbody>
           {% for obj in object_list %}
             <tr>
-              <td><a href="{% url 'retails_sale_detail' obj.id %}">{{ obj.store }}</a></td>
+              <td><a href="{% url 'retails_sale_detail' obj.id %}">{{ forloop.counter }}</a></td>
+              {% if user.employee.hq %}
+                <td>{{ obj.store }}</td>
+              {% endif %}
               <td>{{ obj.saleperson }}</td>
               <td>{{ obj.opening_time }}</td>
               <td>{{ obj.closing_time }}</td>
