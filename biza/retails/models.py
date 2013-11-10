@@ -85,3 +85,9 @@ class SaleLine(models.Model):
             return self.quantity * self.discount
         else:
             return 0
+
+    def get_quantity(self):
+        if self.product.is_package():
+            return '{} SET'.format(self.quantity)
+        else:
+            return '{} {}'.format(self.quantity, self.product.item.unit_of_measure)

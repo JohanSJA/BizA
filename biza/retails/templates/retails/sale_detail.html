@@ -1,5 +1,15 @@
 {% extends "base_app.html" %}
 
+{% block css %}
+  .large-text {
+    font-size: 2em;
+  }
+
+  .xlarge-text {
+    font-size: 3em;
+  }
+{% endblock %}
+
 {% block breadcrumb %}
   <li><a href="{% url 'employees_dashboard' %}">Home</a></li>
   <li><a href="{% url 'retails_sale_list' %}">Sales</a></li>
@@ -68,7 +78,7 @@
               <td>{{ line.product }}</td>
               <td>{{ line.product.name }}</td>
               <td class="text-right">{{ line.product.retail_price|floatformat:"2" }}</td>
-              <td class="text-right">{{ line.quantity }}</td>
+              <td class="text-right">{{ line.get_quantity }}</td>
               <td class="text-right">{{ line.discount|floatformat:"2"|default:"-" }}</td>
               <td class="text-right">{{ line.total_amount|floatformat:"2" }}</td>
               {% if not object.closed %}
@@ -86,11 +96,11 @@
       <h2>Summary</h2>
       <dl class="dl-horizontal pull-right">
         <dt>Quantity</dt>
-        <dd class="text-right" style="font-size:1.6em;">{{ object.total_quantity }}</dd>
+        <dd class="text-right large-text">{{ object.total_quantity }}</dd>
         <dt>Discount (RM)</dt>
-        <dd class="text-right" style="font-size:1.6em;">{{ object.total_discount|floatformat:"2"|default:"-" }}</dd>
+        <dd class="text-right large-text">{{ object.total_discount|floatformat:"2"|default:"-" }}</dd>
         <dt>Total (RM)</dt>
-        <dd class="text-right" style="font-size: 2em;">
+        <dd class="text-right xlarge-text">
           <b>{{ object.total_amount|floatformat:"2" }}</b>
         </dd>
       </dl>

@@ -8,6 +8,15 @@ class Warehouse(models.Model):
     def __unicode__(self):
         return self.name
 
+
+class UnitOfMeasure(models.Model):
+    code = models.CharField(max_length=4)
+    name = models.CharField(max_length=20)
+
+    def __unicode__(self):
+        return self.code
+
+
 class Product(models.Model):
     model = models.CharField(max_length=12, unique=True)
     name = models.CharField(max_length=100)
@@ -30,8 +39,11 @@ class Product(models.Model):
         except Package.DoesNotExist, e:
             return False
 
+
 class Item(Product):
     cost_price = models.DecimalField(max_digits=12, decimal_places=4)
+    unit_of_measure = models.ForeignKey(UnitOfMeasure)
+
 
 class ItemQuantity(models.Model):
     item = models.ForeignKey(Item)
@@ -44,6 +56,7 @@ class ItemQuantity(models.Model):
 
     def __unicode__(self):
         return '{} {} at {} on {}'.format(self.quantity, self.item, self.warehouse, self.datetime)
+
 
 class Package(Product):
 
@@ -64,6 +77,7 @@ class Package(Product):
         for pkgitem in self.packageitem_set.all():
             price += pkgitem.quantity * pkgitem.item.wholesale_price
         return price
+
 
 class PackageItem(models.Model):
     package = models.ForeignKey(Package)
