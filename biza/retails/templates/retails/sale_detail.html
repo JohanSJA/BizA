@@ -25,7 +25,13 @@
 
       <dl class="dl-horizontal">
         <dt>Status</dt>
-        <dd>{% if object.closed %}Closed{% else %}Open{% endif %}</dd>
+        {% if object.closed %}
+          <dd>Closed</dd>
+          <dt>Cash bill number</dt>
+          <dd>{{ object.cash_bill_number }}</dd>
+        {% else %}
+          <dd>Open</dd>
+        {% endif %}
         <dt>Store</dt>
         <dd>{{ object.store }}</dd>
         <dt>Saleperson</dt>

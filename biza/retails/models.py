@@ -4,6 +4,7 @@ from django.utils import timezone
 
 from stocks.models import Warehouse, Product
 
+
 class Store(models.Model):
     name = models.CharField(max_length=32)
     location = models.TextField()
@@ -14,17 +15,21 @@ class Store(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class Saleperson(models.Model):
     name = models.CharField(max_length=32)
 
     def __unicode__(self):
         return self.name
 
+
 class Sale(models.Model):
     store = models.ForeignKey(Store)
     saleperson = models.ForeignKey(Saleperson)
     opening_time = models.DateTimeField(auto_now_add=True)
     closing_time = models.DateTimeField(null=True, blank=True)
+    invoice_number = models.CharField(max_length=12, blank=True)
+    cash_bill_number = models.CharField(max_length=12, blank=True)
 
     def __unicode__(self):
         return '{:%c} at {}'.format(timezone.localtime(self.opening_time), self.store)
@@ -55,6 +60,7 @@ class Sale(models.Model):
             return True
         else:
             return False
+
 
 class SaleLine(models.Model):
     sale = models.ForeignKey(Sale)

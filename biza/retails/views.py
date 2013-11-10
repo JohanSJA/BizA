@@ -7,6 +7,7 @@ import datetime
 from .models import *
 from .forms import *
 from stocks.models import ItemQuantity
+from documents.models import Document
 
 
 class SaleListView(ListView):
@@ -58,6 +59,8 @@ class SaleCloseView(UpdateView):
     def form_valid(self, form):
         sale = form.instance
         warehouse = sale.store.warehouse
+
+        # deduct item quantities
         for line in sale.saleline_set.all():
             if line.product.is_package():
                 package = line.product.package
@@ -73,7 +76,16 @@ class SaleCloseView(UpdateView):
                 quantity_left = last_quantity.quantity - line.quantity
                 iq = ItemQuantity(item=item, warehouse=warehouse, quantity=quantity_left)
                 iq.save()
+
+        # set closing time to indicate sale closed
         sale.closing_time = datetime.datetime.now()
+
+        # give the sale a cash bill number
+        doc = Document.objects.get(name='Cash bill')
+        sale.cash_bill_number = doc.get_full_name()
+        doc.number += 1
+        doc.save()
+
         return super(SaleCloseView, self).form_valid(form)
 
 class SaleLineListView(ListView):

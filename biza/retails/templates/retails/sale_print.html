@@ -34,15 +34,17 @@
         {% endif %}
       </h1>
       <dl class="dl-horizontal pull-right">
-        <dt>Saleperson</dt>
-        <dd>{{ object.saleperson }}</dd>
         {% if object.closed %}
+          <dt>Number:</dt>
+          <dd>{{ object.cash_bill_number }}</dd>
           <dt>Closing Time</dt>
           <dd>{{ object.closing_time }}</dd>
         {% else %}
           <dt>Opening Time</dt>
           <dd>{{ object.opening_time }}</dd>
         {% endif %}
+        <dt>Saleperson</dt>
+        <dd>{{ object.saleperson }}</dd>
       </dl>
     </div>
   </div>
