@@ -6,6 +6,10 @@
   .large-text {
     font-size: 2em;
   }
+
+  .xlarge-text {
+    font-size: 3em;
+  }
 {% endblock %}
 
 {% block breadcrumb %}
@@ -37,7 +41,7 @@
           <p class="text-right"><b>Balance (RM)</b></p>
         </div>
         <div class="col-lg-8">
-          <p class="large-text" id="balance">&nbsp;</p>
+          <p class="xlarge-text" id="balance">&nbsp;</p>
         </div>
       </div>
     </div>
@@ -52,7 +56,7 @@
     if ( balance < 0 ) {
       $( "#balance" ).text( "Not enough" );
     } else {
-      $( "#balance" ).text( balance );
+      $( "#balance" ).text( balance.toFixed(2) );
     }
   }
 
