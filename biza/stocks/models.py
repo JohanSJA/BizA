@@ -53,6 +53,8 @@ class ItemQuantity(models.Model):
 
     class Meta:
         verbose_name_plural = 'item quantities'
+        get_latest_by = 'datetime'
+        ordering = ['-datetime']
 
     def __unicode__(self):
         return '{} {} at {} on {}'.format(self.quantity, self.item, self.warehouse, self.datetime)
