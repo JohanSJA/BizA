@@ -2,6 +2,8 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 
+import datetime
+
 from .models import *
 from .forms import *
 
@@ -38,6 +40,18 @@ class SaleUpdateView(UpdateView):
 
     def get_object(self, queryset=None):
         return Sale.objects.get(pk=self.kwargs['pk'])
+
+
+class SaleCloseView(UpdateView):
+    form_class = SaleCloseForm
+    template_name = 'retails/sale_close_form.html'
+
+    def get_object(self, queryset=None):
+        return Sale.objects.get(pk=self.kwargs['pk'])
+
+    def form_valid(self, form):
+        form.instance.closing_time = datetime.datetime.now()
+        return super(SaleCloseView, self).form_valid(form)
 
 class SaleLineListView(ListView):
     model = SaleLine
