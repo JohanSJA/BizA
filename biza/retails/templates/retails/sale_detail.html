@@ -15,7 +15,13 @@
 {% block breadcrumb %}
   <li><a href="{% url 'employees_dashboard' %}">Home</a></li>
   <li><a href="{% url 'retails_sale_list' %}">Sales</a></li>
-  <li class="active">{{ object }}</li>
+  <li class="active">
+    {% if user.employee.hq %}
+    {{ object.opening_time }} at {{ object.store }}
+    {% else %}
+      {{ object.opening_time }}
+    {% endif %}
+  </li>
 {% endblock %}
 
 {% block content_app %}
@@ -29,6 +35,10 @@
           <dd>Closed</dd>
           <dt>Cash bill number</dt>
           <dd>{{ object.cash_bill_number }}</dd>
+        {% elif object.quoted %}
+          <dd>Quoted</dd>
+          <dt>Quotation number</dt>
+          <dd>{{ object.quotation_number }}</dd>
         {% else %}
           <dd>Open</dd>
         {% endif %}
@@ -49,6 +59,11 @@
           <a href="{% url 'retails_sale_edit' object.id %}" class="btn btn-default">
             <span class="glyphicon glyphicon-edit"></span> Edit
           </a>
+          {% if not object.quoted %}
+          <a href="{% url 'retails_sale_quote' object.id %}" class="btn btn-default">
+              <span class="glyphicon glyphicon-edit"></span> Quote
+            </a>
+          {% endif %}
           <a href="{% url 'retails_sale_close' object.id %}" class="btn btn-default">
             <span class="glyphicon glyphicon-shopping-cart"></span> Close
           </a>

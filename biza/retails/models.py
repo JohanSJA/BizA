@@ -28,8 +28,8 @@ class Sale(models.Model):
     saleperson = models.ForeignKey(Saleperson)
     opening_time = models.DateTimeField(auto_now_add=True)
     closing_time = models.DateTimeField(null=True, blank=True)
-    invoice_number = models.CharField(max_length=12, blank=True)
     cash_bill_number = models.CharField(max_length=12, blank=True)
+    quotation_number = models.CharField(max_length=12, blank=True)
 
     def __unicode__(self):
         return '{:%c} at {}'.format(timezone.localtime(self.opening_time), self.store)
@@ -55,11 +55,19 @@ class Sale(models.Model):
             quantity += line.quantity
         return quantity
 
-    def closed(self):
-        if self.closing_time:
-            return True
+    def get_status(self):
+        if self.cash_bill_number:
+            return 'Closed'
+        elif self.quotation_number:
+            return 'Quoted'
         else:
-            return False
+            return 'Open'
+
+    def closed(self):
+        return self.get_status() == 'Closed'
+
+    def quoted(self):
+        return self.get_status() == 'Quoted'
 
 
 class SaleLine(models.Model):

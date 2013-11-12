@@ -15,3 +15,9 @@ class SaleCloseForm(forms.ModelForm):
     class Meta:
         model = Sale
         fields = []
+
+
+class SaleQuoteForm(forms.ModelForm):
+    class Meta:
+        model = Sale
+        fields = []

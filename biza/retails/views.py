@@ -88,6 +88,23 @@ class SaleCloseView(UpdateView):
 
         return super(SaleCloseView, self).form_valid(form)
 
+
+class SaleQuoteView(UpdateView):
+    form_class = SaleQuoteForm
+    template_name = 'retails/sale_quote_form.html'
+
+    def get_object(self, queryset=None):
+        return Sale.objects.get(pk=self.kwargs['pk'])
+
+    def form_valid(self, form):
+        # give the sale a quotation number
+        doc = Document.objects.get(name='Quotation')
+        form.instance.quotation_number = doc.get_full_name()
+        doc.number += 1
+        doc.save()
+
+        return super(SaleQuoteView, self).form_valid(form)
+
 class SaleLineListView(ListView):
     model = SaleLine
 
