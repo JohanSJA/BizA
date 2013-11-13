@@ -21,3 +21,9 @@ class SaleQuoteForm(forms.ModelForm):
     class Meta:
         model = Sale
         fields = []
+
+
+class SaleLineForm(forms.ModelForm):
+    class Meta:
+        model = SaleLine
+        fields = ['product', 'quantity', 'discount']
