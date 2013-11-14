@@ -13,6 +13,6 @@ urlpatterns = patterns('stocks.views',
     url(r'^product/(?P<pk>\d+)/printing/$', login_required(ProductPrintingView.as_view()), name='stocks_product_printing'),
     url(r'^item/new/$', login_required(ItemCreateView.as_view()), name='stocks_item_new'),
     url(r'^item/(?P<pk>\d+)/edit/$', login_required(ItemUpdateView.as_view()), name='stocks_item_edit'),
-    url(r'^package/new/$', login_required(PackageCreateView.as_view()), name='stocks_package_new'),
-    url(r'^package/(?P<pk>\d+)/edit/$', login_required(PackageUpdateView.as_view()), name='stocks_package_edit'),
+    url(r'^package/new/$', login_required(PackageCreateWizardView.as_view()), name='stocks_package_new'),
+    url(r'^package/(?P<pk>\d+)/edit/$', login_required(PackageUpdateWizardView.as_view()), name='stocks_package_edit'),
 )
