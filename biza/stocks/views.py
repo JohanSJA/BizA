@@ -10,6 +10,7 @@ from barcode.codex import Code39
 from .models import *
 from .forms import *
 
+
 class ProductListView(ListView):
     model = Product
 
@@ -57,36 +58,21 @@ class ItemUpdateView(UpdateView):
 class PackageCreateWizardView(SessionWizardView):
     form_list = [PackageForm1, PackageForm2]
     template_name = 'stocks/package_wizard_form.html'
+    instance = None
+
+    def get_form_instance(self, step):
+        if self.instance is None:
+            self.instance = Package()
+        return self.instance
 
     def done(self, form_list, **kwargs):
-        form1 = form_list[0]
-        form2 = form_list[1]
-        pkg = Package()
-        pkg.model = form1.cleaned_data['model']
-        pkg.name = form1.cleaned_data['name']
-        pkg.barcode = form1.cleaned_data['barcode']
-        pkg.retail_price = form2.cleaned_data['retail_price']
-        pkg.lowest_retail_price = form2.cleaned_data['lowest_retail_price']
-        pkg.wholesale_price = form2.cleaned_data['wholesale_price']
-        pkg.lowest_wholesale_price = form2.cleaned_data['lowest_wholesale_price']
+        pkg = self.instance
         pkg.save()
-        return redirect('stocks_product_list')
+        return redirect(pkg.get_absolute_url())
 
 
 class PackageUpdateWizardView(PackageCreateWizardView):
     def get_form_instance(self, step):
-        return Package.objects.get(pk=self.kwargs['pk'])
-
-    def done(self, form_list, **kwargs):
-        form1 = form_list[0]
-        form2 = form_list[1]
-        pkg = Package.objects.get(pk=self.kwargs['pk'])
-        pkg.model = form1.cleaned_data['model']
-        pkg.name = form1.cleaned_data['name']
-        pkg.barcode = form1.cleaned_data['barcode']
-        pkg.retail_price = form2.cleaned_data['retail_price']
-        pkg.lowest_retail_price = form2.cleaned_data['lowest_retail_price']
-        pkg.wholesale_price = form2.cleaned_data['wholesale_price']
-        pkg.lowest_wholesale_price = form2.cleaned_data['lowest_wholesale_price']
-        pkg.save()
-        return redirect('stocks_product_list')
+        if self.instance is None:
+            self.instance = Package.objects.get(pk=self.kwargs['pk'])
+        return self.instance
