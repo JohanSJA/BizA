@@ -28,6 +28,17 @@
       </dl>
 
       <p>
+        {% if user.employee.hq %}
+          {% if object.is_package %}
+          <a href="{% url 'stocks_package_edit' object.id %}" class="btn btn-default">
+            <span class="glyphicon glyphicon-edit"></span> Edit
+          </a>
+          {% else %}
+          <a href="{% url 'stocks_item_edit' object.id %}" class="btn btn-default">
+            <span class="glyphicon glyphicon-edit"></span> Edit
+          </a>
+          {% endif %}
+        {% endif %}
         <a href="{% url 'stocks_product_printing' object.id %}" target="_blank" class="btn btn-default">
           <span class="glyphicon glyphicon-barcode"></span> Print Barcode
         </a>
@@ -58,7 +69,7 @@
                 <td>{{ forloop.counter }}</td>
                 <td>{{ packitem.item }}</td>
                 <td>{{ packitem.item.name }}</td>
-                <td>{{ packitem.quantity }}</td>
+                <td>{{ packitem.quantity }} {{ packitem.item.unit_of_measure }}</td>
                 <td>
                   <a href="{% url 'stocks_packageitem_edit' packitem.id %}">
                     <span class="glyphicon glyphicon-edit"></span> Edit
