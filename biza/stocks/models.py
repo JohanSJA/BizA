@@ -39,6 +39,12 @@ class Product(models.Model):
         except Package.DoesNotExist, e:
             return False
 
+    def cost_price(self):
+        if self.is_package():
+            return self.package.cost_price()
+        else:
+            return self.item.cost_price
+
 
 class Item(Product):
     cost_price = models.DecimalField(max_digits=12, decimal_places=4)
