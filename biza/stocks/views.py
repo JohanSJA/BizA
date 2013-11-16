@@ -3,6 +3,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.formtools.wizard.views import SessionWizardView
+from django.core.urlresolvers import reverse
 
 from cStringIO import StringIO
 from barcode.codex import Code39
@@ -57,13 +58,24 @@ class ItemUpdateView(UpdateView):
 
 class PackageCreateView(CreateView):
     model = Package
+    form_class = PackageInfoForm
+    template_name = 'stocks/package_form.html'
 
 
 class PackageUpdateView(UpdateView):
     model = Package
+    form_class = PackageInfoForm
+    template_name = 'stocks/package_form.html'
+
+
+class PackagePriceUpdateView(UpdateView):
+    model = Package
+    form_class = PackagePriceForm
+    template_name = 'stocks/package_price_form.html'
 
 
 class PackageItemCreateView(CreateView):
+    model = PackageItem
     form_class = PackageItemForm
     template_name = 'stocks/packageitem_form.html'
 
@@ -78,20 +90,18 @@ class PackageItemCreateView(CreateView):
         return super(PackageItemCreateView, self).form_valid(form)
 
     def get_success_url(self):
-        return self.object.package.get_absolute_url()
+        return reverse('stocks_package_edit_price', kwargs={'pk': self.object.package.id })
 
 
 class PackageItemUpdateView(UpdateView):
+    model = PackageItem
     form_class = PackageItemForm
     template_name = 'stocks/packageitem_form.html'
 
-    def get_object(self, queryset=None):
-        return PackageItem.objects.get(pk=self.kwargs['pk'])
-
     def get_context_data(self, **kwargs):
         context = super(PackageItemUpdateView, self).get_context_data(**kwargs)
-        context['package'] = self.get_object().package
+        context['package'] = self.object.package
         return context
 
     def get_success_url(self):
-        return self.object.package.get_absolute_url()
+        return reverse('stocks_package_edit_price', kwargs={'pk': self.object.package.id })

@@ -15,6 +15,7 @@ urlpatterns = patterns('stocks.views',
     url(r'^item/(?P<pk>\d+)/edit/$', login_required(ItemUpdateView.as_view()), name='stocks_item_edit'),
     url(r'^package/new/$', login_required(PackageCreateView.as_view()), name='stocks_package_new'),
     url(r'^package/(?P<pk>\d+)/edit/$', login_required(PackageUpdateView.as_view()), name='stocks_package_edit'),
+    url(r'^package/(?P<pk>\d+)/edit_price/$', login_required(PackagePriceUpdateView.as_view()), name='stocks_package_edit_price'),
     url(r'^product/(?P<package_pk>\d+)/packageitem/new/$', login_required(PackageItemCreateView.as_view()), name='stocks_packageitem_new'),
     url(r'^packageitem/(?P<pk>\d+)/edit/$', login_required(PackageItemUpdateView.as_view()), name='stocks_packageitem_edit'),
 )

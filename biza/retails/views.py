@@ -50,11 +50,9 @@ class SaleUpdateView(UpdateView):
 
 
 class SaleCloseView(UpdateView):
+    model = Sale
     form_class = SaleCloseForm
     template_name = 'retails/sale_close_form.html'
-
-    def get_object(self, queryset=None):
-        return Sale.objects.get(pk=self.kwargs['pk'])
 
     def form_valid(self, form):
         sale = form.instance

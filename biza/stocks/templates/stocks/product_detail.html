@@ -30,9 +30,12 @@
       <p>
         {% if user.employee.hq %}
           {% if object.is_package %}
-          <a href="{% url 'stocks_package_edit' object.id %}" class="btn btn-default">
-            <span class="glyphicon glyphicon-edit"></span> Edit
-          </a>
+            <a href="{% url 'stocks_package_edit' object.id %}" class="btn btn-default">
+              <span class="glyphicon glyphicon-edit"></span> Edit Info
+            </a>
+            <a href="{% url 'stocks_package_edit_price' object.id %}" class="btn btn-default">
+              <span class="glyphicon glyphicon-edit"></span> Edit Prices
+            </a>
           {% else %}
           <a href="{% url 'stocks_item_edit' object.id %}" class="btn btn-default">
             <span class="glyphicon glyphicon-edit"></span> Edit
