@@ -55,24 +55,39 @@ class ItemUpdateView(UpdateView):
     model = Item
 
 
-class PackageCreateWizardView(SessionWizardView):
-    form_list = [PackageForm1, PackageForm2]
-    template_name = 'stocks/package_wizard_form.html'
-    instance = None
-
-    def get_form_instance(self, step):
-        if self.instance is None:
-            self.instance = Package()
-        return self.instance
-
-    def done(self, form_list, **kwargs):
-        pkg = self.instance
-        pkg.save()
-        return redirect(pkg.get_absolute_url())
+class PackageUpdateView(UpdateView):
+    model = Package
 
 
-class PackageUpdateWizardView(PackageCreateWizardView):
-    def get_form_instance(self, step):
-        if self.instance is None:
-            self.instance = Package.objects.get(pk=self.kwargs['pk'])
-        return self.instance
+class PackageItemCreateView(CreateView):
+    form_class = PackageItemForm
+    template_name = 'stocks/packageitem_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PackageItemCreateView, self).get_context_data(**kwargs)
+        context['package'] = Package.objects.get(pk=self.kwargs['package_pk'])
+        return context
+
+    def form_valid(self, form):
+        package = Package.objects.get(pk=self.kwargs['package_pk'])
+        form.instance.package = package
+        return super(PackageItemCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return self.object.package.get_absolute_url()
+
+
+class PackageItemUpdateView(UpdateView):
+    form_class = PackageItemForm
+    template_name = 'stocks/packageitem_form.html'
+
+    def get_object(self, queryset=None):
+        return PackageItem.objects.get(pk=self.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        context = super(PackageItemUpdateView, self).get_context_data(**kwargs)
+        context['package'] = self.get_object().package
+        return context
+
+    def get_success_url(self):
+        return self.object.package.get_absolute_url()

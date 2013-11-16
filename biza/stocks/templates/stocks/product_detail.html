@@ -37,6 +37,11 @@
     <div class="col-lg-7">
       {% if object.is_package %}
         <h2>Content</h2>
+        <p class="text-right">
+          <a href="{% url 'stocks_packageitem_new' object.id %}" class="btn btn-default">
+            <span class="glyphicon glyphicon-plus"></span> Add Item
+          </a>
+        </p>
         <table class="table table-striped table-responsive">
           <thead>
             <tr>
@@ -44,6 +49,7 @@
               <th>Model</th>
               <th>Name</th>
               <th>Quantity</th>
+              <th>&nbsp;</th>
             </tr>
           </thead>
           <tbody>
@@ -53,6 +59,11 @@
                 <td>{{ packitem.item }}</td>
                 <td>{{ packitem.item.name }}</td>
                 <td>{{ packitem.quantity }}</td>
+                <td>
+                  <a href="{% url 'stocks_packageitem_edit' packitem.id %}">
+                    <span class="glyphicon glyphicon-edit"></span> Edit
+                  </a>
+                </td>
               </tr>
             {% empty %}
               <tr>
