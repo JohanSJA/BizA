@@ -119,6 +119,7 @@ class SaleLineCreateView(CreateView):
     def form_valid(self, form):
         sale = Sale.objects.get(pk=self.kwargs['sale_pk'])
         form.instance.sale = sale
+        form.instance.unit_price = form.instance.product.retail_price
         return super(SaleLineCreateView, self).form_valid(form)
 
     def get_success_url(self):

@@ -100,7 +100,7 @@
               <td>{{ forloop.counter }}</td>
               <td>{{ line.product }}</td>
               <td>{{ line.product.name }}</td>
-              <td class="text-right">{{ line.product.retail_price|floatformat:"2" }}</td>
+              <td class="text-right">{{ line.unit_price|floatformat:"2" }}</td>
               <td class="text-right">{{ line.get_quantity }}</td>
               <td class="text-right">{{ line.discount|floatformat:"2"|default:"-" }}</td>
               <td class="text-right">{{ line.total_amount|floatformat:"2" }}</td>

@@ -74,6 +74,7 @@ class SaleLine(models.Model):
     sale = models.ForeignKey(Sale)
     product = models.ForeignKey(Product)
     quantity = models.IntegerField()
+    unit_price = models.DecimalField(max_digits=12, decimal_places=4)
     discount = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
 
     class Meta:
@@ -87,9 +88,9 @@ class SaleLine(models.Model):
 
     def price_after_discount(self):
         if self.discount:
-            return self.product.retail_price - self.discount
+            return self.unit_price - self.discount
         else:
-            return self.product.retail_price
+            return self.unit_price
 
     def total_amount(self):
         return self.quantity * self.price_after_discount()
