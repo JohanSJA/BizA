@@ -8,10 +8,9 @@ from django.core.urlresolvers import reverse
 from cStringIO import StringIO
 from barcode.codex import Code39
 
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.rl_config import defaultPageSize
-from reportlab.lib.units import inch
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import mm
+from reportlab.graphics.barcode import code39
 
 from .models import *
 from .forms import *
@@ -54,36 +53,38 @@ class ProductPrintingView(DetailView):
 
 
 def product_printing_pdf_view(request, pk):
+    product = Product.objects.get(pk=pk)
+
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="print.pdf"'
 
-    page_width = defaultPageSize[1]
-    page_height = defaultPageSize[0]
-    styles = getSampleStyleSheet()
+    page_width = 205 * mm
+    page_height = 134 * mm
+    page_size = (page_width, page_height)
+    tl_sticker = (3 * mm, 133.5 * mm)
+    sticker_size = (38 * mm, 25 * mm)
+    sticker_gap = 2 * mm
 
-    def myFirstPage(canvas, doc):
-        canvas.saveState()
-        canvas.setFont('Times-Bold', 16)
-        canvas.drawCentredString(page_width / 2.0, page_height - 108, "Hello World")
-        canvas.setFont('Times-Roman', 9)
-        canvas.drawString(inch, 0.75 * inch, 'First Page / platypus example')
-        canvas.restoreState()
+    p = canvas.Canvas(response, pagesize=page_size)
 
-    def myLaterPages(canvas, doc):
-        canvas.saveState()
-        canvas.setFont('Times-Roman', 9)
-        canvas.drawString(inch, 0.75 * inch, 'Page {} platypus example'.format(doc.page))
-        canvas.restoreState()
+    p.setFontSize(size=7)
+    code = code39.Standard39(product.barcode, barHeight=10 * mm, checksum=0, quiet=0)
 
-    doc = SimpleDocTemplate(response)
-    story = [Spacer(1, 2 * inch)]
-    style = styles['Normal']
-    for i in range(100):
-        bogustext = ('Paragraph number {}.'.format(i)) * 20
-        p = Paragraph(bogustext, style)
-        story.append(p)
-        story.append(Spacer(1, 0.2 * inch))
-    doc.build(story, onFirstPage=myFirstPage, onLaterPages=myLaterPages)
+    for row in range(5):
+        for col in range(5):
+            x = tl_sticker[0] + col * sticker_gap + col * sticker_size[0]
+            y = tl_sticker[1] - row * sticker_gap - row * sticker_size[1]
+            str_x_center = x + (sticker_size[0] / 2)
+            str_y = y - 6.5 * mm
+            p.drawCentredString(str_x_center, str_y, 'Cheantar Electronics')
+            code_x = x + (sticker_size[0] - code.width) / 2
+            code_y = y - 17.5 * mm
+            code.drawOn(p, code_x, code_y)
+            str_y = y - 20.5 * mm
+            p.drawCentredString(str_x_center, str_y, product.barcode)
+
+    p.showPage()
+    p.save()
 
     return response
 
