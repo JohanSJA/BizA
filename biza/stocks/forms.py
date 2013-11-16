@@ -33,3 +33,9 @@ class ItemQuantityForm(forms.ModelForm):
     class Meta:
         model = ItemQuantity
         fields = ['warehouse', 'quantity', 'reason']
+
+
+class ItemQuantityStoreForm(ItemQuantityForm):
+    class Meta:
+        model = ItemQuantity
+        fields = ['quantity', 'reason']

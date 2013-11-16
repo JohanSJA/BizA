@@ -92,9 +92,15 @@
       {% if quantities %}
         <h2>Stocks</h2>
         <p class="text-right">
-          <a href="{% url 'stocks_itemquantity_new' object.id %}" class="btn btn-default">
-            <span class="glyphicon glyphicon-plus"></span> Adjust
-          </a>
+          {% if user.employee.hq %}
+            <a href="{% url 'stocks_itemquantity_new' object.id %}" class="btn btn-default">
+              <span class="glyphicon glyphicon-plus"></span> Adjust
+            </a>
+          {% else %}
+            <a href="{% url 'stocks_itemquantitystore_new' object.id %}" class="btn btn-default">
+              <span class="glyphicon glyphicon-plus"></span> Adjust
+            </a>
+          {% endif %}
         </p>
         <table class="table table-striped table-responsive">
           <thead>

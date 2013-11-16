@@ -124,3 +124,14 @@ class ItemQuantityCreateView(CreateView):
 
     def get_success_url(self):
         return self.object.item.get_absolute_url()
+
+
+class ItemQuantityStoreCreateView(ItemQuantityCreateView):
+    form_class = ItemQuantityStoreForm
+
+    def form_valid(self, form):
+        item = Item.objects.get(pk=self.kwargs['item_pk'])
+        form.instance.item = item
+        warehouse = self.request.user.employee.store.warehouse
+        form.instance.warehouse = warehouse
+        return super(ItemQuantityStoreCreateView, self).form_valid(form)
