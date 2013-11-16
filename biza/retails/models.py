@@ -31,6 +31,9 @@ class Sale(models.Model):
     cash_bill_number = models.CharField(max_length=12, blank=True)
     quotation_number = models.CharField(max_length=12, blank=True)
 
+    class Meta:
+        ordering = ['-opening_time']
+
     def __unicode__(self):
         return '{:%c} at {}'.format(timezone.localtime(self.opening_time), self.store)
 
