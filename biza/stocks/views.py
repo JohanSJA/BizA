@@ -8,6 +8,11 @@ from django.core.urlresolvers import reverse
 from cStringIO import StringIO
 from barcode.codex import Code39
 
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.rl_config import defaultPageSize
+from reportlab.lib.units import inch
+
 from .models import *
 from .forms import *
 
@@ -46,6 +51,41 @@ def product_barcode_svg(request, pk):
 class ProductPrintingView(DetailView):
     model = Product
     template_name = 'stocks/product_printing.html'
+
+
+def product_printing_pdf_view(request, pk):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="print.pdf"'
+
+    page_width = defaultPageSize[1]
+    page_height = defaultPageSize[0]
+    styles = getSampleStyleSheet()
+
+    def myFirstPage(canvas, doc):
+        canvas.saveState()
+        canvas.setFont('Times-Bold', 16)
+        canvas.drawCentredString(page_width / 2.0, page_height - 108, "Hello World")
+        canvas.setFont('Times-Roman', 9)
+        canvas.drawString(inch, 0.75 * inch, 'First Page / platypus example')
+        canvas.restoreState()
+
+    def myLaterPages(canvas, doc):
+        canvas.saveState()
+        canvas.setFont('Times-Roman', 9)
+        canvas.drawString(inch, 0.75 * inch, 'Page {} platypus example'.format(doc.page))
+        canvas.restoreState()
+
+    doc = SimpleDocTemplate(response)
+    story = [Spacer(1, 2 * inch)]
+    style = styles['Normal']
+    for i in range(100):
+        bogustext = ('Paragraph number {}.'.format(i)) * 20
+        p = Paragraph(bogustext, style)
+        story.append(p)
+        story.append(Spacer(1, 0.2 * inch))
+    doc.build(story, onFirstPage=myFirstPage, onLaterPages=myLaterPages)
+
+    return response
 
 
 class ItemCreateView(CreateView):
