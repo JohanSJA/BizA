@@ -6,6 +6,7 @@ from cStringIO import StringIO
 from barcode.codex import Code39
 
 from .models import *
+from .forms import *
 
 class ProductListView(ListView):
     model = Product
@@ -52,3 +53,37 @@ class PackageCreateView(CreateView):
 
 class PackageUpdateView(UpdateView):
     model = Package
+
+
+class PackageItemCreateView(CreateView):
+    form_class = PackageItemForm
+    template_name = 'stocks/packageitem_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PackageItemCreateView, self).get_context_data(**kwargs)
+        context['package'] = Package.objects.get(pk=self.kwargs['package_pk'])
+        return context
+
+    def form_valid(self, form):
+        package = Package.objects.get(pk=self.kwargs['package_pk'])
+        form.instance.package = package
+        return super(PackageItemCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return self.object.package.get_absolute_url()
+
+
+class PackageItemUpdateView(UpdateView):
+    form_class = PackageItemForm
+    template_name = 'stocks/packageitem_form.html'
+
+    def get_object(self, queryset=None):
+        return PackageItem.objects.get(pk=self.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        context = super(PackageItemUpdateView, self).get_context_data(**kwargs)
+        context['package'] = self.get_object().package
+        return context
+
+    def get_success_url(self):
+        return self.object.package.get_absolute_url()
