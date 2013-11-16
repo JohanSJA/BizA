@@ -105,3 +105,22 @@ class PackageItemUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('stocks_package_edit_price', kwargs={'pk': self.object.package.id })
+
+
+class ItemQuantityCreateView(CreateView):
+    model = ItemQuantity
+    form_class = ItemQuantityForm
+    template_name = 'stocks/itemquantity_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ItemQuantityCreateView, self).get_context_data(**kwargs)
+        context['item'] = Item.objects.get(pk=self.kwargs['item_pk'])
+        return context
+
+    def form_valid(self, form):
+        item = Item.objects.get(pk=self.kwargs['item_pk'])
+        form.instance.item = item
+        return super(ItemQuantityCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return self.object.item.get_absolute_url()

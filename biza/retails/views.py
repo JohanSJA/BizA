@@ -66,13 +66,13 @@ class SaleCloseView(UpdateView):
                     item = pi.item
                     last_quantity = item.itemquantity_set.filter(item=item, warehouse=warehouse).latest()
                     quantity_left = last_quantity.quantity - (line.quantity * pi.quantity)
-                    iq = ItemQuantity(item=item, warehouse=warehouse, quantity=quantity_left)
+                    iq = ItemQuantity(item=item, warehouse=warehouse, quantity=quantity_left, reason='S')
                     iq.save()
             else:
                 item = line.product.item
                 last_quantity = item.itemquantity_set.filter(item=item, warehouse=warehouse).latest()
                 quantity_left = last_quantity.quantity - line.quantity
-                iq = ItemQuantity(item=item, warehouse=warehouse, quantity=quantity_left)
+                iq = ItemQuantity(item=item, warehouse=warehouse, quantity=quantity_left, reason='S')
                 iq.save()
 
         # set closing time to indicate sale closed

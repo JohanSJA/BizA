@@ -52,9 +52,18 @@ class Item(Product):
 
 
 class ItemQuantity(models.Model):
+    REASONS = (
+        ('T', 'Transfers'),
+        ('R', 'Spare part for repair'),
+        ('O', 'Own use'),
+        ('S', 'Sales'),
+        ('P', 'Purchases')
+    )
+
     item = models.ForeignKey(Item)
     warehouse = models.ForeignKey(Warehouse)
     quantity = models.IntegerField()
+    reason = models.CharField(max_length=1, choices=REASONS)
     datetime = models.DateTimeField(auto_now=True)
 
     class Meta:
