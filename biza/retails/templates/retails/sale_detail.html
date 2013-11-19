@@ -28,31 +28,44 @@
   <div class="row">
     <div class="col-lg-4">
       <h2>Infos</h2>
-
       <dl class="dl-horizontal">
         <dt>Status</dt>
-        {% if object.closed %}
-          <dd>Closed</dd>
-          <dt>Cash bill number</dt>
-          <dd>{{ object.cash_bill_number }}</dd>
-        {% elif object.quoted %}
-          <dd>Quoted</dd>
-          <dt>Quotation number</dt>
-          <dd>{{ object.quotation_number }}</dd>
-        {% else %}
-          <dd>Open</dd>
-        {% endif %}
+        <dd>{{ object.get_status }}</dd>
+      </dl>
+
+      <h3>General</h3>
+      <dl class="dl-horizontal">
         <dt>Store</dt>
         <dd>{{ object.store }}</dd>
         <dt>Saleperson</dt>
         <dd>{{ object.saleperson }}</dd>
         <dt>Opening Time</dt>
         <dd>{{ object.opening_time }}</dd>
-        {% if object.closed %}
+        <dt>Opened By</dt>
+        <dd>{{ object.opened_by }}</dd>
+      </dl>
+      {% if object.closed %}
+        <h3>Closing</h3>
+        <dl class="dl-horizontal">
           <dt>Closing Time</dt>
           <dd>{{ object.closing_time }}</dd>
-        {% endif %}
-      </dl>
+          <dt>Closed By</dt>
+          <dd>{{ object.closed_by }}</dd>
+          <dt>Cash bill number</dt>
+          <dd>{{ object.cash_bill_number }}</dd>
+        </dl>
+      {% endif %}
+      {% if object.quoted %}
+        <h3>Quoting</h3>
+        <dl class="dl-horizontal">
+          <dt>Quoting Time</dt>
+          <dd>{{ object.quoting_time }}</dd>
+          <dt>Quoted By</dt>
+          <dd>{{ object.quoted_by }}</dd>
+          <dt>Quotation number</dt>
+          <dd>{{ object.quotation_number }}</dd>
+        </dl>
+      {% endif %}
 
       <p>
         {% if not object.closed %}

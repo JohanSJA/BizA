@@ -24,7 +24,9 @@ class SaleCreateView(CreateView):
     template_name = 'retails/sale_form.html'
 
     def form_valid(self, form):
-        form.instance.store = self.request.user.employee.store
+        sale = form.instance
+        sale.store = self.request.user.employee.store
+        sale.opened_by = self.request.user
         return super(SaleCreateView, self).form_valid(form)
 
 
@@ -75,8 +77,9 @@ class SaleCloseView(UpdateView):
                 iq = ItemQuantity(item=item, warehouse=warehouse, quantity=quantity_left, reason='S')
                 iq.save()
 
-        # set closing time to indicate sale closed
+        # set more info
         sale.closing_time = datetime.datetime.now()
+        sale.closed_by = self.request.user
 
         # give the sale a cash bill number
         doc = Document.objects.get(name='Cash bill')
@@ -95,9 +98,15 @@ class SaleQuoteView(UpdateView):
         return Sale.objects.get(pk=self.kwargs['pk'])
 
     def form_valid(self, form):
+        sale = form.instance
+
+        # set more info
+        sale.quoting_time = datetime.datetime.now()
+        sale.quoted_by = self.request.user
+
         # give the sale a quotation number
         doc = Document.objects.get(name='Quotation')
-        form.instance.quotation_number = doc.get_full_name()
+        sale.quotation_number = doc.get_full_name()
         doc.number += 1
         doc.save()
 

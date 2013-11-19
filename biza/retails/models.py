@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 from stocks.models import Warehouse, Product
 
@@ -27,7 +28,11 @@ class Sale(models.Model):
     store = models.ForeignKey(Store)
     saleperson = models.ForeignKey(Saleperson)
     opening_time = models.DateTimeField(auto_now_add=True)
+    opened_by = models.ForeignKey(User, related_name='opened_sale_set')
+    quoting_time = models.DateTimeField(null=True, blank=True)
+    quoted_by = models.ForeignKey(User, null=True, blank=True, related_name='quoted_sale_set')
     closing_time = models.DateTimeField(null=True, blank=True)
+    closed_by = models.ForeignKey(User, null=True, blank=True, related_name='closed_sale_set')
     cash_bill_number = models.CharField(max_length=12, blank=True)
     quotation_number = models.CharField(max_length=12, blank=True)
 
@@ -67,10 +72,16 @@ class Sale(models.Model):
             return 'Open'
 
     def closed(self):
-        return self.get_status() == 'Closed'
+        if self.cash_bill_number:
+            return True
+        else:
+            return False
 
     def quoted(self):
-        return self.get_status() == 'Quoted'
+        if self.quotation_number:
+            return True
+        else:
+            return False
 
 
 class SaleLine(models.Model):
