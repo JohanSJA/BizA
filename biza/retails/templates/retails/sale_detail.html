@@ -138,14 +138,19 @@
                 </td>
               {% endif %}
             </tr>
+          {% empty %}
+            {% if not object.closed %}
+              <td colspan="8">
+            {% else %}
+              <td colspan="7">
+            {% endif %}
+            Empty</td>
           {% endfor %}
         </tbody>
       </table>
 
       <h2>Summary</h2>
       <dl class="dl-horizontal pull-right">
-        <dt>Quantity</dt>
-        <dd class="text-right large-text">{{ object.total_quantity }}</dd>
         <dt>Discount (RM)</dt>
         <dd class="text-right large-text">{{ object.total_discount|floatformat:"2"|default:"-" }}</dd>
         <dt>Total (RM)</dt>

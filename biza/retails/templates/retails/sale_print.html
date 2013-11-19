@@ -94,6 +94,8 @@
               <td class="text-right">{{ line.price_after_discount|floatformat:"2" }}</td>
               <td class="text-right">{{ line.total_amount|floatformat:"2" }}</td>
             </tr>
+          {% empty %}
+            <td colspan="6">Empty</td>
           {% endfor %}
         </tbody>
       </table>

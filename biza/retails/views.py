@@ -1,4 +1,5 @@
 from django.views.generic import ListView, DetailView
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 
@@ -112,6 +113,7 @@ class SaleQuoteView(UpdateView):
 
         return super(SaleQuoteView, self).form_valid(form)
 
+
 class SaleLineListView(ListView):
     model = SaleLine
 
@@ -153,3 +155,23 @@ class SaleLineUpdateView(UpdateView):
 
     def get_success_url(self):
         return self.object.sale.get_absolute_url()
+
+
+class StoreReportTemplateView(TemplateView):
+    template_name = 'retails/store_report.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(StoreReportTemplateView, self).get_context_data(**kwargs)
+        emp = self.request.user.employee
+        today = datetime.date.today()
+        tomorrow = today + datetime.timedelta(days=1)
+        context['closed_sales'] = Sale.objects.filter(closing_time__range=(today, tomorrow))
+        if not emp.hq:
+            context['closed_sales'] = context['closed_sales'].filter(store=emp.store)
+        context['quoted_sales'] = Sale.objects.filter(quoting_time__range=(today, tomorrow), closing_time=None)
+        if not emp.hq:
+            context['quoted_sales'] = context['quoted_sales'].filter(store=emp.store)
+        context['opened_sales'] = Sale.objects.filter(opening_time__range=(today, tomorrow), closing_time=None, quoting_time=None)
+        if not emp.hq:
+            context['opened_sales'] = context['opened_sales'].filter(store=emp.store)
+        return context

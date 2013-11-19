@@ -1,0 +1,48 @@
+{% extends "base_app.html" %}
+
+{% block css %}
+  {{ block.super }}
+
+  .large-text {
+    font-size: 2em;
+  }
+
+  .xlarge-text {
+    font-size: 3em;
+  }
+{% endblock %}
+
+{% block breadcrumb %}
+  <li><a href="{% url 'employees_dashboard' %}">Home</a></li>
+  <li><a href="{% url 'retails_sale_list' %}">Sales</a></li>
+  <li class="active">Report</li>
+{% endblock %}
+
+{% block content_app %}
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>Closed Sales <small>Sales that were closed today</small></h2>
+      <hr />
+    </div>
+  </div>
+
+  {% include "retails/store_report_sale.html" with sales=closed_sales sales_type="closed" %}
+
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>Quoted Sales <small>Sales that were quoted today and yet to be closed</small></h2>
+      <hr />
+    </div>
+  </div>
+
+  {% include "retails/store_report_sale.html" with sales=quoted_sales sales_type="quoted" %}
+
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>Opened Sales <small>Sales that were opened today and yet to be closed or quoted</small></h2>
+      <hr />
+    </div>
+  </div>
+
+  {% include "retails/store_report_sale.html" with sales=opened_sales sales_type="opened" %}
+{% endblock %}
