@@ -39,9 +39,9 @@
               <span class="glyphicon glyphicon-edit"></span> Edit Prices
             </a>
           {% else %}
-          <a href="{% url 'stocks_item_edit' object.id %}" class="btn btn-default">
-            <span class="glyphicon glyphicon-edit"></span> Edit
-          </a>
+            <a href="{% url 'stocks_item_edit' object.id %}" class="btn btn-default">
+              <span class="glyphicon glyphicon-edit"></span> Edit
+            </a>
           {% endif %}
         {% endif %}
         <a href="{% url 'stocks_product_printing' object.id %}" target="_blank" class="btn btn-default">
@@ -92,44 +92,51 @@
           </tbody>
         </table>
       {% endif %}
-      {% if quantities %}
-        <h2>Stocks</h2>
-        <p class="text-right">
-          {% if user.employee.hq %}
-            <a href="{% url 'stocks_itemquantity_new' object.id %}" class="btn btn-default">
-              <span class="glyphicon glyphicon-plus"></span> Adjust
-            </a>
-          {% else %}
-            <a href="{% url 'stocks_itemquantitystore_new' object.id %}" class="btn btn-default">
-              <span class="glyphicon glyphicon-plus"></span> Adjust
-            </a>
-          {% endif %}
-        </p>
-        <table class="table table-striped table-responsive">
-          <thead>
+      <h2>Stocks</h2>
+      <p class="text-right">
+        {% if user.employee.hq %}
+          <a href="{% url 'stocks_itemquantity_new' object.id %}" class="btn btn-default">
+            <span class="glyphicon glyphicon-plus"></span> Adjust
+          </a>
+        {% else %}
+          <a href="{% url 'stocks_itemquantitystore_new' object.id %}" class="btn btn-default">
+            <span class="glyphicon glyphicon-plus"></span> Adjust
+          </a>
+        {% endif %}
+      </p>
+      <table class="table table-striped table-responsive">
+        <thead>
+          <tr>
+            {% if user.employee.work_in_hq %}
+              <th>Warehouse</th>
+            {% endif %}
+            <th>Time</th>
+            <th class="text-right">Quantity</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for obj in quantities %}
             <tr>
               {% if user.employee.work_in_hq %}
-                <th>Warehouse</th>
+                <td>{{ obj.warehouse }}</td>
               {% endif %}
-              <th>Time</th>
-              <th class="text-right">Quantity</th>
-              <th>Reason</th>
+              <td>{{ obj.datetime }}</td>
+              <td class="text-right">{{ obj.quantity }}</td>
+              <td>{{ obj.get_reason_display }}</td>
             </tr>
-          </thead>
-          <tbody>
-            {% for obj in quantities %}
-              <tr>
-                {% if user.employee.work_in_hq %}
-                  <td>{{ obj.warehouse }}</td>
-                {% endif %}
-                <td>{{ obj.datetime }}</td>
-                <td class="text-right">{{ obj.quantity }}</td>
-                <td>{{ obj.get_reason_display }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      {% endif %}
+          {% empty %}
+            <tr>
+              {% if user.employee.hq %}
+                <td colspan="4">
+              {% else %}
+                <td colspan="3">
+              {% endif %}
+              No stocks available</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 {% endblock %}
