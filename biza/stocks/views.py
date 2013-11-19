@@ -56,7 +56,7 @@ def product_printing_pdf_view(request, pk):
     product = Product.objects.get(pk=pk)
 
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="print.pdf"'
+    response['Content-Disposition'] = 'filename="printing.pdf"'
 
     page_width = 205 * mm
     page_height = 134 * mm
