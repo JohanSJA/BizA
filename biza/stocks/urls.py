@@ -4,14 +4,11 @@ from django.contrib.auth.decorators import login_required
 from .views import *
 
 urlpatterns = patterns('stocks.views',
-    # Examples:
-    # url(r'^$', 'biza.views.home', name='home'),
-    # url(r'^biza/', include('biza.foo.urls')),
     url(r'^product/$', login_required(ProductListView.as_view()), name='stocks_product_list'),
     url(r'^product/(?P<pk>\d+)/$', login_required(ProductDetailView.as_view()), name='stocks_product_detail'),
     url(r'^product/(?P<pk>\d+)_barcode.svg$', login_required(product_barcode_svg), name='stocks_product_barcode'),
-    url(r'^product/(?P<pk>\d+)/printing/$', login_required(ProductPrintingView.as_view()), name='stocks_product_printing'),
-    url(r'^product/(?P<pk>\d+)/printing.pdf$', login_required(product_printing_pdf_view), name='stocks_product_printing_pdf'),
+    url(r'^product/(?P<pk>\d+)/printing/$', login_required(ProductPrintingFormView.as_view()), name='stocks_product_printing_form'),
+    url(r'^product/(?P<pk>\d+)/(?P<start>\d+)/(?P<amount>\d+)/printing.pdf$', login_required(product_printing_view), name='stocks_product_printing'),
     url(r'^item/new/$', login_required(ItemCreateView.as_view()), name='stocks_item_new'),
     url(r'^item/(?P<pk>\d+)/edit/$', login_required(ItemUpdateView.as_view()), name='stocks_item_edit'),
     url(r'^product/(?P<item_pk>\d+)/itemquantity/new/$', login_required(ItemQuantityCreateView.as_view()), name='stocks_itemquantity_new'),

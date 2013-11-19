@@ -39,3 +39,10 @@ class ItemQuantityStoreForm(ItemQuantityForm):
     class Meta:
         model = ItemQuantity
         fields = ['quantity', 'reason']
+
+
+class ProductPrintForm(forms.Form):
+    start = forms.IntegerField(max_value=25, min_value=1, label='Starting sticker',
+                               help_text='Number is counted from top to down and then left to right.')
+    amount = forms.IntegerField(min_value=1, label='Total amount',
+                                help_text='Amount that you want to print.')

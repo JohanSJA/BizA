@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.formtools.wizard.views import SessionWizardView
@@ -47,12 +47,30 @@ def product_barcode_svg(request, pk):
     return HttpResponse(io.getvalue(), content_type='image/svg+xml')
 
 
-class ProductPrintingView(DetailView):
-    model = Product
-    template_name = 'stocks/product_printing.html'
+class ProductPrintingFormView(FormView):
+    template_name = 'stocks/product_printing_form.html'
+    form_class = ProductPrintForm
+
+    def form_valid(self, form):
+        self._start = form.cleaned_data['start']
+        self._amount = form.cleaned_data['amount']
+        return super(ProductPrintingFormView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('stocks_product_printing',
+                       kwargs={
+                           'pk': self.kwargs['pk'],
+                           'start': self._start,
+                           'amount': self._amount
+                       })
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductPrintingFormView, self).get_context_data(**kwargs)
+        context['object'] = Product.objects.get(pk=self.kwargs['pk'])
+        return context
 
 
-def product_printing_pdf_view(request, pk):
+def product_printing_view(request, pk, start, amount):
     product = Product.objects.get(pk=pk)
 
     response = HttpResponse(content_type='application/pdf')
@@ -70,20 +88,35 @@ def product_printing_pdf_view(request, pk):
     p.setFontSize(size=7)
     code = code39.Standard39(product.barcode, barHeight=10 * mm, checksum=0, quiet=0)
 
-    for row in range(5):
-        for col in range(5):
-            x = tl_sticker[0] + col * sticker_gap + col * sticker_size[0]
-            y = tl_sticker[1] - row * sticker_gap - row * sticker_size[1]
-            str_x_center = x + (sticker_size[0] / 2)
-            str_y = y - 6.5 * mm
-            p.drawCentredString(str_x_center, str_y, 'Cheantar Electronics')
-            code_x = x + (sticker_size[0] - code.width) / 2
-            code_y = y - 17.5 * mm
-            code.drawOn(p, code_x, code_y)
-            str_y = y - 20.5 * mm
-            p.drawCentredString(str_x_center, str_y, product.barcode)
+    start = int(start)
+    amount = int(amount)
+    total = start + amount - 1 # total indicate blank sticker + print sticker
+    sticker_row = 5
+    sticker_col = 5
+    num_col = total / sticker_row + 1
+    last_row = total % sticker_row
+    current_sticker = 1
 
-    p.showPage()
+    for col in range(num_col):
+        col = col % sticker_col
+        for row in range(sticker_row):
+            if current_sticker >= start and current_sticker <= total:
+                x = tl_sticker[0] + col * sticker_gap + col * sticker_size[0]
+                y = tl_sticker[1] - row * sticker_gap - row * sticker_size[1]
+                str_x_center = x + (sticker_size[0] / 2)
+                str_y = y - 6.5 * mm
+                p.drawCentredString(str_x_center, str_y, 'Cheantar Electronics')
+                code_x = x + (sticker_size[0] - code.width) / 2
+                code_y = y - 17.5 * mm
+                code.drawOn(p, code_x, code_y)
+                str_y = y - 20.5 * mm
+                p.drawCentredString(str_x_center, str_y, product.barcode)
+            current_sticker += 1
+        if col == 4 and current_sticker <= total:
+            p.showPage()
+            p.setFontSize(size=7)
+            code = code39.Standard39(product.barcode, barHeight=10 * mm, checksum=0, quiet=0)
+
     p.save()
 
     return response
