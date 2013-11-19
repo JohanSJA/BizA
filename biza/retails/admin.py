@@ -9,7 +9,7 @@ class SaleLineInline(admin.TabularInline):
     model = SaleLine
 
 class SaleAdmin(admin.ModelAdmin):
-    list_display = ['store', 'opening_time', 'closing_time', 'total_amount']
+    list_display = ['store', 'get_status', 'opening_time', 'closing_time', 'quoting_time', 'total_amount']
     inlines = [SaleLineInline,]
 
 admin.site.register(Store, StoreAdmin)
