@@ -35,8 +35,10 @@
 
       <h3>General</h3>
       <dl class="dl-horizontal">
-        <dt>Store</dt>
-        <dd>{{ object.store }}</dd>
+        {% if user.employee.hq %}
+          <dt>Store</dt>
+          <dd>{{ object.store }}</dd>
+        {% endif %}
         <dt>Saleperson</dt>
         <dd>{{ object.saleperson }}</dd>
         <dt>Opening Time</dt>
@@ -44,6 +46,7 @@
         <dt>Opened By</dt>
         <dd>{{ object.opened_by }}</dd>
       </dl>
+
       {% if object.closed %}
         <h3>Closing</h3>
         <dl class="dl-horizontal">
@@ -55,6 +58,7 @@
           <dd>{{ object.cash_bill_number }}</dd>
         </dl>
       {% endif %}
+
       {% if object.quoted %}
         <h3>Quoting</h3>
         <dl class="dl-horizontal">
@@ -112,7 +116,16 @@
             <tr>
               <td>{{ forloop.counter }}</td>
               <td>{{ line.product }}</td>
-              <td>{{ line.product.name }}</td>
+              <td>
+                {{ line.product.name }}
+                {% if line.product.is_package %}
+                  <ul>
+                    {% for packitem in line.product.package.packageitem_set.all %}
+                      <li>{{ packitem.quantity }} {{ packitem.item.unit_of_measure }} {{ packitem.item.name }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </td>
               <td class="text-right">{{ line.unit_price|floatformat:"2" }}</td>
               <td class="text-right">{{ line.get_quantity }}</td>
               <td class="text-right">{{ line.discount|floatformat:"2"|default:"-" }}</td>

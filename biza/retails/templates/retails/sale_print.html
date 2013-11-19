@@ -16,7 +16,7 @@
   <div class="row">
     <div class="col-xs-6">
       <h2>Cheantar Electronics Sdn. Bhd.</h2>
-      <p>
+      <p class='small-text'>
         <strong>HQ:</strong> 4388, Jalan Heng Choon Thian, 12000 Butterworth<br />
         <em>Tel:</em> (+60)4-3334645 &nbsp;&nbsp; <em>Email:</em> sales@cheantar.com<br />
         <strong>Branch:</strong> {{ object.store.location }}<br />
@@ -80,7 +80,16 @@
             <tr>
               <td>{{ forloop.counter }}</td>
               <td>{{ line.product }}</td>
-              <td>{{ line.product.name }}</td>
+              <td>
+                {{ line.product.name }}
+                {% if line.product.is_package %}
+                  <ul>
+                    {% for packitem in line.product.package.packageitem_set.all %}
+                      <li>{{ packitem.quantity }} {{ packitem.item.unit_of_measure }} {{ packitem.item.name }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </td>
               <td class="text-right">{{ line.get_quantity }}</td>
               <td class="text-right">{{ line.price_after_discount|floatformat:"2" }}</td>
               <td class="text-right">{{ line.total_amount|floatformat:"2" }}</td>
