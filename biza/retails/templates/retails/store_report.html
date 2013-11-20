@@ -1,5 +1,7 @@
 {% extends "base_app.html" %}
 
+{% block title %}Sale Report for {{ today|date:"d M Y" }}{% endblock %}
+
 {% block css %}
   {{ block.super }}
 

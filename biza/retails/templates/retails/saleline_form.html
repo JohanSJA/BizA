@@ -1,5 +1,7 @@
 {% extends "generic_form.html" %}
 
+{% block title %}Sale Line Form{% endblock %}
+
 {% block breadcrumb %}
   <li><a href="{% url 'employees_dashboard' %}">Home</a></li>
   <li><a href="{% url 'retails_sale_list' %}">Sale</a></li>
@@ -12,5 +14,5 @@
       {% endif %}
     </a>
   </li>
-  <li class="active">Line</li>
+  <li class="active">Line Form</li>
 {% endblock %}

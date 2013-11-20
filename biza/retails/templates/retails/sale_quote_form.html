@@ -1,9 +1,20 @@
 {% extends "generic_form.html" %}
 
+{% block title %}Sale Quote Form{% endblock %}
+
 {% block breadcrumb %}
   <li><a href="{% url 'employees_dashboard' %}">Home</a></li>
   <li><a href="{% url 'retails_sale_list' %}">Sales</a></li>
-  <li class="active">Form</li>
+  <li>
+    <a href="{% url 'retails_sale_detail' sale.id %}">
+      {% if user.employee.hq %}
+        {{ sale.opening_time }} at {{ sale.store }}
+      {% else %}
+        {{ sale.opening_time }}
+      {% endif %}
+    </a>
+  </li>
+  <li class="active">Quote Form</li>
 {% endblock %}
 
 {% block content_app %}

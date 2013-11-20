@@ -1,9 +1,12 @@
 {% extends "generic_form.html" %}
 
+{% block title %}Package Prices Form{% endblock %}
+
 {% block breadcrumb %}
   <li><a href="{% url 'employees_dashboard' %}">Home</a></li>
   <li><a href="{% url 'stocks_product_list' %}">Products</a></li>
-  <li class="active">Package</li>
+  <li><a href="{% url 'stocks_product_detail' object.id %}">{{ object }}</a></li>
+  <li class="active">Form</li>
 {% endblock %}
 
 {% block content_app %}

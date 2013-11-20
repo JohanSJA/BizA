@@ -1,5 +1,14 @@
 {% extends "base_app.html" %}
 
+{% block title %}
+  Sale
+  {% if user.employee.hq %}
+    {{ object.opening_time }} at {{ object.store }}
+  {% else %}
+    {{ object.opening_time }}
+  {% endif %}
+{% endblock %}
+
 {% block css %}
   {{ block.super }}
 

@@ -1,5 +1,15 @@
 {% extends "base_print.html" %}
 
+{% block title %}
+  Sale
+  {% if user.employee.hq %}
+    {{ object.opening_time }} at {{ object.store }}
+  {% else %}
+    {{ object.opening_time }}
+  {% endif %}
+  Printing
+{% endblock %}
+
 {% block css %}
   {{ block.super }}
 
