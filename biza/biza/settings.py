@@ -1,5 +1,7 @@
 # Django settings for biza project.
 
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
 import os
 
 SETTING_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -175,3 +177,7 @@ LOGGING = {
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/employees/dashboard/'
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    'django.core.context_processors.request',
+)

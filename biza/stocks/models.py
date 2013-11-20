@@ -26,6 +26,9 @@ class Product(models.Model):
     wholesale_price = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
     lowest_wholesale_price = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
 
+    class Meta:
+        ordering = ['model']
+
     def __unicode__(self):
         return self.model
 
