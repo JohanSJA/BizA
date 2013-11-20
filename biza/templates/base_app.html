@@ -27,11 +27,17 @@
         {% endif %}
         <a href="{% url 'stocks_product_list' %}">Products</a></li>
         {% if '/retails/' in request.path %}
-          <li class="active">
+          <li class="dropdown active">
         {% else %}
-          <li>
+          <li class="dropdown">
         {% endif %}
-        <a href="{% url 'retails_sale_list' %}">Sales</a></li>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sales <b class="caret"></b></a>
+
+        <ul class="dropdown-menu">
+          <li><a href="{% url 'retails_sale_list' %}">Sales</a></li>
+          <li><a href="{% url 'retails_store_report_today' %}">Report</a></li>
+        </ul>
+        </li>
       </ul>
       <div class="navbar-right">
         <p class="navbar-text">Signed in as {{ user.get_username }}</p>
