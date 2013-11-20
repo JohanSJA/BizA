@@ -18,5 +18,6 @@ urlpatterns = patterns('retails.views',
     url(r'^saleline/$', login_required(SaleLineListView.as_view()), name='retails_saleline_list'),
     url(r'^saleline/(?P<pk>\d+)/$', login_required(SaleLineDetailView.as_view()), name='retails_saleline_detail'),
     url(r'^saleline/(?P<pk>\d+)/edit/$', login_required(SaleLineUpdateView.as_view()), name='retails_saleline_edit'),
-    url(r'^report/$', login_required(StoreReportTemplateView.as_view()), name='retails_store_report'),
+    url(r'^report/(?P<y>\d{4})/(?P<m>\d{2})/(?P<d>\d{2})/$', login_required(StoreReportTemplateView.as_view()), name='retails_store_report'),
+    url(r'^report/today/$', login_required(StoreReportTodayTemplateView.as_view()), name='retails_store_report_today'),
 )

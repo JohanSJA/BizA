@@ -21,7 +21,16 @@
 {% block content_app %}
   <div class="row">
     <div class="col-lg-12">
-      <h2>Closed Sales <small>Sales that were closed today</small></h2>
+      <h2>Sale Report for {{ today|date:"d M Y" }}</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <h3>
+        Closed Sales
+        <small>Sales that were closed today</small>
+      </h3>
       <hr />
     </div>
   </div>
@@ -30,7 +39,10 @@
 
   <div class="row">
     <div class="col-lg-12">
-      <h2>Quoted Sales <small>Sales that were quoted today and yet to be closed</small></h2>
+      <h3>
+        Quoted Sales
+        <small>Sales that were quoted today and yet to be closed</small>
+      </h3>
       <hr />
     </div>
   </div>
@@ -39,7 +51,10 @@
 
   <div class="row">
     <div class="col-lg-12">
-      <h2>Opened Sales <small>Sales that were opened today and yet to be closed or quoted</small></h2>
+      <h3>
+        Opened Sales
+        <small>Sales that were opened today and yet to be closed or quoted</small>
+      </h3>
       <hr />
     </div>
   </div>

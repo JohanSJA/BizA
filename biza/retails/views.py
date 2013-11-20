@@ -160,11 +160,11 @@ class SaleLineUpdateView(UpdateView):
 class StoreReportTemplateView(TemplateView):
     template_name = 'retails/store_report.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(StoreReportTemplateView, self).get_context_data(**kwargs)
-        emp = self.request.user.employee
-        today = datetime.date.today()
+    def get_single_day_sales(self, context, date):
+        today = date
+        context['today'] = today
         tomorrow = today + datetime.timedelta(days=1)
+        emp = self.request.user.employee
         context['closed_sales'] = Sale.objects.filter(closing_time__range=(today, tomorrow))
         if not emp.hq:
             context['closed_sales'] = context['closed_sales'].filter(store=emp.store)
@@ -174,4 +174,20 @@ class StoreReportTemplateView(TemplateView):
         context['opened_sales'] = Sale.objects.filter(opening_time__range=(today, tomorrow), closing_time=None, quoting_time=None)
         if not emp.hq:
             context['opened_sales'] = context['opened_sales'].filter(store=emp.store)
+        return context
+
+    def get_context_data(self, **kwargs):
+        context = super(StoreReportTemplateView, self).get_context_data(**kwargs)
+        today = datetime.date(int(kwargs['y']), int(kwargs['m']), int(kwargs['d']))
+        context = self.get_single_day_sales(context, today)
+        return context
+
+
+class StoreReportTodayTemplateView(StoreReportTemplateView):
+    template_name = 'retails/store_report.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(StoreReportTemplateView, self).get_context_data(**kwargs)
+        today = datetime.date.today()
+        context = self.get_single_day_sales(context, today)
         return context

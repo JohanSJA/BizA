@@ -2,16 +2,25 @@
   <div class="row">
     <div class="col-lg-4">
       <dl class="dl-horizontal">
-        <dt>Opening Time</dt>
-        <dd>{{ sale.opening_time }}</dd>
-        <dt>Opened By</dt>
-        <dd>{{ sale.opened_by }}</dd>
         {% if sales_type == "closed" %}
+          <dt>Cash Bill Number</dt>
+          <dd>{{ sale.cash_bill_number }}</dd>
           <dt>Closing Time</dt>
           <dd>{{ sale.closing_time }}</dd>
           <dt>Closed By</dt>
           <dd>{{ sale.closed_by }}</dd>
+        {% elif sales_type == "quoted" %}
+          <dt>Quotation Number</dt>
+          <dd>{{ sale.quotation_number }}</dd>
+          <dt>Quoting Time</dt>
+          <dd>{{ sale.quoting_time }}</dd>
+          <dt>Quoted By</dt>
+          <dd>{{ sale.quoted_by }}</dd>
         {% endif %}
+        <dt>Opening Time</dt>
+        <dd>{{ sale.opening_time }}</dd>
+        <dt>Opened By</dt>
+        <dd>{{ sale.opened_by }}</dd>
       </dl>
     </div>
     <div class="col-lg-8">
