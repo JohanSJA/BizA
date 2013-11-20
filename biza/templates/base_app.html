@@ -20,6 +20,8 @@
 
     <div class="collapse navbar-collapse navbar-exl-collapse">
       <ul class="nav navbar-nav">
+        <li><a href="{% url 'stocks_product_list' %}">Products</a></li>
+        <li><a href="{% url 'retails_sale_list' %}">Sales</a></li>
       </ul>
       <div class="navbar-right">
         <p class="navbar-text">Signed in as {{ user.get_username }}</p>
