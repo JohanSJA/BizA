@@ -88,25 +88,32 @@
               <th>&nbsp;</th>
             </tr>
           </thead>
-          <tbody>
-            {% for packitem in object.package.packageitem_set.all %}
+          {% with object.package.packageitem_set.all as pi_set %}
+            <tfoot>
               <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ packitem.item }}</td>
-                <td>{{ packitem.item.name }}</td>
-                <td>{{ packitem.quantity }} {{ packitem.item.unit_of_measure }}</td>
-                <td>
-                  <a href="{% url 'stocks_packageitem_edit' packitem.id %}">
-                    <span class="glyphicon glyphicon-edit"></span> Edit
-                  </a>
-                </td>
+                <td colspan="5">Total {{ pi_set|length }} item{{ pi_set|pluralize }}</td>
               </tr>
-            {% empty %}
-              <tr>
-                <td colspan="4">Empty</td>
-              </tr>
-            {% endfor %}
-          </tbody>
+            </tfoot>
+            <tbody>
+              {% for packitem in pi_set %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ packitem.item }}</td>
+                  <td>{{ packitem.item.name }}</td>
+                  <td>{{ packitem.quantity }} {{ packitem.item.unit_of_measure }}</td>
+                  <td>
+                    <a href="{% url 'stocks_packageitem_edit' packitem.id %}">
+                      <span class="glyphicon glyphicon-edit"></span> Edit
+                    </a>
+                  </td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="5">Empty</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          {% endwith %}
         </table>
       {% else %}
         <h2>Stocks</h2>

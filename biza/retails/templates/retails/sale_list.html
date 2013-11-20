@@ -36,6 +36,16 @@
             <th class="text-right">Total (RM)</th>
           </tr>
         </thead>
+        <tfoot>
+          <tr>
+            {% if user.employee.hq %}
+              <td colspan="6">
+            {% else %}
+              <td colspan="5">
+            {% endif %}
+            Total {{ object_list|length }} sale{{ object_list|pluralize }}</td>
+          </tr>
+        </tfoot>
         <tbody>
           {% for obj in object_list %}
             <tr>

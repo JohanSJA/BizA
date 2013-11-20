@@ -131,6 +131,16 @@
             {% endif %}
           </tr>
         </thead>
+        <tfoot>
+          <tr>
+            {% if not object.closed %}
+              <td colspan="8">
+            {% else %}
+              <td colspan="7">
+            {% endif %}
+            Total {{ lines|length }} line{{ lines|pluralize }}</td>
+          </tr>
+        </tfoot>
         <tbody>
           {% for line in lines %}
             <tr>

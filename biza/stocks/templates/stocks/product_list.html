@@ -33,6 +33,16 @@
             {% endif %}
           </tr>
         </thead>
+        <tfoot>
+          <tr>
+            {% if user.employee.hq %}
+              <td colspan="5">
+            {% else %}
+              <td colspan="4">
+            {% endif %}
+            Total {{ object_list|length }} product{{ object_list|pluralize }}</td>
+          </tr>
+        </tfoot>
         <tbody>
           {% for obj in object_list %}
             <tr>
