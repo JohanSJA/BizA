@@ -92,24 +92,24 @@
       {% if object.closed %}
         <h3>Closing</h3>
         <dl class="dl-horizontal">
+          <dt>Cash Bill Number</dt>
+          <dd>{{ object.cash_bill_number }}</dd>
           <dt>Closing Time</dt>
           <dd>{{ object.closing_time }}</dd>
           <dt>Closed By</dt>
           <dd>{{ object.closed_by }}</dd>
-          <dt>Cash bill number</dt>
-          <dd>{{ object.cash_bill_number }}</dd>
         </dl>
       {% endif %}
 
       {% if object.quoted %}
         <h3>Quoting</h3>
         <dl class="dl-horizontal">
+          <dt>Quotation Number</dt>
+          <dd>{{ object.quotation_number }}</dd>
           <dt>Quoting Time</dt>
           <dd>{{ object.quoting_time }}</dd>
           <dt>Quoted By</dt>
           <dd>{{ object.quoted_by }}</dd>
-          <dt>Quotation number</dt>
-          <dd>{{ object.quotation_number }}</dd>
         </dl>
       {% endif %}
     </div>
