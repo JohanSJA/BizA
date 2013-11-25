@@ -1,1 +1,8 @@
-*.pyc
+# Python #
+##########
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+
+# Django stuff
+*.log
+*.pot
