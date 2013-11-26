@@ -66,6 +66,14 @@
   <hr />
 
   <footer>
-    <p>By <a href="http://flavors.me/JohanSJA" target="_blank">Johan Sim Jian An</a></p>
+    <p>
+      By <a href="http://flavors.me/JohanSJA" target="_blank">Johan Sim Jian An</a>
+      for
+      {% if user.employee.company.website %}
+        <a href='{{ user.employee.company.website }}' target='_blank'>{{ user.employee.company.name }}</a>
+      {% else %}
+        {{ user.employee.company.name }}
+      {% endif %}
+    </p>
   </footer>
 {% endblock %}
