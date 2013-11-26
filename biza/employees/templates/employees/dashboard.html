@@ -17,8 +17,9 @@
 {% block content_app %}
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="text-center">Hello, {{ user }}!</h1>
-      <p class="text-center">{% now "jS F Y H:i" %}</p>
+      <p class="text-right">
+        Current time on server: <strong>{% now "D n M y, g:i a" %}</strong>
+      </p>
     </div>
   </div>
 
