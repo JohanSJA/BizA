@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'south',
     # Apps
+    'companies',
     'documents',
     'stocks',
     'retails',
