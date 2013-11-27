@@ -19,26 +19,6 @@
     </div>
 
     <div class="collapse navbar-collapse navbar-exl-collapse">
-      <ul class="nav navbar-nav">
-        {% if '/stocks/' in request.path %}
-          <li class="active">
-        {% else %}
-          <li>
-        {% endif %}
-        <a href="{% url 'stocks_product_list' %}">Products</a></li>
-        {% if '/retails/' in request.path %}
-          <li class="dropdown active">
-        {% else %}
-          <li class="dropdown">
-        {% endif %}
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sales <b class="caret"></b></a>
-
-          <ul class="dropdown-menu">
-            <li><a href="{% url 'retails_sale_list' %}">Sales</a></li>
-            <li><a href="{% url 'retails_store_report_today' %}">Report</a></li>
-          </ul>
-        </li>
-      </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in {{ user.get_username }} <b class="caret"></b></a>
@@ -66,14 +46,6 @@
   <hr />
 
   <footer>
-    <p>
-      By <a href="http://flavors.me/JohanSJA" target="_blank">Johan Sim Jian An</a>
-      for
-      {% if user.employee.company.website %}
-        <a href='{{ user.employee.company.website }}' target='_blank'>{{ user.employee.company.name }}</a>
-      {% else %}
-        {{ user.employee.company.name }}
-      {% endif %}
-    </p>
+    <p>By <a href="http://flavors.me/JohanSJA" target="_blank">Johan Sim Jian An</a></p>
   </footer>
 {% endblock %}
