@@ -37,9 +37,13 @@
 {% endblock %}
 
 {% block content %}
-  <ol class="breadcrumb">
-    {% block breadcrumb %}{% endblock %}
-  </ol>
+  <div class='row'>
+    <div class='col-lg-12'>
+      <ol class="breadcrumb">
+        {% block breadcrumb %}{% endblock %}
+      </ol>
+    </div>
+  </div>
 
   {% block content_app %}{% endblock %}
 
