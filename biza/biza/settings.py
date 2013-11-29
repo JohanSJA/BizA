@@ -19,7 +19,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'biza',                      # Or path to database file if using sqlite3.
+        'NAME': 'biza_dev',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'root',
         'PASSWORD': 'root',
@@ -138,11 +138,16 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'south',
     # Apps
-    'companies',
-    'documents',
-    'stocks',
-    'retails',
-    'employees'
+    'cashbooks',
+    'pricelists',
+    'locations',
+    'warehouses',
+    'uoms',
+    #'companies',
+    #'documents',
+    #'stocks',
+    #'retails',
+    #'employees'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
