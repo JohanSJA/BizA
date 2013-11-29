@@ -138,16 +138,18 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'south',
     # Apps
-    'cashbooks',
-    'pricelists',
-    'locations',
-    'warehouses',
-    'uoms',
-    #'companies',
-    #'documents',
-    #'stocks',
-    #'retails',
-    #'employees'
+    'employees',
+    'branches',
+    # 'cashbooks',
+    # 'pricelists',
+    # 'locations',
+    # 'warehouses',
+    # 'uoms',
+    # 'companies',
+    # 'documents',
+    # 'stocks',
+    # 'retails',
+    # 'employees'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

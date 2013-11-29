@@ -8,15 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Employee.company'
-        db.add_column(u'employees_employee', 'company',
-                      self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['companies.Company']),
+        # Adding field 'Branch.manager'
+        db.add_column(u'branches_branch', 'manager',
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['employees.Employee']),
                       keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting field 'Employee.company'
-        db.delete_column(u'employees_employee', 'company_id')
+        # Deleting field 'Branch.manager'
+        db.delete_column(u'branches_branch', 'manager_id')
 
 
     models = {
@@ -49,16 +49,19 @@ class Migration(SchemaMigration):
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Permission']"}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
-        u'companies.company': {
-            'Meta': {'ordering': "['name']", 'object_name': 'Company'},
-            'address': ('django.db.models.fields.TextField', [], {}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'fax': ('django.db.models.fields.CharField', [], {'max_length': '16', 'blank': 'True'}),
+        u'branches.branch': {
+            'Meta': {'object_name': 'Branch'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'reg_num': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '16'}),
-            'tel': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '16'}),
-            'website': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'})
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'manager': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['employees.Employee']"}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
+        },
+        u'branches.station': {
+            'Meta': {'unique_together': "(('branch', 'name'),)", 'object_name': 'Station'},
+            'branch': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['branches.Branch']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
         u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
@@ -69,27 +72,11 @@ class Migration(SchemaMigration):
         },
         u'employees.employee': {
             'Meta': {'object_name': 'Employee'},
-            'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['companies.Company']"}),
-            'hq': ('django.db.models.fields.BooleanField', [], {}),
+            'admission_date': ('django.db.models.fields.DateField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'store': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['retails.Store']", 'null': 'True', 'blank': 'True'}),
+            'registry_number': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
-        },
-        u'retails.store': {
-            'Meta': {'object_name': 'Store'},
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'location': ('django.db.models.fields.TextField', [], {}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
-            'telephone': ('django.db.models.fields.CharField', [], {'max_length': '16'}),
-            'warehouse': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['stocks.Warehouse']"})
-        },
-        u'stocks.warehouse': {
-            'Meta': {'object_name': 'Warehouse'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'location': ('django.db.models.fields.TextField', [], {}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '32'})
         }
     }
 
-    complete_apps = ['employees']
+    complete_apps = ['branches']
