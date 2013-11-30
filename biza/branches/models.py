@@ -1,6 +1,6 @@
 from django.db import models
 
-from employees.models import Employee
+from employees.models import Employee as eEmployee
 
 
 class Branch(models.Model):
@@ -15,7 +15,7 @@ class Branch(models.Model):
 
 class Employee(models.Model):
     branch = models.ForeignKey(Branch)
-    employee = models.ForeignKey(Employee, unique=True)
+    employee = models.OneToOneField(eEmployee)
 
     def __unicode__(self):
         return '{} {}'.format(self.branch, self.employee)
