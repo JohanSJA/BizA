@@ -13,14 +13,3 @@ class Branch(models.Model):
 
     def __unicode__(self):
         return self.name
-
-class Station(models.Model):
-    branch = models.ForeignKey(Branch)
-    name = models.CharField(max_length=50)
-    is_active = models.BooleanField(default=True)
-
-    class Meta:
-        unique_together = ('branch', 'name')
-
-    def __unicode__(self):
-        return self.name

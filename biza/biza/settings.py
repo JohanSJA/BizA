@@ -140,7 +140,7 @@ INSTALLED_APPS = (
     # Apps
     'employees',
     'branches',
-    'tills',
+    'drawers',
     'sellables',
 
     # 'companies',

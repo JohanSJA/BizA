@@ -8,34 +8,25 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Till'
-        db.create_table(u'tills_till', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('station', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['branches.Station'])),
-            ('opening_time', self.gf('django.db.models.fields.DateTimeField')()),
-            ('closing_time', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('initial_cash_amount', self.gf('django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2)),
-            ('final_cash_amount', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=20, decimal_places=2, blank=True)),
-            ('status', self.gf('django.db.models.fields.SmallIntegerField')()),
-        ))
-        db.send_create_signal(u'tills', ['Till'])
+        # Removing unique constraint on 'Station', fields ['branch', 'name']
+        db.delete_unique(u'branches_station', ['branch_id', 'name'])
 
-        # Adding model 'Entry'
-        db.create_table(u'tills_entry', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('till', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['tills.Till'])),
-            ('time', self.gf('django.db.models.fields.DateTimeField')()),
-            ('value', self.gf('django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2)),
-        ))
-        db.send_create_signal(u'tills', ['Entry'])
+        # Deleting model 'Station'
+        db.delete_table(u'branches_station')
 
 
     def backwards(self, orm):
-        # Deleting model 'Till'
-        db.delete_table(u'tills_till')
+        # Adding model 'Station'
+        db.create_table(u'branches_station', (
+            ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('branch', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['branches.Branch'])),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+        ))
+        db.send_create_signal(u'branches', ['Station'])
 
-        # Deleting model 'Entry'
-        db.delete_table(u'tills_entry')
+        # Adding unique constraint on 'Station', fields ['branch', 'name']
+        db.create_unique(u'branches_station', ['branch_id', 'name'])
 
 
     models = {
@@ -75,13 +66,6 @@ class Migration(SchemaMigration):
             'manager': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['employees.Employee']"}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
         },
-        u'branches.station': {
-            'Meta': {'unique_together': "(('branch', 'name'),)", 'object_name': 'Station'},
-            'branch': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['branches.Branch']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
         u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
             'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
@@ -95,24 +79,7 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'registry_number': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
-        },
-        u'tills.entry': {
-            'Meta': {'object_name': 'Entry'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'till': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['tills.Till']"}),
-            'time': ('django.db.models.fields.DateTimeField', [], {}),
-            'value': ('django.db.models.fields.DecimalField', [], {'max_digits': '20', 'decimal_places': '2'})
-        },
-        u'tills.till': {
-            'Meta': {'object_name': 'Till'},
-            'closing_time': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'final_cash_amount': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '20', 'decimal_places': '2', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'initial_cash_amount': ('django.db.models.fields.DecimalField', [], {'max_digits': '20', 'decimal_places': '2'}),
-            'opening_time': ('django.db.models.fields.DateTimeField', [], {}),
-            'station': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['branches.Station']"}),
-            'status': ('django.db.models.fields.SmallIntegerField', [], {})
         }
     }
 
-    complete_apps = ['tills']
+    complete_apps = ['branches']
