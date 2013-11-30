@@ -136,12 +136,12 @@ INSTALLED_APPS = (
     'django.contrib.formtools',
     # Third-party
     'widget_tweaks',
-    'south',
+    # 'south',
     # Apps
     'employees',
     'branches',
     'drawers',
-    'sellables',
+    'products',
 
     # 'companies',
     # 'documents',
