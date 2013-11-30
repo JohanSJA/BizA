@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from drawers.models import Drawer, Session
+from retails.models import Drawer, Session
 
 
 class SessionInline(admin.TabularInline):
