@@ -139,7 +139,6 @@ INSTALLED_APPS = (
     # 'south',
     # Apps
     'employees',
-    'branches',
     'products',
     'retails',
 )

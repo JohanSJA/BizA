@@ -1,26 +1,35 @@
 from django.db import models
 
-from branches.models import Branch
+from products.models import Product
+from employees.models import Employee as eEmployee
 
 
-class Drawer(models.Model):
-    branch = models.ForeignKey(Branch)
-    name = models.CharField(max_length=50)
+class Branch(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
-        unique_together = ('branch', 'name')
+        verbose_name_plural = 'branches'
 
     def __unicode__(self):
-        return '{} {}'.format(self.branch, self.name)
+        return self.name
 
-class Session(models.Model):
-    drawer = models.ForeignKey(Drawer)
-    opening_time = models.DateTimeField()
-    closing_time = models.DateTimeField(null=True, blank=True)
-    initial_cash_amount = models.DecimalField(max_digits=20, decimal_places=2)
-    final_cash_amount = models.DecimalField(max_digits=20, decimal_places=2,
-            null=True, blank=True)
-    status = models.SmallIntegerField()
+class Employee(models.Model):
+    branch = models.ForeignKey(Branch)
+    employee = models.OneToOneField(eEmployee)
 
     def __unicode__(self):
-        return '{} {}'.format(self.station, self.opening_time)
+        return '{} {}'.format(self.branch, self.employee)
+
+class Price(models.Model):
+    product = models.ForeignKey(Product)
+    branch = models.ForeignKey(Branch)
+    cost = models.DecimalField(max_digits=20, decimal_places=4)
+    base = models.DecimalField(max_digits=20, decimal_places=2)
+    lowest = models.DecimalField(max_digits=20, decimal_places=2)
+
+    class Meta:
+        unique_together = ('product', 'branch')
+
+    def __unicode__(self):
+        return '{} at {}'.format(self.product, self.branch)

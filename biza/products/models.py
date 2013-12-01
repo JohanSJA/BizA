@@ -1,7 +1,5 @@
 from django.db import models
 
-from branches.models import Branch
-
 
 class Unit(models.Model):
     code = models.CharField(max_length=2, unique=True)
@@ -50,13 +48,3 @@ class BasePrice(Price):
 
     def __unicode__(self):
         return self.product
-
-class BranchPrice(Price):
-    product = models.ForeignKey(Product)
-    branch = models.ForeignKey(Branch)
-
-    class Meta:
-        unique_together = ('product', 'branch')
-
-    def __unicode__(self):
-        return '{} at {}'.format(self.product, self.branch)

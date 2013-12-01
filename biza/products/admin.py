@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from products.models import Unit, Category, Product, Component, BasePrice, BranchPrice
+from products.models import Unit, Category, Product, Component, BasePrice
 
 
 class ComponentInline(admin.TabularInline):
@@ -12,11 +12,8 @@ class BasePriceInline(admin.StackedInline):
     can_delete = False
     verbose_name_plural = 'base price'
 
-class BranchPriceInline(admin.StackedInline):
-    model = BranchPrice
-
 class ProductAdmin(admin.ModelAdmin):
-    inlines = (ComponentInline, BasePriceInline, BranchPriceInline)
+    inlines = (ComponentInline, BasePriceInline)
 
 
 admin.site.register(Unit)
