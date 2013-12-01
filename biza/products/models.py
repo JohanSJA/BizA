@@ -25,3 +25,20 @@ class Component(models.Model):
 
     def __unicode__(self):
         return '{} {} in {}'.format(self.quantity, self.component, self.product)
+
+class Warehouse(models.Model):
+    name = models.CharField(max_length=50)
+    address = models.TextField()
+
+    def __unicode__(self):
+        return self.name
+
+class Quantity(models.Model):
+    product = models.ForeignKey(Product)
+    warehouse = models.ForeignKey(Warehouse)
+    datetime = models.DateTimeField(auto_now=True)
+    changes = models.IntegerField()
+    balance = models.IntegerField()
+
+    def __unicode__(self):
+        return '{} {} at {}'.format(self.balance, self.product, self.warehouse)
