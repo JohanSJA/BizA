@@ -14,6 +14,7 @@ class QuantityInline(admin.TabularInline):
     model = Quantity
 
 class ProductAdmin(admin.ModelAdmin):
+    list_display = ('code', 'name', 'barcode')
     inlines = (ComponentInline, QuantityInline)
 
 
