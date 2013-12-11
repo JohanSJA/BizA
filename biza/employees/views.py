@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from django.views.generic.base import TemplateView
 
-# Create your views here.
+from employees.models import Employee
+
+class DashboardTv(TemplateView):
+    template_name = 'employees/dashboard.html'

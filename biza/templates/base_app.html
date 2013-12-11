@@ -21,7 +21,7 @@
     <div class="collapse navbar-collapse navbar-exl-collapse">
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in {{ user.get_username }} <b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in as {{ user.get_username }} <b class="caret"></b></a>
 
           <ul class="dropdown-menu">
             <li>
@@ -50,6 +50,7 @@
   <hr />
 
   <footer>
+    <p class='pull-right'>Last refresh: {% now 'DATETIME_FORMAT' %}</p>
     <p>By <a href="http://flavors.me/JohanSJA" target="_blank">Johan Sim Jian An</a></p>
   </footer>
 {% endblock %}

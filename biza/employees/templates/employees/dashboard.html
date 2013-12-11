@@ -1,0 +1,31 @@
+{% extends 'base_app.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block breadcrumb %}
+  <li class='active'>Home</li>
+{% endblock %}
+
+{% block content_app %}
+  <div class='row'>
+    <div class='col-lg-8'>
+
+    </div>
+
+    <div class='col-lg-4'>
+      <div class='panel panel-default'>
+        <div class='panel-heading'>Personal information</div>
+        <div class='panel-body'>
+          <dl class='dl-horizontal'>
+            <dt>Admission Date</dt>
+            <dd>{{ user.employee.admission_date }}</dd>
+            <dt>Duration</dt>
+            <dd>{{ user.employee.admission_date|timesince }}</dd>
+            <dt>I/C Number</dt>
+            <dd>{{ user.employee.registry_number }}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
