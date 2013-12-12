@@ -40,5 +40,8 @@ class Quantity(models.Model):
     changes = models.IntegerField()
     balance = models.IntegerField()
 
+    class Meta:
+        verbose_name_plural = 'quantities'
+
     def __unicode__(self):
         return '{} {} at {}'.format(self.balance, self.product, self.warehouse)

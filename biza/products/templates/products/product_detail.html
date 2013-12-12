@@ -1,0 +1,29 @@
+{% extends 'base_app.html' %}
+
+{% block breadcrumb %}
+  <li><a href='{% url "employees_dashboard" %}'>Home</a></li>
+  <li><a href='{% url "products_product_list" %}'>Products</a></li>
+  <li class='active'>{{ object.code }}</li>
+{% endblock %}
+
+{% block content_app %}
+  <div class='row'>
+    <div class='col-md-4'>
+      <div class='panel panel-default'>
+        <div class='panel-heading'>
+          <h2 class='panel-title'>General Info</h2>
+        </div>
+        <div class='panel-body'>
+          <dl class='dl-horizontal'>
+            <dt>Code</dt>
+            <dd>{{ object.code }}</dd>
+            <dt>Name</dt>
+            <dd>{{ object.name }}</dd>
+            <dt>Barcode</dt>
+            <dd>{{ object.barcode }}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

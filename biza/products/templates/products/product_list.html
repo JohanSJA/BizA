@@ -1,0 +1,33 @@
+{% extends 'base_app.html' %}
+
+{% block breadcrumb %}
+  <li><a href='{% url "employees_dashboard" %}'>Home</a></li>
+  <li class='active'>Products</li>
+{% endblock %}
+
+{% block content_app %}
+  <div class='row'>
+    <div class='col-md-12'>
+      <table class='table table-striped table-responsive'>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Barcode</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for obj in object_list %}
+            <tr>
+              <td><a href='{% url "products_product_detail" obj.pk %}'>{{ obj.code }}</a></td>
+              <td>{{ obj.name }}</td>
+              <td>{{ obj.barcode }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <p>Total {{ object_list|length }} products</p>
+    </div>
+  </div>
+{% endblock %}
