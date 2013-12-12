@@ -1,0 +1,7 @@
+{% extends 'generic_form.html' %}
+
+{% block breadcrumb %}
+  <li><a href='{% url "employees_dashboard" %}'>Home</a></li>
+  <li><a href='{% url "products_product_list" %}'>Products</a></li>
+  <li class='active'>New Product</li>
+{% endblock %}

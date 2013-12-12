@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 
 class Unit(models.Model):
@@ -17,6 +18,9 @@ class Product(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('products_product_detail', args=[str(self.id)])
 
 class Component(models.Model):
     product = models.ForeignKey(Product)

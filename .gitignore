@@ -6,3 +6,4 @@
 # Django stuff
 *.log
 *.pot
+*.db
