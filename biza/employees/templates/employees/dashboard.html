@@ -2,6 +2,19 @@
 
 {% block title %}Dashboard{% endblock %}
 
+{% block css %}
+  {{ block.super }}
+
+  .large-text {
+    font-size: 3em;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+{% endblock %}
+
 {% block breadcrumb %}
   <li class='active'>Home</li>
 {% endblock %}
@@ -9,7 +22,20 @@
 {% block content_app %}
   <div class='row'>
     <div class='col-md-8'>
-
+      <div class='row'>
+        <div class='col-md-4'>
+          <a href='/' class='btn btn-default large-text
+              col-md-12 col-xs-12'>
+            Retails
+          </a>
+        </div>
+        <div class='col-md-4'>
+          <a href='/' class='btn btn-default large-text
+              col-md-12 col-xs-12'>
+            Products
+          </a>
+        </div>
+      </div>
     </div>
 
     <div class='col-md-4'>
