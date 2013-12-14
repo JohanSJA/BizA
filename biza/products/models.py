@@ -27,6 +27,9 @@ class Component(models.Model):
     component = models.ForeignKey(Product, related_name='product_set')
     quantity = models.SmallIntegerField()
 
+    class Meta:
+        unique_together = ['product', 'component']
+
     def __unicode__(self):
         return '{} {} in {}'.format(self.quantity, self.component, self.product)
 
