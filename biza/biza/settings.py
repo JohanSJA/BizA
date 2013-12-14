@@ -110,6 +110,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'biza.urls'
@@ -138,6 +139,7 @@ INSTALLED_APPS = (
     'django.contrib.formtools',
     # Third-party
     'widget_tweaks',
+    'debug_toolbar',
     # 'south',
     # Apps
     'employees',
@@ -182,3 +184,6 @@ LOGIN_REDIRECT_URL = '/employees/dashboard/'
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
+
+# Required by django-debug-toolbar
+INTERNAL_IPS=('127.0.0.1')
