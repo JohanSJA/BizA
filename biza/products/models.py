@@ -49,6 +49,7 @@ class Quantity(models.Model):
 
     class Meta:
         verbose_name_plural = 'quantities'
+        ordering = ['-datetime']
 
     def __unicode__(self):
         return '{} {} at {}'.format(self.balance, self.product, self.warehouse)
