@@ -139,7 +139,7 @@ INSTALLED_APPS = (
     'django.contrib.formtools',
     # Third-party
     'widget_tweaks',
-    'debug_toolbar',
+    # 'debug_toolbar',
     # 'south',
     # Apps
     'employees',
@@ -186,4 +186,4 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
 )
 
 # Required by django-debug-toolbar
-INTERNAL_IPS=('127.0.0.1')
+# INTERNAL_IPS=('127.0.0.1')
