@@ -2,7 +2,8 @@
 
 {% block breadcrumb %}
   <li><a href='{% url "employees_dashboard" %}'>Home</a></li>
-  <li class='active'>Products</li>
+  <li><a href='{% url "products_home" %}'>Products</a></li>
+  <li class='active'>Product</li>
 {% endblock %}
 
 {% block content_app %}

@@ -1,3 +1,4 @@
+from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
@@ -5,6 +6,9 @@ from django.views.generic.edit import CreateView, UpdateView
 from products.models import Product, Component, Quantity
 from products.forms import ComponentForm, QuantityForm
 
+
+class ProductTv(TemplateView):
+    template_name = 'products/home.html'
 
 class ProductLv(ListView):
     model = Product
