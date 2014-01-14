@@ -1,0 +1,28 @@
+{% extends 'base_app.html' %}
+
+{% block content_app %}
+<h1>{% block title_page %}Form{% endblock %}</h1>
+
+<form action='' class='ink-form' method='post'>
+  {% csrf_token %}
+
+  {{ form.non_field_errors }}
+
+  {% for field in form %}
+    <div class='control-group{% if field.errors %} validation error{% endif %}'>
+      {{ field.label_tag }}
+      <div class='control'>
+        {{ field }}
+      </div>
+      <p class='tip'>
+        {% if field.errors %}
+          {{ field.errors }}
+        {% else %}
+          {{ field.help_text }}
+        {% endif %}
+      </p>
+    </div>
+  {% endfor %}
+
+  <input type='submit' class='ink-button' />
+{% endblock %}

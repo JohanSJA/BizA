@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'biza.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
+    url(r'^stocks/', include('stocks.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 )

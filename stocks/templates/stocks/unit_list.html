@@ -1,0 +1,28 @@
+{% extends 'base_app.html' %}
+
+{% block content_app %}
+  <h1>Units</h1>
+
+  <table class='ink-table alternating'>
+  <thead>
+    <tr>
+      <th class='content-left'>Name</th>
+      <th class='content-left'>Abbreviation</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td colspan='2'>Total {{ unit_list|length }} unit{{ unit_list|pluralize }}.</td>
+    </tr>
+  </tfoot>
+  <tbody>
+    {% for unit in unit_list %}
+    <tr>
+      <td><a href='{% url "stocks-unit-edit" unit.pk %}'>{{ unit.name }}</a></td>
+      <td>{{ unit.abbreviation }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <a href='{% url "stocks-unit-new" %}' class='ink-button'>New</a>
+{% endblock %}
