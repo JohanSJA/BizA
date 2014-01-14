@@ -1,0 +1,29 @@
+{% extends 'base_app.html' %}
+
+{% block title %}
+  Retails
+{% endblock %}
+
+{% block breadcrumb %}
+  <li><a href='{% url "employees_dashboard" %}'>Home</a></li>
+  <li class='active'>Retails</li>
+{% endblock %}
+
+{% block content_app %}
+  <div class='page-header'>
+    <h1>Retails</h1>
+  </div>
+
+  <div class='row'>
+    <div class='col-md-6'>
+      <div class='well'>
+        <p>Manage the price.</p>
+        <p class='text-right'>
+          <a href='{% url "retails_price_list" %}' class='btn btn-default'>
+            Price list
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

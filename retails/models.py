@@ -15,12 +15,14 @@ class Branch(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class Employee(models.Model):
     branch = models.ForeignKey(Branch)
     employee = models.OneToOneField(eEmployee)
 
     def __unicode__(self):
         return '{} {}'.format(self.branch, self.employee)
+
 
 class Price(models.Model):
     product = models.ForeignKey(Product)
@@ -34,6 +36,7 @@ class Price(models.Model):
 
     def __unicode__(self):
         return '{} at {}'.format(self.product, self.branch)
+
 
 class Sale(models.Model):
     branch = models.ForeignKey(Branch)
@@ -50,6 +53,7 @@ class Sale(models.Model):
 
     def __unicode__(self):
         return 'Handled by {} at {}'.format(self.handled_by, self.branch)
+
 
 class SaleLine(models.Model):
     sale = models.ForeignKey(Sale)

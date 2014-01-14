@@ -1,0 +1,38 @@
+{% extends 'base_app.html' %}
+
+{% block title %}
+  Retail Prices
+{% endblock %}
+
+{% block breadcrumb %}
+  <li><a href='{% url "employees_dashboard" %}'>Home</a></li>
+  <li><a href='{% url "retails_home" %}'>Retails</a></li>
+  <li class='active'>Prices</li>
+{% endblock %}
+
+{% block content_app %}
+  <div class='page-header'>
+    <h1>Retail Prices</h1>
+  </div>
+
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Branch</th>
+        <th>Base</th>
+        <th>Lowest</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for price in object_list %}
+        <tr>
+          <td>{{ price.product }}</td>
+          <td>{{ price.branch }}</td>
+          <td>{{ price.base }}</td>
+          <td>{{ price.lowest }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
