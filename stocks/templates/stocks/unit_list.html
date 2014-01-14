@@ -3,11 +3,14 @@
 {% block content_app %}
   <h1>Units</h1>
 
+  <a href='{% url "stocks-unit-new" %}' class='ink-button'>
+    <i class='icon-plus'></i> New
+  </a>
+
   <table class='ink-table alternating'>
   <thead>
     <tr>
       <th class='content-left'>Name</th>
-      <th class='content-left'>Abbreviation</th>
     </tr>
   </thead>
   <tfoot>
@@ -19,10 +22,7 @@
     {% for unit in unit_list %}
     <tr>
       <td><a href='{% url "stocks-unit-edit" unit.pk %}'>{{ unit.name }}</a></td>
-      <td>{{ unit.abbreviation }}</td>
     </tr>
     {% endfor %}
   </table>
-
-  <a href='{% url "stocks-unit-new" %}' class='ink-button'>New</a>
 {% endblock %}

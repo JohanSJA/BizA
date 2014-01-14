@@ -3,10 +3,9 @@ from django.db import models
 
 class Unit(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    abbreviation = models.CharField(max_length=3, unique=True)
 
     def __unicode__(self):
-        return self.abbreviation
+        return self.name
 
 
 class Stock(models.Model):
@@ -29,9 +28,16 @@ class Warehouse(models.Model):
 
 
 class Balance(models.Model):
+    REASONS = [
+        ('P', 'Purchase'),
+        ('S', 'Sales'),
+        ('T', 'Transfer'),
+    ]
+
     stock = models.ForeignKey(Stock)
     warehouse = models.ForeignKey(Warehouse)
     changes = models.IntegerField()
+    reason = models.CharField(max_length=1, choices=REASONS)
     amount = models.IntegerField()
 
     def __unicode__(self):
