@@ -3,29 +3,27 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>{% block title %}BizA{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="ink, cookbook, recipes">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    {% with cdn='//cdnjs.cloudflare.com/ajax/libs/ink/2.2.1' %}
-    <link rel="stylesheet" type="text/css" href="{{ cdn }}/css/ink.css">
-    <link rel="stylesheet" type="text/css" href="{{ cdn }}/css/quick-start.css">
+    <meta name="author" content="">
 
-    <!--[if IE 7 ]>
-      <link rel="stylesheet" href="{{ cdn }}/css/ink-ie7.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <title>{% block title %}BizA{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.css' rel='stylesheet'>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js'></script>
+      <script src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js'></script>
     <![endif]-->
-
-    <script type="text/javascript" src="{{ cdn }}/js/holder.js"></script>
-    <script type="text/javascript" src="{{ cdn }}/js/ink.min.js"></script>
-    <script type="text/javascript" src="{{ cdn }}/js/ink-ui.min.js"></script>
-    <script type="text/javascript" src="{{ cdn }}/js/autoload.js"></script>
-    <script type="text/javascript" src="{{ cdn }}/js/html5shiv.js"></script>
-    {% endwith %}
   </head>
 
   <body>
     {% block content %}{% endblock %}
+
+    <!-- Bootstrap core Javascript -->
+    <script src='https://code.jquery.com/jquery-1.10.2.min.js'></script>
+    <script src='//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js'></script>
   </body>
 </html>
