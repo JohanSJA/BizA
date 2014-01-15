@@ -9,22 +9,35 @@
   {{ form.non_field_errors }}
 
   {% for field in form %}
-    <div class='control-group{% if field.errors %} validation error{% endif %}'>
-      {{ field.label_tag }}
-      <div class='control'>
+    <div class='control-group column-group horizontal-gutters{% if field.errors %} validation error{% endif %}'>
+      <label class='large-20 small-100 content-right' for='{{ field.id_for_label }}'>
+        {{ field.label }}
+      </label>
+      <div class='control large-50 small-100'>
         {{ field }}
       </div>
-      <p class='tip'>
-        {% if field.errors %}
-          {{ field.errors }}
-        {% else %}
+      {% if field.errors %}
+        <div class='tip large-30 small-100'>
+          <ul>
+            {% for error in field.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% elif field.help_text %}
+        <p class='tip large-30 small-100'>
           {{ field.help_text }}
-        {% endif %}
-      </p>
+        </p>
+      {% endif %}
     </div>
   {% endfor %}
 
-  <button type='submit' class='ink-button'>
-    <i class='icon-upload'></i> Submit
-  </button>
+  <div class='column-group horizontal-gutters'>
+    <div class='large-20 small-100'></div>
+    <div class='large-60 small-100'>
+      <button type='submit' class='ink-button'>
+        <i class='icon-upload'></i> Submit
+      </button>
+    </div>
+  </div>
 {% endblock %}
