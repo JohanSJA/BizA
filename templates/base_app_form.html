@@ -3,7 +3,9 @@
 {% load widget_tweaks %}
 
 {% block content_app %}
-  <h1>{% block title_page %}Form{% endblock %}</h1>
+  <div class='page-header'>
+    <h1>{% block title_page %}Form{% endblock %}</h1>
+  </div>
 
   <form action='' method='post' class='form-horizontal' role='form'>
     {% csrf_token %}
