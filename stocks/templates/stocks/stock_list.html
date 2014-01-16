@@ -3,29 +3,31 @@
 {% block breadcrumb %}
   <li><a href='{% url "home" %}'>Home</a></li>
   <li>Stocks</li>
-  <li class='active'>Units</li>
+  <li class='active'>Stocks</li>
 {% endblock %}
 
 {% block content_app %}
   <p class='text-right'>
-    <a href='{% url "stocks-unit-new" %}' class='btn btn-default'>New</a>
+    <a href='{% url "stocks-stock-new" %}' class='btn btn-default'>New</a>
   </p>
 
   <table class='table table-striped table-hover table-bordered table-responsive'>
     <thead>
       <tr>
+        <th>Code</th>
         <th>Name</th>
       </tr>
     </thead>
     <tfoot>
       <tr>
-        <td>Total {{ unit_list|length }} unit{{ unit_list|pluralize }}.</td>
+        <td colspan='2'>Total {{ stock_list|length }} stock{{ stock_list|pluralize }}.</td>
       </tr>
     </tfoot>
     <tbody>
-      {% for unit in unit_list %}
+      {% for stock in stock_list %}
         <tr>
-          <td><a href='{% url "stocks-unit-edit" unit.pk %}'>{{ unit.name }}</a></td>
+          <td><a href='{% url "stocks-stock-edit" stock.pk %}'>{{ stock.code }}</a></td>
+          <td>{{ stock.name }}</td>
         </tr>
       {% endfor %}
     </tbody>

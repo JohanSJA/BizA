@@ -3,10 +3,6 @@
 {% load widget_tweaks %}
 
 {% block content_app %}
-  <div class='page-header'>
-    <h1>{% block title_page %}Form{% endblock %}</h1>
-  </div>
-
   <form action='' method='post' class='form-horizontal' role='form'>
     {% csrf_token %}
 
@@ -14,12 +10,22 @@
 
     {% for field in form %}
       <div class='form-group{% if field.errors %} has-error{% endif %}'>
-        <label for='{{ field.id_for_label }}' class='col-lg-2 control-label'>
-          {{ field.label }}
-        </label>
-        <div class='col-lg-6'>
-          {{ field|add_class:'form-control' }}
-        </div>
+        {% if field|widget_type == 'checkboxinput' %}
+          <div class='col-lg-6 col-lg-offset-2'>
+            <div class='checkbox'>
+              <label>
+                {{ field }} {{ field.label }}
+              </label>
+            </div>
+          </div>
+        {% else %}
+          <label for='{{ field.id_for_label }}' class='col-lg-2 control-label'>
+            {{ field.label }}
+          </label>
+          <div class='col-lg-6'>
+            {{ field|add_class:'form-control' }}
+          </div>
+        {% endif %}
         <div class='col-lg-4'>
           {% if field.errors %}
             <ul>

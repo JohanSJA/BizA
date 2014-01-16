@@ -1,5 +1,20 @@
 {% extends 'base_app.html' %}
 
+{% block breadcrumb %}
+  <li class='active'>Home</li>
+{% endblock %}
+
 {% block content_app %}
-  <h1>Home</h1>
+  <div class='row'>
+    <div class='col-lg-4'>
+      <div class='panel panel-default'>
+        <div class='panel-heading'>Stocks</div>
+        <div class='list-group'>
+          <a href='{% url "stocks-stock-list" %}' class='list-group-item'>Stocks</a>
+          <a href='{% url "stocks-unit-list" %}' class='list-group-item'>Units</a>
+          <a href='{% url "stocks-warehouse-list" %}' class='list-group-item'>Warehouses</a>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base_app.html' %}
+
+{% block breadcrumb %}
+  <li><a href='{% url "home" %}'>Home</a></li>
+  <li>Stocks</li>
+  <li><a href='{% url "stocks-stock-list" %}'>Stocks</a></li>
+  <li><a href='{% url "stocks-stock-edit" stock.pk %}'>{{ stock.code }}</a></li>
+  <li class='active'>Balance</li>
+{% endblock %}
+
+{% block content_app %}
+  <ul class='nav nav-tabs'>
+    <li><a href='{% url "stocks-stock-edit" stock.pk %}'>Detail</a></li>
+    <li class='active'><a href=''>Balance</a></li>
+  </ul>
+
+  <br>
+
+  <p class='text-right'>
+    <a href='{% url "stocks-warehouse-new" %}' class='btn btn-default'>New</a>
+  </p>
+
+  <table class='table table-striped table-hover table-bordered table-responsive'>
+    <thead>
+      <tr>
+        <th>Warehouse</th>
+        <th>Changes</th>
+        <th>Reason</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <td colspan='4'>Total {{ balance_list|length }} balance{{ balance_list|pluralize }}.</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      {% for balance in balance_list %}
+        <tr>
+          <td>{{ balance.warehouse }}</td>
+          <td>{{ balance.changes }}</td>
+          <td>{{ balance.reason }}</td>
+          <td>{{ balance.amount }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
