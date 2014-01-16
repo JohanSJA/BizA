@@ -7,3 +7,6 @@
 *.log
 *.pot
 *.db
+
+# Development database
+biza_dev.sqlite3
