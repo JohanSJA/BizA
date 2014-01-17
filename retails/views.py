@@ -18,3 +18,33 @@ class PriceCreate(CreateView):
 class PriceUpdate(UpdateView):
     model = Price
     success_url = reverse_lazy('retails-price-list')
+
+
+class SaleList(ListView):
+    def get_queryset(self):
+        worker_shop = self.request.user.worker.shop
+        return Sale.objects.filter(shop=worker_shop)
+
+
+class SaleCreate(CreateView):
+    model = Sale
+    fields = ['served_by']
+
+    def form_valid(self, form):
+        shop = self.request.user.worker.shop
+        form.instance.shop = shop
+        return super(SaleCreate, self).form_valid(form)
+
+
+
+class SaleDetail(DetailView):
+    model = Sale
+
+
+class SaleUpdate(UpdateView):
+    model = Sale
+    fields = ['served_by']
+
+
+class LineCreate(CreateView):
+    model = Line

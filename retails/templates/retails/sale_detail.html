@@ -1,0 +1,81 @@
+{% extends 'base_app.html' %}
+
+{% block breadcrumb %}
+  <li><a href='{% url "home" %}'>Home</a></li>
+  <li>Retails</li>
+  <li><a href='{% url "retails-sale-list" %}'>Sales</a></li>
+  <li>{{ sale.pk }}</li>
+{% endblock %}
+
+{% block content_app %}
+  <div class='well well-sm'>
+    <div class='btn-group'>
+      <a href='{% url "retails-sale-edit" sale.pk %}' class='btn btn-default'>Edit Info</a>
+      <a href='{% url "retails-line-new" %}' class='btn btn-default'>Add Line</a>
+    </div>
+  </div>
+
+
+  <div class='row'>
+    <div class='col-lg-4'>
+      <div class='panel panel-default'>
+        <div class='panel-heading'>Info</div>
+        <div class='panel-body'>
+          <dl class='dl-horizontal'>
+            <dt>Served By</dt>
+            <dd>{{ sale.served_by }}</dd>
+            {% if sale.closed %}
+              <dt>Closed At</dt>
+              <dd>{{ sale.closed_at }}</dd>
+              <dt>Closed By</dt>
+              <dd>{{ sale.closed_by }}</dd>
+            {% endif %}
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-lg-8'>
+      {% with sale.line_set.all as line_list %}
+        <div class='panel panel-default'>
+          <div class='panel-heading'>Lines</div>
+          <table class='table table-striped table-hover table-bordered table-responsive'>
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th class='text-right'>Unit Price (RM)</th>
+                <th class='text-right'>Quantity</th>
+                <th class='text-right'>Subtotal (RM)</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <td colspan='4'>Total {{ line_list|length }} line{{ line_list|pluralize }}.</td>
+              </tr>
+            </tfoot>
+            <tbody>
+              {% for line in line_list %}
+                <tr>
+                  <td>{{ line.stock.name }}</td>
+                  <td class='text-right'>{{ line.unit_price|floatformat:'2' }}</td>
+                  <td class='text-right'>{{ line.quantity }}</td>
+                  <td class='text-right'>{{ line.price|floatformat:'2' }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endwith %}
+
+      <div class='panel panel-default'>
+        <div class='panel-heading'>Summary</div>
+        <div class='panel-body'>
+          <dl class='dl-horizontal'>
+            <dt>Total (RM)</dt>
+            <dd class='text-right'>{{ sale.total_price|floatformat:'2' }}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

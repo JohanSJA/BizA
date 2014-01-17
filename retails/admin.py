@@ -24,7 +24,7 @@ class ReceiptInline(admin.TabularInline):
 
 
 class SaleAdmin(admin.ModelAdmin):
-    list_display = ['shop', 'closed_at', 'closed_by']
+    list_display = ['shop', 'served_by', 'closed_at', 'closed_by']
     list_filter = ['shop']
     inlines = [ReceiptInline, LineInline]
 

@@ -1,0 +1,42 @@
+{% extends 'base_app.html' %}
+
+{% block breadcrumb %}
+  <li><a href='{% url "home" %}'>Home</a></li>
+  <li>Retails</li>
+  <li class='active'>Sales</li>
+{% endblock %}
+
+{% block content_app %}
+  <div class='row'>
+    <div class='col-lg-6'>
+      <p><strong>Shop:</strong> {{ user.worker.shop }}</p>
+    </div>
+    <div class='col-lg-6'>
+      <p class='text-right'>
+        <a href='{% url "retails-sale-new" %}' class='btn btn-default'>New</a>
+      </p>
+    </div>
+  </div>
+
+  <table class='table table-striped table-hover table-bordered table-responsive'>
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Served By</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <td colspan='2'>Total {{ sale_list|length }} sale{{ sale_list|pluralize }}.</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      {% for sale in sale_list %}
+        <tr>
+          <td><a href='{% url "retails-sale-detail" sale.pk %}'>{{ sale.pk }}</a></td>
+          <td>{{ sale.served_by }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

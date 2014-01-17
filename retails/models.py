@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 from stocks.models import Warehouse, Stock
 
@@ -33,11 +34,27 @@ class Price(models.Model):
 
 class Sale(models.Model):
     shop = models.ForeignKey(Shop)
+    served_by = models.ForeignKey(User, related_name='served_sales')
     closed_at = models.DateTimeField(null=True, blank=True)
-    closed_by = models.ForeignKey(User, null=True, blank=True)
+    closed_by = models.ForeignKey(User, related_name='closed_sales', null=True, blank=True)
 
     def __unicode__(self):
         return '{} - {}'.format(self.shop, self.pk)
+
+    def get_absolute_url(self):
+        return reverse('retails-sale-detail', args=[self.pk])
+
+    def closed(self):
+        if self.closed_at:
+            return True
+        else:
+            return False
+
+    def total_price(self):
+        total = 0
+        for line in self.line_set.all():
+            total += line.price()
+        return total
 
 
 class Line(models.Model):
@@ -48,6 +65,9 @@ class Line(models.Model):
 
     def __unicode__(self):
         return '{} - {}'.format(self.sale, self.stock)
+
+    def price(self):
+        return self.quantity * self.unit_price
 
 
 class Receipt(models.Model):
