@@ -38,6 +38,9 @@ class Purchase(models.Model):
     def __unicode__(self):
         return '{} - {}'.format(self.partner, self.doc_num)
 
+    def get_absolute_url(self):
+        return reverse('wholesales-purchase-detail', args=[self.pk])
+
     def total_price(self):
         total = 0
         for line in self.purchaseline_set.all():
@@ -70,6 +73,15 @@ class Sale(models.Model):
     def __unicode__(self):
         return '{} - {}'.format(self.partner, self.doc_num)
 
+    def get_absolute_url(self):
+        return reverse('wholesales-sale-detail', args=[self.pk])
+
+    def closed(self):
+        if self.doc_num:
+            return True
+        else:
+            return False
+
     def total_price(self):
         total = 0
         for line in self.saleline_set.all():
@@ -84,7 +96,7 @@ class SaleLine(models.Model):
     quantity = models.IntegerField()
 
     def __unicode__(self):
-        return '{} - {}'.format(self.purchase, self.stock)
+        return '{} - {}'.format(self.sale, self.stock)
 
     def price(self):
         return self.unit_price * self.quantity

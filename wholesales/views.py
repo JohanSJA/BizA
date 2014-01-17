@@ -36,3 +36,50 @@ class PartnerDetail(DetailView):
 
 class PartnerUpdate(UpdateView):
     model = Partner
+
+
+class SaleList(ListView):
+    model = Sale
+
+
+class SaleCreate(CreateView):
+    model = Sale
+    fields = ['partner', 'served_by']
+
+
+class SaleDetail(DetailView):
+    model = Sale
+
+
+class SaleUpdate(UpdateView):
+    model = Sale
+    fields = ['partner', 'served_by']
+
+
+class SalePrint(DetailView):
+    model = Sale
+    template_name = 'wholesales/sale_print.html'
+
+
+class SaleLineCreate(CreateView):
+    model = SaleLine
+
+
+class PurchaseList(ListView):
+    model = Purchase
+
+
+class PurchaseCreate(CreateView):
+    model = Purchase
+
+
+class PurchaseDetail(DetailView):
+    model = Purchase
+
+
+class PurchaseUpdate(UpdateView):
+    model = Purchase
+
+
+class PurchaseLineCreate(CreateView):
+    model = PurchaseLine
