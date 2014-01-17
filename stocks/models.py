@@ -13,7 +13,7 @@ class Stock(models.Model):
     code = models.CharField(max_length=12, unique=True)
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField(blank=True)
-    unit = models.ForeignKey(Unit)
+    unit = models.ForeignKey(Unit, verbose_name='UOM')
     discontinued = models.BooleanField(default=False)
 
     def __unicode__(self):

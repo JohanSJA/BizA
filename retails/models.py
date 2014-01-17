@@ -25,6 +25,7 @@ class Price(models.Model):
     stock = models.OneToOneField(Stock)
     base = models.DecimalField(max_digits=12, decimal_places=4)
     lowest = models.DecimalField(max_digits=12, decimal_places=4)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return '{} - {}'.format(self.stock, self.base)
