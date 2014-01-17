@@ -17,6 +17,16 @@
 
     <div class='col-lg-4'>
       <div class='panel panel-default'>
+        <div class='panel-heading'>Wholesales</div>
+        <div class='list-group'>
+          <a href='{% url "wholesales-partner-list" %}' class='list-group-item'>Partners</a>
+          <a href='{% url "wholesales-price-list" %}' class='list-group-item'>Prices</a>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-lg-4'>
+      <div class='panel panel-default'>
         <div class='panel-heading'>Retails</div>
         <div class='list-group'>
           <a href='{% url "retails-sale-list" %}' class='list-group-item'>Sales</a>

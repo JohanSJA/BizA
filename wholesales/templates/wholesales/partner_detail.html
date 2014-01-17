@@ -1,0 +1,25 @@
+{% extends 'base_app.html' %}
+
+{% block breadcrumb %}
+  <li><a href='{% url "home" %}'>Home</a></li>
+  <li>Wholesales</li>
+  <li><a href='{% url "wholesales-partner-list" %}'>Partners</a></li>
+  <li>{{ partner.name }}</li>
+{% endblock %}
+
+{% block content_app %}
+  <div class='well well-sm'>
+    <div class='btn-group'>
+      <a href='{% url "wholesales-partner-edit" partner.pk %}' class='btn btn-default'>Edit</a>
+    </div>
+  </div>
+
+  <dl class='dl-horizontal'>
+    <dt>Name</dt>
+    <dd>{{ partner.name }}</dd>
+    <dt>Address</dt>
+    <dd>{{ partner.address|linebreaks }}</dd>
+    <dt>Phone</dt>
+    <dd>{{ partner.phone }}</dd>
+  </dl>
+{% endblock %}

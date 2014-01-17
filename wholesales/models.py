@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 from stocks.models import *
 
@@ -20,6 +22,9 @@ class Partner(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('wholesales-partner-detail', args=[self.pk])
 
 
 class Purchase(models.Model):
@@ -55,6 +60,7 @@ class PurchaseLine(models.Model):
 
 class Sale(models.Model):
     partner = models.ForeignKey(Partner)
+    served_by = models.ForeignKey(User)
     date = models.DateField(auto_now_add=True)
     doc_num = models.CharField(max_length=20, verbose_name='Document No.', blank=True)
 
