@@ -23,7 +23,7 @@ class Worker(models.Model):
 
 
 class Price(models.Model):
-    stock = models.OneToOneField(Stock)
+    stock = models.OneToOneField(Stock, related_name='retails_price')
     base = models.DecimalField(max_digits=12, decimal_places=4)
     lowest = models.DecimalField(max_digits=12, decimal_places=4)
     updated_at = models.DateTimeField(auto_now=True)
