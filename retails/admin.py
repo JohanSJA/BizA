@@ -3,9 +3,12 @@ from django.contrib import admin
 from .models import *
 
 
-class WorkerAdmin(admin.ModelAdmin):
-    list_display = ['shop', 'worker']
-    list_filter = ['shop']
+class WorkerInline(admin.TabularInline):
+    model = Worker
+
+
+class ShopAdmin(admin.ModelAdmin):
+    inlines = [WorkerInline]
 
 
 class PriceAdmin(admin.ModelAdmin):
@@ -26,7 +29,6 @@ class SaleAdmin(admin.ModelAdmin):
     inlines = [ReceiptInline, LineInline]
 
 
-admin.site.register(Shop)
-admin.site.register(Worker, WorkerAdmin)
+admin.site.register(Shop, ShopAdmin)
 admin.site.register(Price, PriceAdmin)
 admin.site.register(Sale, SaleAdmin)

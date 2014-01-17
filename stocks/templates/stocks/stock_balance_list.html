@@ -35,7 +35,7 @@
         <tr>
           <td>{{ balance.warehouse }}</td>
           <td>{{ balance.changes }}</td>
-          <td>{{ balance.reason }}</td>
+          <td>{{ balance.get_reason_display }}</td>
           <td>{{ balance.amount }}</td>
         </tr>
       {% endfor %}
