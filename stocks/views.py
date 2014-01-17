@@ -6,20 +6,6 @@ from django.core.urlresolvers import reverse_lazy
 from .models import *
 
 
-class UnitList(ListView):
-    model = Unit
-
-
-class UnitCreate(CreateView):
-    model = Unit
-    success_url = reverse_lazy('stocks-unit-list')
-
-
-class UnitUpdate(UpdateView):
-    model = Unit
-    success_url = reverse_lazy('stocks-unit-list')
-
-
 class StockList(ListView):
     model = Stock
 
@@ -38,20 +24,6 @@ class StockUpdate(UpdateView):
     success_url = reverse_lazy('stocks-stock-list')
 
 
-class WarehouseList(ListView):
-    model = Warehouse
-
-
-class WarehouseCreate(CreateView):
-    model = Warehouse
-    success_url = reverse_lazy('stocks-warehouse-list')
-
-
-class WarehouseUpdate(UpdateView):
-    model = Warehouse
-    success_url = reverse_lazy('stocks-warehouse-list')
-
-
 class StockBalanceList(ListView):
     template_name = 'stocks/stock_balance_list.html'
 
@@ -62,8 +34,3 @@ class StockBalanceList(ListView):
         context = super(StockBalanceList, self).get_context_data(**kwargs)
         context['stock'] = Stock.objects.get(pk=self.kwargs['stock_pk'])
         return context
-
-
-class StockBalanceCreate(CreateView):
-    template_name = 'stocks/stock_balance_form.html'
-    model = Balance
