@@ -3,7 +3,10 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.core.urlresolvers import reverse_lazy
 
+from datetime import datetime
+
 from .models import *
+from .forms import *
 
 
 class PriceList(ListView):
@@ -44,6 +47,24 @@ class SaleDetail(DetailView):
 class SaleUpdate(UpdateView):
     model = Sale
     fields = ['served_by']
+
+
+class SaleClose(UpdateView):
+    model = Sale
+    form_class = SaleCloseForm
+    template_name = 'retails/sale_close_form.html'
+
+    def form_valid(self, form):
+        sale = form.instance
+        sale.closed_by = self.request.user
+        sale.closed_at = datetime.now()
+        form.instance = sale
+        return super(SaleClose, self).form_valid(form)
+
+
+class SalePrint(DetailView):
+    model = Sale
+    template_name = 'retails/sale_print.html'
 
 
 class LineCreate(CreateView):

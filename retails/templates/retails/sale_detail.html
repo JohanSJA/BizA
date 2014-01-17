@@ -10,8 +10,12 @@
 {% block content_app %}
   <div class='well well-sm'>
     <div class='btn-group'>
-      <a href='{% url "retails-sale-edit" sale.pk %}' class='btn btn-default'>Edit Info</a>
-      <a href='{% url "retails-line-new" %}' class='btn btn-default'>Add Line</a>
+      {% if not sale.closed %}
+        <a href='{% url "retails-sale-edit" sale.pk %}' class='btn btn-default'>Edit Info</a>
+        <a href='{% url "retails-line-new" %}' class='btn btn-default'>Add Line</a>
+        <a href='{% url "retails-sale-close" sale.pk %}' class='btn btn-default'>Close Sale</a>
+      {% endif %}
+      <a href='' class='btn btn-default'>Print Receipt</a>
     </div>
   </div>
 
@@ -50,7 +54,8 @@
             </thead>
             <tfoot>
               <tr>
-                <td colspan='4'>Total {{ line_list|length }} line{{ line_list|pluralize }}.</td>
+                <td colspan='3' class='text-right'><strong>Total</strong></td>
+                <td class='text-right'>{{ sale.total_price|floatformat:'2' }}</td>
               </tr>
             </tfoot>
             <tbody>
@@ -66,16 +71,6 @@
           </table>
         </div>
       {% endwith %}
-
-      <div class='panel panel-default'>
-        <div class='panel-heading'>Summary</div>
-        <div class='panel-body'>
-          <dl class='dl-horizontal'>
-            <dt>Total (RM)</dt>
-            <dd class='text-right'>{{ sale.total_price|floatformat:'2' }}</dd>
-          </dl>
-        </div>
-      </div>
     </div>
   </div>
 {% endblock %}
