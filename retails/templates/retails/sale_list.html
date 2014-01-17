@@ -7,14 +7,12 @@
 {% endblock %}
 
 {% block content_app %}
-  <div class='row'>
-    <div class='col-lg-6'>
-      <p><strong>Shop:</strong> {{ user.worker.shop }}</p>
+  <div class='well well-sm'>
+    <div class='pull-right'>
+      <strong>Shop:</strong> {{ user.worker.shop }}
     </div>
-    <div class='col-lg-6'>
-      <p class='text-right'>
-        <a href='{% url "retails-sale-new" %}' class='btn btn-default'>New</a>
-      </p>
+    <div class='btn-group'>
+      <a href='{% url "wholesales-sale-new" %}' class='btn btn-default'>New</a>
     </div>
   </div>
 

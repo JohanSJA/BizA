@@ -7,9 +7,11 @@
 {% endblock %}
 
 {% block content_app %}
-  <p class='text-right'>
-    <a href='{% url "stocks-stock-new" %}' class='btn btn-default'>New</a>
-  </p>
+  <div class='well well-sm'>
+    <div class='btn-group'>
+      <a href='{% url "stocks-stock-new" %}' class='btn btn-default'>New</a>
+    </div>
+  </div>
 
   <table class='table table-striped table-hover table-bordered table-responsive'>
     <thead>
