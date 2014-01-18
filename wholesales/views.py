@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse_lazy
 from datetime import datetime
 
 from .models import *
+from .forms import *
 
 
 class PriceList(ListView):
@@ -61,8 +62,13 @@ class SalePrint(DetailView):
     template_name = 'wholesales/sale_print.html'
 
 
-class SaleLineCreate(CreateView):
-    model = SaleLine
+class SaleSaleLineUpdate(UpdateView):
+    model = Sale
+    form_class = SaleSaleLineFormSet
+    template_name = 'wholesales/sale_saleline_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('wholesales-sale-detail', args=[self.kwargs['pk']])
 
 
 class PurchaseList(ListView):
@@ -81,5 +87,10 @@ class PurchaseUpdate(UpdateView):
     model = Purchase
 
 
-class PurchaseLineCreate(CreateView):
-    model = PurchaseLine
+class PurchasePurchaseLineUpdate(UpdateView):
+    model = Purchase
+    form_class = PurchasePurchaseLineFormSet
+    template_name = 'wholesales/purchase_purchaseline_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('wholesales-purchase-detail', args=[self.kwargs['pk']])

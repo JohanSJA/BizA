@@ -12,7 +12,7 @@
     <div class='btn-group'>
       {% if not sale.closed %}
         <a href='{% url "wholesales-sale-edit" sale.pk %}' class='btn btn-default'>Edit Info</a>
-        <a href='{% url "wholesales-saleline-new" %}' class='btn btn-default'>Add Line</a>
+        <a href='{% url "wholesales-sale-saleline-edit" sale.pk %}' class='btn btn-default'>Edit Lines</a>
       {% endif %}
       <a href='{% url "wholesales-sale-print" sale.pk %}' class='btn btn-default'>Print</a>
     </div>
