@@ -1,11 +1,17 @@
 {% extends 'base_app.html' %}
 
-{% load widget_tweaks %}
-
 {% block content_app %}
   <form action='' method='post' class='form-horizontal' role='form'>
     {% csrf_token %}
-    {% include 'form.html' %}
+    {{ form.management_form }}
+
+    {% for f in form %}
+      <fieldset>
+        <legend>{{ forloop.counter }}</legend>
+        {{ f.id }}
+        {% include 'form.html' with form=f %}
+      </fieldset>
+    {% endfor %}
 
     <div class='form-group'>
       <div class='col-lg-6 col-lg-offset-2'>

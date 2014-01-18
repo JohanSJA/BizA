@@ -1,7 +1,7 @@
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 
 from datetime import datetime
 
@@ -67,5 +67,10 @@ class SalePrint(DetailView):
     template_name = 'retails/sale_print.html'
 
 
-class LineCreate(CreateView):
-    model = Line
+class SaleLineUpdate(UpdateView):
+    model = Sale
+    form_class = SaleLineFormSet
+    template_name = 'retails/sale_line_form.html'
+
+    def get_success_url(self):
+        return reverse('retails-sale-detail', args=[self.kwargs['pk']])

@@ -23,6 +23,6 @@ urlpatterns = patterns('',
         name='retails-sale-close'),
     url(r'^sale/(?P<pk>\d+)/print/$', login_required(SalePrint.as_view()),
         name='retails-sale-print'),
-    url(r'^line/new/$', login_required(LineCreate.as_view()),
-        name='retails-line-new'),
+    url(r'^sale/(?P<pk>\d+)/line/edit/$', login_required(SaleLineUpdate.as_view()),
+        name='retails-sale-line-edit'),
 )

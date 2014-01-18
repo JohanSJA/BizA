@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.models import inlineformset_factory
 
 from .models import *
 
@@ -9,3 +10,6 @@ class SaleCloseForm(forms.ModelForm):
     class Meta:
         model = Sale
         fields = []
+
+
+SaleLineFormSet = inlineformset_factory(Sale, Line)
