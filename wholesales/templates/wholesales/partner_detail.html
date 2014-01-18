@@ -52,7 +52,7 @@
             <tbody>
               {% for purchase in purchase_list %}
                 <tr>
-                  <td>{{ forloop.counter }}</td>
+                  <td><a href='{% url "wholesales-purchase-detail" purchase.pk %}'>{{ forloop.counter }}</a></td>
                   <td>{{ purchase.doc_num }}</td>
                   <td>{{ purchase.date }}</td>
                   <td class='text-right'>{{ purchase.total_price|floatformat:'2' }}</td>
@@ -83,7 +83,7 @@
             <tbody>
               {% for sale in sale_list %}
                 <tr>
-                  <td>{{ forloop.counter }}</td>
+                  <td><a href='{% url "wholesales-sale-detail" sale.pk %}'>{{ forloop.counter }}</a></td>
                   <td>{{ sale.doc_num }}</td>
                   <td>{{ sale.date }}</td>
                   <td class='text-right'>{{ sale.total_price|floatformat:'2' }}</td>
