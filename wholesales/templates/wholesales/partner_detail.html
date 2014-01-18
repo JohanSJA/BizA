@@ -14,12 +14,85 @@
     </div>
   </div>
 
-  <dl class='dl-horizontal'>
-    <dt>Name</dt>
-    <dd>{{ partner.name }}</dd>
-    <dt>Address</dt>
-    <dd>{{ partner.address|linebreaks }}</dd>
-    <dt>Phone</dt>
-    <dd>{{ partner.phone }}</dd>
-  </dl>
+  <div class='row'>
+    <div class='col-lg-4'>
+      <div class='panel panel-default'>
+        <div class='panel-heading'>Info</div>
+        <div class='panel-body'>
+          <dl class='dl-horizontal'>
+            <dt>Name</dt>
+            <dd>{{ partner.name }}</dd>
+            <dt>Address</dt>
+            <dd>{{ partner.address|linebreaksbr }}</dd>
+            <dt>Phone</dt>
+            <dd>{{ partner.phone }}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-lg-8'>
+      {% with partner.purchase_set.all as purchase_list %}
+        <div class='panel panel-default'>
+          <div class='panel-heading'>Purchases</div>
+          <table class='table table-striped table-hover table-bordered table-responsive'>
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Document No.</th>
+                <th>Date</th>
+                <th class='text-right'>Total Price (RM)</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <td colspan='4'>Total {{ purchase_list|length }} purchase{{ purchase_list|pluralize }}.</td>
+              </tr>
+            </tfoot>
+            <tbody>
+              {% for purchase in purchase_list %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ purchase.doc_num }}</td>
+                  <td>{{ purchase.date }}</td>
+                  <td class='text-right'>{{ purchase.total_price|floatformat:'2' }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endwith %}
+
+      {% with partner.sale_set.all as sale_list %}
+        <div class='panel panel-default'>
+          <div class='panel-heading'>Sales</div>
+          <table class='table table-striped table-hover table-bordered table-responsive'>
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Document No.</th>
+                <th>Date</th>
+                <th class='text-right'>Total Price (RM)</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <td colspan='4'>Total {{ sale_list|length }} sale{{ sale_list|pluralize }}.</td>
+              </tr>
+            </tfoot>
+            <tbody>
+              {% for sale in sale_list %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ sale.doc_num }}</td>
+                  <td>{{ sale.date }}</td>
+                  <td class='text-right'>{{ sale.total_price|floatformat:'2' }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endwith %}
+    </div>
+  </div>
 {% endblock %}
