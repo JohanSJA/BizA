@@ -45,7 +45,7 @@ class SaleList(ListView):
 
 class SaleCreate(CreateView):
     model = Sale
-    fields = ['partner', 'served_by']
+    fields = ['partner', 'served_by', 'term']
 
 
 class SaleDetail(DetailView):
@@ -54,7 +54,7 @@ class SaleDetail(DetailView):
 
 class SaleUpdate(UpdateView):
     model = Sale
-    fields = ['partner', 'served_by']
+    fields = ['partner', 'served_by', 'term']
 
 
 class SaleClose(UpdateView):

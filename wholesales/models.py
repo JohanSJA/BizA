@@ -62,10 +62,18 @@ class PurchaseLine(models.Model):
         return self.unit_price * self.quantity
 
 
+class Term(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Sale(models.Model):
     partner = models.ForeignKey(Partner)
     served_by = models.ForeignKey(User)
     date = models.DateField(auto_now_add=True)
+    term = models.ForeignKey(Term)
     doc_num = models.CharField(max_length=20, verbose_name='Document No.', blank=True)
     closed = models.BooleanField(default=False)
 

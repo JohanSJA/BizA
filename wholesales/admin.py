@@ -34,4 +34,5 @@ class SaleAdmin(admin.ModelAdmin):
 admin.site.register(Price, PriceAdmin)
 admin.site.register(Partner, PartnerAdmin)
 admin.site.register(Purchase, PurchaseAdmin)
+admin.site.register(Term)
 admin.site.register(Sale, SaleAdmin)

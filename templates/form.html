@@ -23,6 +23,8 @@
       <div class='col-lg-6'>
         {% if field|widget_type == 'select' %}
           {{ field|attr:'data-live-search:true'|add_class:'form-control' }}
+        {% elif field|widget_type == 'dateinput' %}
+          {{ field|add_class:'form-control datepicker' }}
         {% else %}
           {{ field|add_class:'form-control' }}
         {% endif %}

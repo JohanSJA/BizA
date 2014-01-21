@@ -16,5 +16,8 @@
 {% endblock %}
 
 {% block js %}
-  $('select').selectpicker()
+  $('select').selectpicker();
+  $('.datepicker').datepicker({
+    format: 'dd/mm/yyyy'
+  });
 {% endblock %}

@@ -29,6 +29,8 @@
             <dd><a href='{% url "wholesales-partner-detail" sale.partner.pk %}'>{{ sale.partner.name }}</a></dd>
             <dt>Served By</dt>
             <dd>{{ sale.served_by }}</dd>
+            <dt>Term</dt>
+            <dd>{{ sale.term }}</dd>
             {% if sale.closed %}
               <dt>Document No.</dt>
               <dd>{{ sale.doc_num }}</dd>
