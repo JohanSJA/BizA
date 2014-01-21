@@ -7,7 +7,6 @@
 {% endfor %}
 
 {% for field in form.visible_fields %}
-  {{ field|widget_type }}
   <div class='form-group{% if field.errors %} has-error{% endif %}'>
     {% if field|widget_type == 'checkboxinput' %}
       <div class='col-lg-6 col-lg-offset-2'>
@@ -31,7 +30,7 @@
     {% endif %}
     <div class='col-lg-4'>
       {% if field.errors %}
-        <ul>
+        <ul class='help-block'>
           {% for error in field.errors %}
             <li>{{ error }}</li>
           {% endfor %}
