@@ -16,6 +16,7 @@
   <table class='table table-striped table-hover table-bordered table-responsive'>
     <thead>
       <tr>
+        <th>No.</th>
         <th>Stock</th>
         <th class='text-right'>Base (RM)</th>
         <th class='text-right'>Lowest (RM)</th>
@@ -24,13 +25,14 @@
     </thead>
     <tfoot>
       <tr>
-        <td colspan='4'>Total {{ price_list|length }} stock{{ price_list|pluralize }}.</td>
+        <td colspan='5'>Total {{ price_list|length }} stock{{ price_list|pluralize }}.</td>
       </tr>
     </tfoot>
     <tbody>
       {% for price in price_list %}
         <tr>
-          <td><a href='{% url "wholesales-price-edit" price.pk %}'>{{ price.stock }}</a></td>
+          <td><a href='{% url "wholesales-price-edit" price.pk %}'>{{ forloop.counter }}</a></td>
+          <td>{{ price.stock }}</td>
           <td class='text-right'>{{ price.base|floatformat:'2' }}</td>
           <td class='text-right'>{{ price.lowest|floatformat:'2' }}</td>
           <td>{{ price.updated_at }}</td>
