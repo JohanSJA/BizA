@@ -1,6 +1,8 @@
 from django import forms
 from django.forms.models import inlineformset_factory
 
+from stocks.models import Stock
+
 from .models import *
 
 

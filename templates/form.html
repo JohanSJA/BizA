@@ -7,6 +7,7 @@
 {% endfor %}
 
 {% for field in form.visible_fields %}
+  {{ field|widget_type }}
   <div class='form-group{% if field.errors %} has-error{% endif %}'>
     {% if field|widget_type == 'checkboxinput' %}
       <div class='col-lg-6 col-lg-offset-2'>
@@ -21,7 +22,11 @@
         {{ field.label }}
       </label>
       <div class='col-lg-6'>
-        {{ field|add_class:'form-control' }}
+        {% if field|widget_type == 'select' %}
+          {{ field|attr:'data-live-search:true'|add_class:'form-control' }}
+        {% else %}
+          {{ field|add_class:'form-control' }}
+        {% endif %}
       </div>
     {% endif %}
     <div class='col-lg-4'>

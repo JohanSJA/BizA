@@ -30,9 +30,11 @@
             <dt>Served By</dt>
             <dd>{{ sale.served_by }}</dd>
             {% if sale.closed %}
-              <dt>Closed At</dt>
+              <dt>Document No.</dt>
               <dd>{{ sale.doc_num }}</dd>
             {% endif %}
+            <dt>Closed</dt>
+            <dd>{{ sale.closed }}</dd>
           </dl>
         </div>
       </div>

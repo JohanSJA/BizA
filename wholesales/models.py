@@ -31,6 +31,7 @@ class Purchase(models.Model):
     partner = models.ForeignKey(Partner)
     doc_num = models.CharField(max_length=20, verbose_name='Document No.')
     date = models.DateField()
+    closed = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ['partner', 'doc_num']
@@ -66,6 +67,7 @@ class Sale(models.Model):
     served_by = models.ForeignKey(User)
     date = models.DateField(auto_now_add=True)
     doc_num = models.CharField(max_length=20, verbose_name='Document No.', blank=True)
+    closed = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ['partner', 'doc_num']
@@ -75,12 +77,6 @@ class Sale(models.Model):
 
     def get_absolute_url(self):
         return reverse('wholesales-sale-detail', args=[self.pk])
-
-    def closed(self):
-        if self.doc_num:
-            return True
-        else:
-            return False
 
     def total_price(self):
         total = 0

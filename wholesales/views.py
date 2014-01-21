@@ -57,6 +57,11 @@ class SaleUpdate(UpdateView):
     fields = ['partner', 'served_by']
 
 
+class SaleClose(UpdateView):
+    model = Sale
+    fields = ['closed']
+
+
 class SalePrint(DetailView):
     model = Sale
     template_name = 'wholesales/sale_print.html'
@@ -77,6 +82,7 @@ class PurchaseList(ListView):
 
 class PurchaseCreate(CreateView):
     model = Purchase
+    fields = ['partner', 'doc_num', 'date']
 
 
 class PurchaseDetail(DetailView):
@@ -85,6 +91,12 @@ class PurchaseDetail(DetailView):
 
 class PurchaseUpdate(UpdateView):
     model = Purchase
+    fields = ['partner', 'doc_num', 'date']
+
+
+class PurchaseClose(UpdateView):
+    model = Purchase
+    fields = ['closed']
 
 
 class PurchasePurchaseLineUpdate(UpdateView):
