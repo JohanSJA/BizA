@@ -15,12 +15,12 @@ class PriceList(ListView):
 
 class PriceCreate(CreateView):
     model = Price
-    success_url = reverse_lazy('retails-price-list')
+    success_url = reverse_lazy('wholesales-price-list')
 
 
 class PriceUpdate(UpdateView):
     model = Price
-    success_url = reverse_lazy('retails-price-list')
+    success_url = reverse_lazy('wholesales-price-list')
 
 
 class PartnerList(ListView):

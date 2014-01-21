@@ -7,6 +7,7 @@ from stocks.models import *
 
 class Price(models.Model):
     stock = models.OneToOneField(Stock, related_name='wholesales_price')
+    cost = models.DecimalField(max_digits=12, decimal_places=4)
     base = models.DecimalField(max_digits=12, decimal_places=4)
     lowest = models.DecimalField(max_digits=12, decimal_places=4)
     updated_at = models.DateTimeField(auto_now=True)
