@@ -48,6 +48,7 @@ class Balance(models.Model):
 
     class Meta:
         get_latest_by = 'timestamp'
+        ordering = ['-timestamp']
 
     def __unicode__(self):
         return '{} {} in {}'.format(self.amount, self.stock, self.warehouse)

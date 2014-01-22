@@ -28,7 +28,7 @@
     <tbody>
       {% for stock in stock_list %}
         <tr>
-          <td><a href='{% url "stocks-stock-edit" stock.pk %}'>{{ stock.code }}</a></td>
+          <td><a href='{% url "stocks-stock-detail" stock.pk %}'>{{ stock.code }}</a></td>
           <td>{{ stock.name }}</td>
         </tr>
       {% endfor %}

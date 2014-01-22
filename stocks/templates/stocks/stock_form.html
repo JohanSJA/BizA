@@ -4,24 +4,10 @@
   <li><a href='{% url "home" %}'>Home</a></li>
   <li>Stocks</li>
   <li><a href='{% url "stocks-stock-list" %}'>Stocks</a></li>
-  <li class='active'>
-    {% if form.instance.pk %}
-      {{ form.instance.code }}
-    {% else %}
-      New
-    {% endif %}
-  </li>
-{% endblock %}
-
-{% block content_app %}
   {% if form.instance.pk %}
-    <ul class='nav nav-tabs'>
-      <li class='active'><a href=''>Detail</a></li>
-      <li><a href='{% url "stocks-stock-balance-list" form.instance.pk %}'>Balance</a></li>
-    </ul>
-
-    <br />
+    <li><a href='{% url "stocks-stock-detail" form.instance.pk %}'>{{ form.instance.code }}</a></li>
+    <li class='active'>Edit</li>
+  {% else %}
+    <li class='active'>New</li>
   {% endif %}
-
-  {{ block.super }}
 {% endblock %}

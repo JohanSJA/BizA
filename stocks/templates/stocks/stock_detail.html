@@ -8,6 +8,13 @@
 {% endblock %}
 
 {% block content_app %}
+  <div class='well well-sm'>
+    <div class='btn-group'>
+      <a href='{% url "stocks-stock-edit" stock.pk %}' class='btn btn-default'>Edit</a>
+      <a href='{% url "stocks-stock-code-print-new" stock.pk %}' target='_blank' class='btn btn-default'>Print Code</a>
+    </div>
+  </div>
+
   <dl class='dl-horizontal'>
     <dt>Code</dt>
     <dd>{{ stock.code }}</dd>
