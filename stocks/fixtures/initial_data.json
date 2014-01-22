@@ -1,0 +1,16 @@
+[
+  {
+    "model": "stocks.unit",
+    "pk": 1,
+    "fields": {
+      "name": "each"
+    }
+  },
+  {
+    "model": "stocks.unit",
+    "pk": 2,
+    "fields": {
+      "name": "pair"
+    }
+  }
+]
