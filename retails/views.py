@@ -36,7 +36,10 @@ class SaleCreate(CreateView):
     def form_valid(self, form):
         user = self.request.user
         shop = user.worker.shop
-        form.instance.shop = shop
+        sale = form.instance
+
+        sale.shop = shop
+
         return super(SaleCreate, self).form_valid(form)
 
 
@@ -57,9 +60,22 @@ class SaleClose(UpdateView):
 
     def form_valid(self, form):
         sale = form.instance
+
         sale.closed_by = self.request.user
         sale.closed_at = datetime.now()
-        form.instance = sale
+
+        receipt = Receipt(sale=sale)
+        receipt.save()
+
+        for line in sale.line_set.all():
+            stock_balance = Balance.objects.filter(
+                    warehouse=sale.shop.warehouse,
+                    stock=line.stock)
+            latest_stock_balance = stock_balance.latest()
+            new_amount = latest_stock_balance.amount - line.quantity
+            new_balance = Balance(warehouse=sale.shop.warehouse, stock=line.stock, changes=line.quantity, reason='RS', amount=new_amount)
+            new_balance.save()
+
         return super(SaleClose, self).form_valid(form)
 
 
