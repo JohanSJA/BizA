@@ -4,7 +4,8 @@
   <li><a href='{% url "home" %}'>Home</a></li>
   <li>Retails</li>
   <li><a href='{% url "retails-sale-list" %}'>Sales</a></li>
-  <li class='active'>Form</li>
+  <li><a href='{% url "retails-sale-detail" form.instance.pk %}'>{{ form.instance.pk }}</a></li>
+  <li class='active'>Close</li>
 {% endblock %}
 
 {% block content_app %}

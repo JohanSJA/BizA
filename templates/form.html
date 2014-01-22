@@ -1,6 +1,13 @@
 {% load widget_tweaks %}
 
-{{ form.non_field_errors }}
+{% if form.non_field_errors %}
+  <div class='panel panel-danger'>
+    <div class='panel-heading'>Error{{ form.non_field_errors|pluralize }}</div>
+    <div class='panel-body'>
+      {{ form.non_field_errors }}
+    </div>
+  </div>
+{% endif %}
 
 {% for field in form.hidden_fields %}
   {{ hidden }}

@@ -13,5 +13,15 @@ class SaleCloseForm(forms.ModelForm):
         model = Sale
         fields = []
 
+    def clean(self):
+        cleaned_data = super(SaleCloseForm, self).clean()
+        sale = self.instance
+
+        amount_paid = self.cleaned_data['amount_paid']
+        if amount_paid < sale.total_price():
+            raise forms.ValidationError('Amount paid is too low.')
+
+        return cleaned_data
+
 
 SaleLineFormSet = inlineformset_factory(Sale, Line)
