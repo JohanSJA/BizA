@@ -33,16 +33,21 @@ class Warehouse(models.Model):
 
 class Balance(models.Model):
     REASONS = [
-        ('P', 'Purchase'),
-        ('S', 'Sales'),
-        ('T', 'Transfer'),
+        ('RS', 'Retails Sales'),
+        ('WP', 'Wholesales Purchase'),
+        ('WS', 'Wholesales Sales'),
+        ('IT', 'Internal Transfer'),
     ]
 
     stock = models.ForeignKey(Stock)
     warehouse = models.ForeignKey(Warehouse)
     changes = models.IntegerField()
-    reason = models.CharField(max_length=1, choices=REASONS)
+    reason = models.CharField(max_length=2, choices=REASONS)
     amount = models.IntegerField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        get_latest_by = 'timestamp'
 
     def __unicode__(self):
         return '{} {} in {}'.format(self.amount, self.stock, self.warehouse)
