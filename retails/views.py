@@ -73,7 +73,9 @@ class SaleClose(UpdateView):
                     stock=line.stock)
             latest_stock_balance = stock_balance.latest()
             new_amount = latest_stock_balance.amount - line.quantity
-            new_balance = Balance(warehouse=sale.shop.warehouse, stock=line.stock, changes=line.quantity, reason='RS', amount=new_amount)
+            new_balance = Balance(warehouse=sale.shop.warehouse,
+                    stock=line.stock, changes=-(line.quantity), reason='RS',
+                    amount=new_amount)
             new_balance.save()
 
         return super(SaleClose, self).form_valid(form)
