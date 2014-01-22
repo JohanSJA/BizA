@@ -34,7 +34,8 @@ class SaleCreate(CreateView):
     fields = ['served_by']
 
     def form_valid(self, form):
-        shop = self.request.user.worker.shop
+        user = self.request.user
+        shop = user.worker.shop
         form.instance.shop = shop
         return super(SaleCreate, self).form_valid(form)
 
