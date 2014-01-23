@@ -1,9 +1,12 @@
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.core.urlresolvers import reverse_lazy
+from django.contrib import messages
 
 from datetime import datetime
+
+from stocks.models import Log
 
 from .models import *
 from .forms import *
@@ -47,6 +50,23 @@ class SaleCreate(CreateView):
 class SaleDetail(DetailView):
     model = Sale
 
+    def get_context_data(self, **kwargs):
+        context = super(SaleDetail, self).get_context_data(**kwargs)
+
+        sale = self.get_object()
+        if not sale.closed():
+            for line in sale.line_set.all():
+                log = Log.objects.filter(
+                        warehouse=sale.shop.warehouse,
+                        stock=line.stock).first()
+                if log:
+                    if log.balance() < line.quantity:
+                        messages.warning(self.request, 'Not enough {} for sale.'.format(line.stock))
+                else:
+                    messages.warning(self.request, 'Not {} in warehouse.'.format(line.stock))
+
+        return context
+
 
 class SaleUpdate(UpdateView):
     model = Sale
@@ -68,15 +88,11 @@ class SaleClose(UpdateView):
         receipt.save()
 
         for line in sale.line_set.all():
-            stock_balance = Balance.objects.filter(
+            log = Log.objects.get(
                     warehouse=sale.shop.warehouse,
                     stock=line.stock)
-            latest_stock_balance = stock_balance.latest()
-            new_amount = latest_stock_balance.amount - line.quantity
-            new_balance = Balance(warehouse=sale.shop.warehouse,
-                    stock=line.stock, changes=-(line.quantity), reason='RS',
-                    amount=new_amount)
-            new_balance.save()
+            new_entry = Entry(log=log, changes=-(line.quantity), reason='RS')
+            entry.save()
 
         return super(SaleClose, self).form_valid(form)
 
@@ -89,7 +105,7 @@ class SalePrint(DetailView):
 class SaleLineUpdate(UpdateView):
     model = Sale
     form_class = SaleLineFormSet
-    template_name = 'retails/sale_line_form.html'
+    template_name = 'retails/sale_line_formset.html'
 
     def get_success_url(self):
-        return reverse('retails-sale-detail', args=[self.kwargs['pk']])
+        return reverse_lazy('retails-sale-detail', args=[self.kwargs['pk']])

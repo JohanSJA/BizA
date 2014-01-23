@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.models import inlineformset_factory
 
-from stocks.models import Balance
+from stocks.models import Log
 
 from .models import *
 
@@ -24,15 +24,14 @@ class SaleCloseForm(forms.ModelForm):
             errors.append(forms.ValidationError('Amount paid is too low.'))
 
         for line in sale.line_set.all():
-            stock_balance = Balance.objects.filter(
+            log = Log.objects.filter(
                     warehouse=sale.shop.warehouse,
-                    stock=line.stock)
-            if stock_balance:
-                latest_stock_balance = stock_balance.latest()
-                if latest_stock_balance.amount < line.quantity:
+                    stock=line.stock).first()
+            if log:
+                if log.balance() < line.quantity:
                     errors.append(forms.ValidationError('Not enough {} for sale.'.format(line.stock)))
             else:
-                errors.append(forms.ValidationError('Not enough {} for sale.'.format(line.stock)))
+                errors.append(forms.ValidationError('Not {} in warehouse.'.format(line.stock)))
 
         if errors:
             raise forms.ValidationError(errors)

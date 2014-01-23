@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
     url(r'^stocks/', include('stocks.urls')),
     #url(r'^wholesales/', include('wholesales.urls')),
-    #url(r'^retails/', include('retails.urls')),
+    url(r'^retails/', include('retails.urls')),
 
     url(r'^$', login_required(Home.as_view()), name='home'),
 

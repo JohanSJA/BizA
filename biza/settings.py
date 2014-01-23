@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     # Project apps
     'stocks',
     #'wholesales',
-    #'retails',
+    'retails',
 )
 
 MIDDLEWARE_CLASSES = (

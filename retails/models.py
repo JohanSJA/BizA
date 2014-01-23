@@ -49,6 +49,7 @@ class Sale(models.Model):
             return True
         else:
             return False
+    closed.boolean = True
 
     def total_price(self):
         total = 0
