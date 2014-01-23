@@ -1,9 +1,13 @@
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 
 
-class Unit(models.Model):
+class Uom(models.Model):
     name = models.CharField(max_length=50, unique=True)
+
+    class Meta:
+        verbose_name = 'unit of measurement'
+        verbose_name_plural = 'units of measurement'
 
     def __unicode__(self):
         return self.name
@@ -12,15 +16,33 @@ class Unit(models.Model):
 class Stock(models.Model):
     code = models.CharField(max_length=12, unique=True)
     name = models.CharField(max_length=50, unique=True)
-    description = models.TextField(blank=True)
-    unit = models.ForeignKey(Unit, verbose_name='UOM')
+    note = models.TextField(blank=True)
+    uom = models.ForeignKey(Uom, verbose_name='UOM')
     discontinued = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('stocks-stock-detail', kwargs={'pk': self.pk})
+        return reverse_lazy('stocks-stock-detail', kwargs={'pk': self.pk})
+
+    def is_package(self):
+        if self.components.all():
+            return True
+        else:
+            return False
+
+
+class Component(models.Model):
+    stock = models.ForeignKey(Stock, related_name='components')
+    content = models.ForeignKey(Stock, related_name='packages')
+    quantity = models.SmallIntegerField()
+
+    class Meta:
+        unique_together = [('stock', 'content')]
+
+    def __unicode__(self):
+        return '{} {} {} in {}'.format(self.quantity, self.content.uom, self.content, self.stock)
 
 
 class Warehouse(models.Model):
@@ -30,8 +52,25 @@ class Warehouse(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse_lazy('stocks-warehouse-detail', kwargs={'pk': self.pk})
 
-class Balance(models.Model):
+
+class Log(models.Model):
+    warehouse = models.ForeignKey(Warehouse)
+    stock = models.ForeignKey(Stock)
+
+    class Meta:
+        unique_together = [('warehouse', 'stock')]
+
+    def __unicode__(self):
+        return '{} in {}'.format(self.stock, self.warehouse)
+
+    def get_absolute_url(self):
+        return reverse_lazy('stocks-log-detail', kwargs={'pk': self.pk})
+
+
+class Entry(models.Model):
     REASONS = [
         ('RS', 'Retails Sales'),
         ('WP', 'Wholesales Purchase'),
@@ -39,16 +78,14 @@ class Balance(models.Model):
         ('IT', 'Internal Transfer'),
     ]
 
-    stock = models.ForeignKey(Stock)
-    warehouse = models.ForeignKey(Warehouse)
+    log = models.ForeignKey(Log)
+    timestamp = models.DateTimeField(auto_now_add=True)
     changes = models.IntegerField()
     reason = models.CharField(max_length=2, choices=REASONS)
-    amount = models.IntegerField()
-    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         get_latest_by = 'timestamp'
         ordering = ['-timestamp']
 
     def __unicode__(self):
-        return '{} {} in {}'.format(self.amount, self.stock, self.warehouse)
+        return '{} - {}'.format(self.log, self.timestamp)

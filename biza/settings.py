@@ -43,8 +43,8 @@ INSTALLED_APPS = (
     'widget_tweaks',
     # Project apps
     'stocks',
-    'wholesales',
-    'retails',
+    #'wholesales',
+    #'retails',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -66,12 +66,8 @@ WSGI_APPLICATION = 'biza.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'biza_dev',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'biza_dev.sqlite3'),
     }
 }
 

@@ -1,16 +1,23 @@
 [
   {
-    "model": "stocks.unit",
+    "model": "stocks.uom",
     "pk": 1,
     "fields": {
       "name": "each"
     }
   },
   {
-    "model": "stocks.unit",
+    "model": "stocks.uom",
     "pk": 2,
     "fields": {
       "name": "pair"
+    }
+  },
+  {
+    "model": "stocks.uom",
+    "pk": 3,
+    "fields": {
+      "name": "set"
     }
   }
 ]

@@ -1,4 +1,10 @@
 from django import forms
+from django.forms.models import inlineformset_factory
+
+from .models import *
+
+
+StockComponentFormSet = inlineformset_factory(Stock, Component, fk_name='stock')
 
 
 class StockCodePrintForm(forms.Form):

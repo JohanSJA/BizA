@@ -3,19 +3,35 @@ from django.contrib import admin
 from .models import *
 
 
-class BalanceInline(admin.TabularInline):
-    model = Balance
+class ComponentInline(admin.TabularInline):
+    model = Component
+    fk_name = 'stock'
 
 
 class StockAdmin(admin.ModelAdmin):
-    list_display = ['code', 'name', 'unit']
-    inlines = [BalanceInline]
+    list_display = ['code', 'name', 'uom', 'is_package']
+    inlines = [ComponentInline]
+
+
+class LogInline(admin.TabularInline):
+    model = Log
 
 
 class WarehouseAdmin(admin.ModelAdmin):
     list_display = ['name', 'address']
+    inlines = [LogInline]
 
 
-admin.site.register(Unit)
+class EntryInline(admin.TabularInline):
+    model = Entry
+
+
+class LogAdmin(admin.ModelAdmin):
+    list_display = ['warehouse', 'stock']
+    inlines = [EntryInline]
+
+
+admin.site.register(Uom)
 admin.site.register(Stock, StockAdmin)
 admin.site.register(Warehouse, WarehouseAdmin)
+admin.site.register(Log, LogAdmin)

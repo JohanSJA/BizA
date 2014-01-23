@@ -1,0 +1,10 @@
+{% extends 'base_app_formset.html' %}
+
+{% block breadcrumb %}
+  <li><a href='{% url "home" %}'>Home</a></li>
+  <li>Stocks</li>
+  <li><a href='{% url "stocks-stock-list" %}'>Stocks</a></li>
+  <li><a href='{% url "stocks-stock-detail" form.instance.pk %}'>{{ form.instance.code }}</a></li>
+  <li>Components</li>
+  <li class='active'>Edit</li>
+{% endblock %}

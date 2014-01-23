@@ -24,6 +24,11 @@ class StockCreate(CreateView):
 class StockDetail(DetailView):
     model = Stock
 
+    def get_context_data(self, **kwargs):
+        context = super(StockDetail, self).get_context_data(**kwargs)
+        context['components'] = self.get_object().components.all()
+        return context
+
 
 class StockUpdate(UpdateView):
     model = Stock
@@ -100,6 +105,16 @@ def stock_code_print_pdf(request, pk, start, amount):
 
     return response
 
+
+class StockComponentUpdate(UpdateView):
+    model = Stock
+    form_class = StockComponentFormSet
+    template_name = 'stocks/stock_component_formset.html'
+
+    def get_success_url(self):
+        return reverse_lazy('stocks-stock-detail', args=[self.kwargs['pk']])
+
+
 class StockBalanceList(ListView):
     template_name = 'stocks/stock_balance_list.html'
 
@@ -118,4 +133,40 @@ class StockBalanceList(ListView):
             total_amount += balance.amount
         context['total_amount'] = total_amount
 
+        return context
+
+
+class WarehouseList(ListView):
+    model = Warehouse
+
+
+class WarehouseCreate(CreateView):
+    model = Warehouse
+
+
+class WarehouseDetail(DetailView):
+    model = Warehouse
+
+
+class WarehouseUpdate(UpdateView):
+    model = Warehouse
+
+
+class LogList(ListView):
+    model = Log
+
+
+class LogCreate(CreateView):
+    model = Log
+
+
+class LogDetail(DetailView):
+    model = Log
+
+    def get_context_data(self, **kwargs):
+        context = super(LogDetail, self).get_context_data(**kwargs)
+        entries = self.get_object().entry_set.all()
+        context['entries'] = entries
+        balance = entries.aggregate(models.Sum('changes'))
+        context['balance'] = balance
         return context

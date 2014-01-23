@@ -1,0 +1,39 @@
+{% extends 'base_app.html' %}
+
+{% block breadcrumb %}
+<li><a href='{% url "home" %}'>Home</a></li>
+<li>Stocks</li>
+<li class='active'>Logs</li>
+{% endblock %}
+
+{% block content_app %}
+<div class='well well-sm'>
+  <div class='btn-group'>
+    <a href='{% url "stocks-log-new" %}' class='btn btn-default'>New</a>
+  </div>
+</div>
+
+<table class='table table-striped table-hover table-bordered table-responsive sortable'>
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Warehouse</th>
+      <th>Stock</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td colspan='3'>Total {{ log_list|length }} log{{ log_list|pluralize }}.</td>
+    </tr>
+  </tfoot>
+  <tbody>
+    {% for log in log_list %}
+    <tr>
+      <td><a href='{% url "stocks-log-detail" log.pk %}'>{{ forloop.counter }}</a></td>
+      <td>{{ log.warehouse }}</td>
+      <td>{{ log.stock }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

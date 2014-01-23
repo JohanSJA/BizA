@@ -1,0 +1,32 @@
+{% extends 'base_app.html' %}
+
+{% block breadcrumb %}
+<li><a href='{% url "home" %}'>Home</a></li>
+<li>Stocks</li>
+<li><a href='{% url "stocks-warehouse-list" %}'>Warehouses</a></li>
+<li class='active'>{{ warehouse.name }}</li>
+{% endblock %}
+
+{% block content_app %}
+<div class='well well-sm'>
+  <div class='btn-group'>
+    <a href='{% url "stocks-warehouse-edit" warehouse.pk %}' class='btn btn-default'>Edit</a>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='col-lg-6 col-lg-offset-3'>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>Info</div>
+      <div class='panel-body'>
+        <dl class='dl-horizontal'>
+          <dt>Name</dt>
+          <dd>{{ warehouse.name }}</dd>
+          <dt>Address</dt>
+          <dd>{{ warehouse.address|linebreaksbr }}</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
