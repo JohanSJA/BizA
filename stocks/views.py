@@ -26,7 +26,10 @@ class StockDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(StockDetail, self).get_context_data(**kwargs)
-        context['components'] = self.get_object().components.all()
+        stock = self.get_object()
+        context['components'] = stock.components.all()
+        context['packages'] = stock.packages.all()
+        context['logs'] = stock.log_set.all()
         return context
 
 
@@ -115,27 +118,6 @@ class StockComponentUpdate(UpdateView):
         return reverse_lazy('stocks-stock-detail', args=[self.kwargs['pk']])
 
 
-class StockBalanceList(ListView):
-    template_name = 'stocks/stock_balance_list.html'
-
-    def get_queryset(self):
-        stock = Stock.objects.get(pk=self.kwargs['stock_pk'])
-        return Balance.objects.filter(stock=stock
-                ).order_by('warehouse', '-timestamp').distinct('warehouse')
-
-    def get_context_data(self, **kwargs):
-        context = super(StockBalanceList, self).get_context_data(**kwargs)
-        context['stock'] = Stock.objects.get(pk=self.kwargs['stock_pk'])
-
-        balances = self.get_queryset()
-        total_amount = 0
-        for balance in balances:
-            total_amount += balance.amount
-        context['total_amount'] = total_amount
-
-        return context
-
-
 class WarehouseList(ListView):
     model = Warehouse
 
@@ -147,16 +129,18 @@ class WarehouseCreate(CreateView):
 class WarehouseDetail(DetailView):
     model = Warehouse
 
+    def get_context_data(self, **kwargs):
+        context = super(WarehouseDetail, self).get_context_data(**kwargs)
+        warehouse = self.get_object()
+        context['logs'] = Log.objects.filter(warehouse=warehouse)
+        return context
+
 
 class WarehouseUpdate(UpdateView):
     model = Warehouse
 
 
 class LogList(ListView):
-    model = Log
-
-
-class LogCreate(CreateView):
     model = Log
 
 
@@ -167,6 +151,4 @@ class LogDetail(DetailView):
         context = super(LogDetail, self).get_context_data(**kwargs)
         entries = self.get_object().entry_set.all()
         context['entries'] = entries
-        balance = entries.aggregate(models.Sum('changes'))
-        context['balance'] = balance
         return context

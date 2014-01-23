@@ -31,6 +31,13 @@ class Stock(models.Model):
             return True
         else:
             return False
+    is_package.boolean = True
+
+    def balance(self):
+        balance = 0
+        for log in self.log_set.all():
+            balance = balance + log.balance()
+        return balance
 
 
 class Component(models.Model):
@@ -55,6 +62,12 @@ class Warehouse(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('stocks-warehouse-detail', kwargs={'pk': self.pk})
 
+    def balance(self):
+        balance = 0
+        for log in self.log_set.all():
+            balance = balance + log.balance()
+        return balance
+
 
 class Log(models.Model):
     warehouse = models.ForeignKey(Warehouse)
@@ -68,6 +81,13 @@ class Log(models.Model):
 
     def get_absolute_url(self):
         return reverse_lazy('stocks-log-detail', kwargs={'pk': self.pk})
+
+    def balance(self):
+        balance = self.entry_set.aggregate(models.Sum('changes'))
+        if balance['changes__sum']:
+            return balance['changes__sum']
+        else:
+            return 0
 
 
 class Entry(models.Model):

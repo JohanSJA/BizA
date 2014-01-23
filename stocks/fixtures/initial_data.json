@@ -3,7 +3,7 @@
     "model": "stocks.uom",
     "pk": 1,
     "fields": {
-      "name": "each"
+      "name": "unit"
     }
   },
   {

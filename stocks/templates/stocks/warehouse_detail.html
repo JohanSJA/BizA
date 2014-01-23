@@ -15,7 +15,7 @@
 </div>
 
 <div class='row'>
-  <div class='col-lg-6 col-lg-offset-3'>
+  <div class='col-lg-6'>
     <div class='panel panel-default'>
       <div class='panel-heading'>Info</div>
       <div class='panel-body'>
@@ -26,6 +26,45 @@
           <dd>{{ warehouse.address|linebreaksbr }}</dd>
         </dl>
       </div>
+    </div>
+  </div>
+
+  <div class='col-lg-6'>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>Logs</div>
+      <div class='panel-body'>
+        <dl class='dl-horizontal'>
+          <dt>Balance</dt>
+          <dd>{{ warehouse.balance }}</dd>
+        </dl>
+      </div>
+      <table class='table table-striped table-hover table-bordered table-responsive'>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Stock</th>
+            <th class='text-right'>Balance</th>
+            <th>UOM</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan='4'>
+              Total {{ logs|length }} log{{ logs|pluralize }}.
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          {% for log in logs %}
+          <tr>
+            <td><a href='{% url "stocks-log-detail" log.pk %}'>{{ forloop.counter }}</a></td>
+            <td><a href='{% url "stocks-stock-detail" log.stock.pk %}'>{{ log.stock }}</a></td>
+            <td class='text-right'>{{ log.balance|default:'0' }}</td>
+            <td>{{ log.stock.uom }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

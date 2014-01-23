@@ -9,7 +9,8 @@ class ComponentInline(admin.TabularInline):
 
 
 class StockAdmin(admin.ModelAdmin):
-    list_display = ['code', 'name', 'uom', 'is_package']
+    list_display = ['code', 'name', 'uom', 'is_package', 'discontinued']
+    list_filter = ['discontinued']
     inlines = [ComponentInline]
 
 
@@ -28,6 +29,7 @@ class EntryInline(admin.TabularInline):
 
 class LogAdmin(admin.ModelAdmin):
     list_display = ['warehouse', 'stock']
+    list_filter = ['warehouse', 'stock']
     inlines = [EntryInline]
 
 
