@@ -6,7 +6,7 @@ from django.contrib import messages
 
 from datetime import datetime
 
-from stocks.models import Log
+from stocks.models import Log, Entry
 
 from .models import *
 from .forms import *
@@ -92,7 +92,7 @@ class SaleClose(UpdateView):
                     warehouse=sale.shop.warehouse,
                     stock=line.stock)
             new_entry = Entry(log=log, changes=-(line.quantity), reason='RS')
-            entry.save()
+            new_entry.save()
 
         return super(SaleClose, self).form_valid(form)
 
