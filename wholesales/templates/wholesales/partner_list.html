@@ -17,20 +17,18 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Address</th>
         <th>Telephone</th>
       </tr>
     </thead>
     <tfoot>
       <tr>
-        <td colspan='3'>Total {{ partner_list|length }} partner{{ partner_list|pluralize }}.</td>
+        <td colspan='2'>Total {{ partner_list|length }} partner{{ partner_list|pluralize }}.</td>
       </tr>
     </tfoot>
     <tbody>
       {% for partner in partner_list %}
         <tr>
           <td><a href='{% url "wholesales-partner-detail" partner.pk %}'>{{ partner.name }}</a></td>
-          <td>{{ partner.address|linebreaks }}</td>
           <td>{{ partner.phone }}</td>
         </tr>
       {% endfor %}

@@ -43,7 +43,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
     # Project apps
     'stocks',
-    #'wholesales',
+    'wholesales',
     'retails',
 )
 

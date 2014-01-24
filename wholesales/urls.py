@@ -20,6 +20,8 @@ urlpatterns = patterns('',
         name='wholesales-partner-detail'),
     url(r'^partner/(?P<pk>\d+)/edit/$', login_required(PartnerUpdate.as_view()),
         name='wholesales-partner-edit'),
+    url(r'^partner/(?P<pk>\d+)/location/edit/$', login_required(PartnerLocationUpdate.as_view()),
+        name='wholesales-partner-location-edit'),
 
     url(r'^sale/$', login_required(SaleList.as_view()),
         name='wholesales-sale-list'),

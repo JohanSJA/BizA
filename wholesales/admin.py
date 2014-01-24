@@ -7,8 +7,13 @@ class PriceAdmin(admin.ModelAdmin):
     list_display = ['stock', 'base', 'lowest', 'updated_at']
 
 
+class LocationInline(admin.TabularInline):
+    model = Location
+
+
 class PartnerAdmin(admin.ModelAdmin):
-    list_display = ['name', 'address', 'phone']
+    list_display = ['name', 'phone']
+    inlines = [LocationInline]
 
 
 class PurchaseLineInline(admin.TabularInline):

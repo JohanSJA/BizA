@@ -39,6 +39,15 @@ class PartnerUpdate(UpdateView):
     model = Partner
 
 
+class PartnerLocationUpdate(UpdateView):
+    model = Partner
+    form_class = PartnerLocationFormSet
+    template_name = 'wholesales/partner_location_formset.html'
+
+    def get_success_url(self):
+        return reverse_lazy('wholesales-partner-detail', kwargs={'pk': self.kwargs['pk']})
+
+
 class SaleList(ListView):
     model = Sale
 

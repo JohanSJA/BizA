@@ -17,15 +17,25 @@ class Price(models.Model):
 
 
 class Partner(models.Model):
+    code = models.CharField(max_length=12, unique=True)
     name = models.CharField(max_length=50)
-    address = models.TextField()
     phone = models.CharField(max_length=20)
+    note = models.TextField(blank=True)
 
     def __unicode__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('wholesales-partner-detail', args=[self.pk])
+
+
+class Location(models.Model):
+    partner = models.ForeignKey(Partner)
+    name = models.CharField(max_length=5)
+    address = models.TextField()
+
+    def __unicode__(self):
+        return '{} - {}'.format(self.partner, self.address)
 
 
 class Purchase(models.Model):
