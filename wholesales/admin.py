@@ -16,14 +16,26 @@ class PartnerAdmin(admin.ModelAdmin):
     inlines = [LocationInline]
 
 
+class PurchaseOrderInline(admin.TabularInline):
+    model = PurchaseOrder
+
+
+class PurchaseInvoiceInline(admin.TabularInline):
+    model = PurchaseInvoice
+
+
 class PurchaseLineInline(admin.TabularInline):
     model = PurchaseLine
 
 
 class PurchaseAdmin(admin.ModelAdmin):
-    list_display = ['partner', 'doc_num', 'date', 'total_price']
+    list_display = ['partner', 'total_price']
     list_filter = ['partner']
-    inlines = [PurchaseLineInline]
+    inlines = [PurchaseOrderInline, PurchaseInvoiceInline, PurchaseLineInline]
+
+
+class SaleOrderInline(admin.TabularInline):
+    model = SaleOrder
 
 
 class SaleLineInline(admin.TabularInline):
@@ -31,9 +43,9 @@ class SaleLineInline(admin.TabularInline):
 
 
 class SaleAdmin(admin.ModelAdmin):
-    list_display = ['partner', 'doc_num', 'date', 'total_price']
+    list_display = ['partner', 'total_price']
     list_filter = ['partner']
-    inlines = [SaleLineInline]
+    inlines = [SaleOrderInline, SaleLineInline]
 
 
 admin.site.register(Price, PriceAdmin)

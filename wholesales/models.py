@@ -40,15 +40,9 @@ class Location(models.Model):
 
 class Purchase(models.Model):
     partner = models.ForeignKey(Partner)
-    doc_num = models.CharField(max_length=20, verbose_name='Document No.')
-    date = models.DateField()
-    closed = models.BooleanField(default=False)
-
-    class Meta:
-        unique_together = ['partner', 'doc_num']
 
     def __unicode__(self):
-        return '{} - {}'.format(self.partner, self.doc_num)
+        return self.pk
 
     def get_absolute_url(self):
         return reverse('wholesales-purchase-detail', args=[self.pk])
@@ -60,17 +54,41 @@ class Purchase(models.Model):
         return total
 
 
-class PurchaseLine(models.Model):
-    purchase = models.ForeignKey(Purchase)
+class Line(models.Model):
     stock = models.ForeignKey(Stock)
     unit_price = models.DecimalField(max_digits=12, decimal_places=4)
     quantity = models.IntegerField()
 
+    class Meta:
+        abstract = True
+
     def __unicode__(self):
-        return '{} - {}'.format(self.purchase, self.stock)
+        return '{} line'.format(self.purchase, self.stock)
 
     def price(self):
         return self.unit_price * self.quantity
+
+
+class PurchaseLine(Line):
+    purchase = models.ForeignKey(Purchase)
+
+    def __unicode__(self):
+        return '{} - {}'.format(self.purchase, self.stock)
+
+
+class PurchaseOrder(models.Model):
+    purchase = models.OneToOneField(Purchase)
+
+    def __unicode__(self):
+        return self.pk
+
+
+class PurchaseInvoice(models.Model):
+    purchase = models.OneToOneField(Purchase)
+    number = models.IntegerField()
+
+    def __unicode__(self):
+        return self.pk
 
 
 class Term(models.Model):
@@ -83,16 +101,9 @@ class Term(models.Model):
 class Sale(models.Model):
     partner = models.ForeignKey(Partner)
     served_by = models.ForeignKey(User)
-    date = models.DateField(auto_now_add=True)
-    term = models.ForeignKey(Term)
-    doc_num = models.CharField(max_length=20, verbose_name='Document No.', blank=True)
-    closed = models.BooleanField(default=False)
-
-    class Meta:
-        unique_together = ['partner', 'doc_num']
 
     def __unicode__(self):
-        return '{} - {}'.format(self.partner, self.doc_num)
+        return self.pk
 
     def get_absolute_url(self):
         return reverse('wholesales-sale-detail', args=[self.pk])
@@ -104,14 +115,18 @@ class Sale(models.Model):
         return total
 
 
-class SaleLine(models.Model):
+class SaleLine(Line):
     sale = models.ForeignKey(Sale)
-    stock = models.ForeignKey(Stock)
-    unit_price = models.DecimalField(max_digits=12, decimal_places=4)
-    quantity = models.IntegerField()
 
     def __unicode__(self):
         return '{} - {}'.format(self.sale, self.stock)
 
-    def price(self):
-        return self.unit_price * self.quantity
+
+class SaleOrder(models.Model):
+    sale = models.OneToOneField(Sale)
+    date = models.DateField(auto_now_add=True)
+    term = models.ForeignKey(Term)
+    closed = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.pk
