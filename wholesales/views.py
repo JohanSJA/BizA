@@ -91,7 +91,7 @@ class PurchaseList(ListView):
 
 class PurchaseCreate(CreateView):
     model = Purchase
-    fields = ['partner', 'doc_num', 'date']
+    fields = ['partner']
 
 
 class PurchaseDetail(DetailView):

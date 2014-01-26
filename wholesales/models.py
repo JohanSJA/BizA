@@ -38,6 +38,21 @@ class Location(models.Model):
         return '{} - {}'.format(self.partner, self.address)
 
 
+class Line(models.Model):
+    stock = models.ForeignKey(Stock)
+    unit_price = models.DecimalField(max_digits=12, decimal_places=4)
+    quantity = models.IntegerField()
+
+    class Meta:
+        abstract = True
+
+    def __unicode__(self):
+        return '{} line'.format(self.stock)
+
+    def price(self):
+        return self.unit_price * self.quantity
+
+
 class Purchase(models.Model):
     partner = models.ForeignKey(Partner)
 
@@ -54,26 +69,11 @@ class Purchase(models.Model):
         return total
 
 
-class Line(models.Model):
-    stock = models.ForeignKey(Stock)
-    unit_price = models.DecimalField(max_digits=12, decimal_places=4)
-    quantity = models.IntegerField()
-
-    class Meta:
-        abstract = True
-
-    def __unicode__(self):
-        return '{} line'.format(self.purchase, self.stock)
-
-    def price(self):
-        return self.unit_price * self.quantity
-
-
 class PurchaseLine(Line):
     purchase = models.ForeignKey(Purchase)
 
     def __unicode__(self):
-        return '{} - {}'.format(self.purchase, self.stock)
+        return '{} -{}'.format(self.purchase, self.stock)
 
 
 class PurchaseOrder(models.Model):
