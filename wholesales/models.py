@@ -46,9 +46,6 @@ class Line(models.Model):
     class Meta:
         abstract = True
 
-    def __unicode__(self):
-        return '{} line'.format(self.stock)
-
     def price(self):
         return self.unit_price * self.quantity
 
