@@ -70,7 +70,7 @@ class PurchaseLine(Line):
     purchase = models.ForeignKey(Purchase)
 
     def __unicode__(self):
-        return '{} -{}'.format(self.purchase, self.stock)
+        return '{} - {}'.format(self.purchase, self.stock)
 
 
 class PurchaseOrder(models.Model):
@@ -82,7 +82,7 @@ class PurchaseOrder(models.Model):
 
 class PurchaseInvoice(models.Model):
     purchase = models.OneToOneField(Purchase)
-    number = models.IntegerField()
+    number = models.CharField(max_length=12)
 
     def __unicode__(self):
         return self.pk
