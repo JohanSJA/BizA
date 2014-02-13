@@ -91,7 +91,6 @@ class PurchaseList(ListView):
 
 class PurchaseCreate(CreateView):
     model = Purchase
-    fields = ['partner']
 
 
 class PurchaseDetail(DetailView):
@@ -100,12 +99,6 @@ class PurchaseDetail(DetailView):
 
 class PurchaseUpdate(UpdateView):
     model = Purchase
-    fields = ['partner', 'doc_num', 'date']
-
-
-class PurchaseClose(UpdateView):
-    model = Purchase
-    fields = ['closed']
 
 
 class PurchasePurchaseLineUpdate(UpdateView):
@@ -115,3 +108,8 @@ class PurchasePurchaseLineUpdate(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('wholesales-purchase-detail', args=[self.kwargs['pk']])
+
+
+class PurchasePurchaseOrderUpdate(UpdateView):
+    model = Purchase
+    template_name = 'wholesales/purchase_purchaseorder_form.html'
