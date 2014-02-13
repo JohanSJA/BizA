@@ -16,11 +16,11 @@ class PartnerAdmin(admin.ModelAdmin):
     inlines = [LocationInline]
 
 
-class PurchaseOrderInline(admin.TabularInline):
+class PurchaseOrderInline(admin.StackedInline):
     model = PurchaseOrder
 
 
-class PurchaseInvoiceInline(admin.TabularInline):
+class PurchaseInvoiceInline(admin.StackedInline):
     model = PurchaseInvoice
 
 
@@ -34,7 +34,7 @@ class PurchaseAdmin(admin.ModelAdmin):
     inlines = [PurchaseOrderInline, PurchaseInvoiceInline, PurchaseLineInline]
 
 
-class SaleOrderInline(admin.TabularInline):
+class SaleOrderInline(admin.StackedInline):
     model = SaleOrder
 
 

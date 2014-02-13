@@ -13,7 +13,7 @@ class Price(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return str(self.stock)
+        return unicode(self.stock)
 
 
 class Partner(models.Model):
@@ -23,7 +23,7 @@ class Partner(models.Model):
     note = models.TextField(blank=True)
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
     def get_absolute_url(self):
         return reverse('wholesales-partner-detail', args=[self.pk])
@@ -35,26 +35,14 @@ class Location(models.Model):
     address = models.TextField()
 
     def __unicode__(self):
-        return '{} - {}'.format(self.partner, self.address)
-
-
-class Line(models.Model):
-    stock = models.ForeignKey(Stock)
-    unit_price = models.DecimalField(max_digits=12, decimal_places=4)
-    quantity = models.IntegerField()
-
-    class Meta:
-        abstract = True
-
-    def price(self):
-        return self.unit_price * self.quantity
+        return unicode('{} - {}'.format(self.partner, self.address))
 
 
 class Purchase(models.Model):
     partner = models.ForeignKey(Partner)
 
     def __unicode__(self):
-        return self.pk
+        return unicode(self.pk)
 
     def get_absolute_url(self):
         return reverse('wholesales-purchase-detail', args=[self.pk])
@@ -66,18 +54,24 @@ class Purchase(models.Model):
         return total
 
 
-class PurchaseLine(Line):
+class PurchaseLine(models.Model):
     purchase = models.ForeignKey(Purchase)
+    stock = models.ForeignKey(Stock)
+    unit_price = models.DecimalField(max_digits=12, decimal_places=4)
+    quantity = models.IntegerField()
 
     def __unicode__(self):
-        return '{} - {}'.format(self.purchase, self.stock)
+        return unicode('{} - {}'.format(self.purchase, self.stock))
+
+    def price(self):
+        return self.unit_price * self.quantity
 
 
 class PurchaseOrder(models.Model):
     purchase = models.OneToOneField(Purchase)
 
     def __unicode__(self):
-        return self.pk
+        return unicode(self.pk)
 
 
 class PurchaseInvoice(models.Model):
@@ -85,14 +79,14 @@ class PurchaseInvoice(models.Model):
     number = models.CharField(max_length=12)
 
     def __unicode__(self):
-        return self.pk
+        return unicode(self.number)
 
 
 class Term(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
 
 class Sale(models.Model):
@@ -100,7 +94,7 @@ class Sale(models.Model):
     served_by = models.ForeignKey(User)
 
     def __unicode__(self):
-        return self.pk
+        return unicode(self.pk)
 
     def get_absolute_url(self):
         return reverse('wholesales-sale-detail', args=[self.pk])
@@ -112,11 +106,18 @@ class Sale(models.Model):
         return total
 
 
-class SaleLine(Line):
+class SaleLine(models.Model):
     sale = models.ForeignKey(Sale)
+    stock = models.ForeignKey(Stock)
+    unit_price = models.DecimalField(max_digits=12, decimal_places=4)
+    quantity = models.IntegerField()
 
     def __unicode__(self):
-        return '{} - {}'.format(self.sale, self.stock)
+        return unicode('{} - {}'.format(self.sale, self.stock))
+
+    def price(self):
+        return self.unit_price * self.quantity
+
 
 
 class SaleOrder(models.Model):
@@ -126,4 +127,4 @@ class SaleOrder(models.Model):
     closed = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.pk
+        return unicode(self.pk)
