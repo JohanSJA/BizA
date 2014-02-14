@@ -54,12 +54,12 @@
     {% with partner.purchase_set.all as purchase_list %}
     <div class='panel panel-default'>
       <div class='panel-heading'>Purchases</div>
-      <table class='table table-striped table-hover table-bordered table-responsive'>
+      <table class='table table-striped table-hover table-responsive'>
         <thead>
           <tr>
             <th>No.</th>
-            <th>Document No.</th>
-            <th>Date</th>
+            <th>Order Number</th>
+            <th>Invoice Number</th>
             <th class='text-right'>Total Price (RM)</th>
           </tr>
         </thead>
@@ -72,8 +72,8 @@
           {% for purchase in purchase_list %}
           <tr>
             <td><a href='{% url "wholesales-purchase-detail" purchase.pk %}'>{{ forloop.counter }}</a></td>
-            <td>{{ purchase.doc_num }}</td>
-            <td>{{ purchase.date }}</td>
+            <td>{% if purchase.ordered %}{{ purchase.purchaseorder.pk }}{% else %}---{% endif %}</td>
+            <td>{% if purchase.invoiced %}{{ purchase.purchaseinvoice.number }}{% else %}---{% endif %}</td>
             <td class='text-right'>{{ purchase.total_price|floatformat:'2' }}</td>
           </tr>
           {% endfor %}
@@ -85,7 +85,7 @@
     {% with partner.sale_set.all as sale_list %}
     <div class='panel panel-default'>
       <div class='panel-heading'>Sales</div>
-      <table class='table table-striped table-hover table-bordered table-responsive'>
+      <table class='table table-striped table-hover table-responsive'>
         <thead>
           <tr>
             <th>No.</th>

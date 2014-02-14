@@ -14,10 +14,10 @@
     <title>{% block title %}BizA{% endblock %}</title>
 
     <!-- Bootstrap CSS -->
-    <link href='{% static "css/bootstrap-select.min.css" %}' rel='stylesheet'>
+    {% block before_css %}{% endblock %}
     <link href='//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.css' rel='stylesheet'>
-    <link href='{% static "css/datepicker3.css" %}' rel='stylesheet'>
-    <link href='{% static "css/bootstrap-sortable.css" %}' rel='stylesheet'>
+    {% block after_css %}{% endblock %}
+<link href='{% static "css/bootstrap-sortable.css" %}' rel='stylesheet'>
 
     <style>
       {% block css %}{% endblock %}
@@ -35,9 +35,9 @@
 
     <!-- Bootstrap core Javascript -->
     <script src='https://code.jquery.com/jquery-1.10.2.min.js'></script>
-    <script src='{% static "js/bootstrap-select.min.js" %}'></script>
+    {% block before_js %}{% endblock %}
     <script src='//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js'></script>
-    <script src='{% static "js/bootstrap-datepicker.js" %}'></script>
+    {% block after_js %}{% endblock %}
     <script src='{% static "js/moment.min.js" %}'></script>
     <script src='{% static "js/bootstrap-sortable.js" %}'></script>
 

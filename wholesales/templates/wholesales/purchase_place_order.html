@@ -1,0 +1,27 @@
+{% extends 'base_app_form.html' %}
+
+{% block breadcrumb %}
+  <li><a href='{% url "home" %}'>Home</a></li>
+  <li>Wholesales</li>
+  <li><a href='{% url "wholesales-purchase-list" %}'>Purchases</a></li>
+  <li><a href='{% url "wholesales-purchase-detail" form.instance.pk %}'>{{ form.instance }}</a></li>
+  <li class='active'>Place Order</li>
+{% endblock %}
+
+{% block content_app %}
+<form action='' method='post' class='form-horizontal' role='form'>
+  {% csrf_token %}
+
+  <div class='form-group'>
+    <div class='col-lg-6 col-lg-offset-2'>
+      <p>Are you sure you want to place the order?</p>
+    </div>
+  </div>
+
+  <div class='form-group'>
+    <div class='col-lg-6 col-lg-offset-2'>
+      <input type='submit' class='btn btn-default' />
+    </div>
+  </div>
+</form>
+{% endblock %}

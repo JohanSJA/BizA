@@ -10,17 +10,26 @@
 {% block content_app %}
 <div class='well well-sm'>
   <div class='btn-toolbar'>
+    {% if not purchase.ordered %}
     <div class='btn-group'>
       <a href='{% url "wholesales-purchase-edit" purchase.pk %}' class='btn btn-default'>Edit Info</a>
       <a href='{% url "wholesales-purchase-purchaseline-edit" purchase.pk %}' class='btn btn-default'>Edit Lines</a>
     </div>
+    {% endif %}
     <div class='btn-group'>
-      <a href='' class='btn btn-default'>Place Order</a>
-      <a href='' class='btn btn-default'>Receive Order</a>
+      {% if not purchase.ordered %}
+      <a href='{% url "wholesales-purchase-place-order" purchase.pk %}' class='btn btn-default'>Place Order</a>
+      {% else %}
+      <a href='' class='btn btn-default'>Print Order</a>
+      {% endif %}
+    </div>
+    <div class='btn-group'>
+      {% if not purchase.invoiced %}
+      <a href='{% url "wholesales-purchase-receive-invoice" purchase.pk %}' class='btn btn-default'>Receive Invoice</a>
+      {% endif %}
     </div>
   </div>
 </div>
-
 
 <div class='row'>
   <div class='col-lg-4'>
@@ -33,41 +42,65 @@
         </dl>
       </div>
     </div>
+
+    {% if purchase.ordered %}
+    <div class='panel panel-default'>
+      <div class='panel-heading'>Order</div>
+      <div class='panel-body'>
+        <dl class='dl-horizontal'>
+          <dt>Number</dt>
+          <dd>{{ purchase.purchaseorder.pk }}</dd>
+        </dl>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if purchase.invoiced %}
+    <div class='panel panel-default'>
+      <div class='panel-heading'>Invoice</div>
+      <div class='panel-body'>
+        <dl class='dl-horizontal'>
+          <dt>Number</dt>
+          <dd>{{ purchase.purchaseinvoice.number }}</dd>
+        </dl>
+      </div>
+    </div>
+    {% endif %}
   </div>
 
   <div class='col-lg-8'>
     {% with purchase.purchaseline_set.all as line_list %}
-      <div class='panel panel-default'>
-        <div class='panel-heading'>Lines</div>
-        <table class='table'>
-          <thead>
-            <tr>
-              <th>No.</th>
-              <th>Description</th>
-              <th class='text-right'>Unit Price (RM)</th>
-              <th class='text-right'>Quantity</th>
-              <th class='text-right'>Subtotal (RM)</th>
-            </tr>
-          </thead>
-          <tfoot>
-            <tr>
-              <td colspan='4' class='text-right'><strong>Total</strong></td>
-              <td class='text-right'>{{ purchase.total_price|floatformat:'2' }}</td>
-            </tr>
-          </tfoot>
-          <tbody>
-            {% for line in line_list %}
-              <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ line.stock.name }}</td>
-                <td class='text-right'>{{ line.unit_price|floatformat:'2' }}</td>
-                <td class='text-right'>{{ line.quantity }}</td>
-                <td class='text-right'>{{ line.price|floatformat:'2' }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>Lines</div>
+      <table class='table'>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Description</th>
+            <th class='text-right'>Unit Price (RM)</th>
+            <th class='text-right'>Quantity</th>
+            <th class='text-right'>Subtotal (RM)</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan='4' class='text-right'><strong>Total</strong></td>
+            <td class='text-right'>{{ purchase.total_price|floatformat:'2' }}</td>
+          </tr>
+        </tfoot>
+        <tbody>
+          {% for line in line_list %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ line.stock.name }}</td>
+            <td class='text-right'>{{ line.unit_price|floatformat:'2' }}</td>
+            <td class='text-right'>{{ line.quantity }} {{ line.stock.uom }}</td>
+            <td class='text-right'>{{ line.price|floatformat:'2' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
     {% endwith %}
   </div>
 </div>

@@ -110,6 +110,47 @@ class PurchasePurchaseLineUpdate(UpdateView):
         return reverse_lazy('wholesales-purchase-detail', args=[self.kwargs['pk']])
 
 
-class PurchasePurchaseOrderUpdate(UpdateView):
+class PurchasePlaceOrder(UpdateView):
     model = Purchase
-    template_name = 'wholesales/purchase_purchaseorder_form.html'
+    form_class = PurchasePlaceOrderForm
+    template_name = 'wholesales/purchase_place_order.html'
+
+    def form_valid(self, form):
+        purchase = form.instance
+
+        po = PurchaseOrder(purchase=purchase)
+        po.save()
+
+        return super(PurchasePlaceOrder, self).form_valid(form)
+
+
+class PurchaseInvoiceCreate(CreateView):
+    model = PurchaseInvoice
+    form_class = PurchaseInvoiceForm
+
+    def get_context_data(self, **kwargs):
+        context = super(PurchaseInvoiceCreate, self).get_context_data(**kwargs)
+        purchase = Purchase.objects.get(pk=self.kwargs['pk'])
+        context['purchase'] = purchase
+        return context
+
+    def form_valid(self, form):
+        invoice = form.instance
+
+        purchase = Purchase.objects.get(pk=self.kwargs['pk'])
+        invoice.purchase = purchase
+
+        warehouse = form.cleaned_data['warehouse']
+
+        for line in purchase.purchaseline_set.all():
+            log = Log.objects.get(
+                    warehouse=warehouse,
+                    stock=line.stock)
+            new_entry = Entry(log=log, changes=line.quantity, reason='WP')
+            new_entry.save()
+
+        form.instance = invoice
+        return super(PurchaseInvoiceCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('wholesales-purchase-detail', args=[self.kwargs['pk']])

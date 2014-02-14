@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 
 from stocks.models import *
 
@@ -52,6 +53,23 @@ class Purchase(models.Model):
         for line in self.purchaseline_set.all():
             total += line.price()
         return total
+
+    def ordered(self):
+        try:
+            self.purchaseorder
+            return True
+        except ObjectDoesNotExist:
+            return False
+    ordered.boolean = True
+
+    def invoiced(self):
+        try:
+            self.purchaseinvoice
+            return True
+        except ObjectDoesNotExist:
+            return False
+    invoiced.boolean = True
+
 
 
 class PurchaseLine(models.Model):
