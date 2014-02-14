@@ -48,6 +48,6 @@ urlpatterns = patterns('',
         name='wholesales-purchase-edit'),
     url(r'^purchase/(?P<pk>\d+)/purchaseline/edit/$', login_required(PurchasePurchaseLineUpdate.as_view()),
         name='wholesales-purchase-purchaseline-edit'),
-    url(r'^purchase/(?P<pk>\d+)/purchaseorder/new/$', login_required(PurchasePurchaseOrderCreate.as_view()),
-        name='wholesales-purchase-purchaseorder-new'),
+    url(r'^purchase/(?P<pk>\d+)/purchaseorder/edit/$', login_required(PurchasePurchaseOrderUpdate.as_view()),
+        name='wholesales-purchase-purchaseorder-edit'),
 )

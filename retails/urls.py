@@ -11,6 +11,7 @@ urlpatterns = patterns('',
         name='retails-price-new'),
     url(r'^price/(?P<pk>\d+)/edit/$', login_required(PriceUpdate.as_view()),
         name='retails-price-edit'),
+
     url(r'^sale/$', login_required(SaleList.as_view()),
         name='retails-sale-list'),
     url(r'^sale/new/$', login_required(SaleCreate.as_view()),
