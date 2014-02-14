@@ -74,7 +74,7 @@
             <td>{{ forloop.counter }}</td>
             <td>{{ line.stock.name }}</td>
             <td class='text-right'>{{ line.unit_price|floatformat:'2' }}</td>
-            <td class='text-right'>{{ line.quantity }}</td>
+            <td class='text-right'>{{ line.quantity }} {{ line.stock.uom }}</td>
             <td class='text-right'>{{ line.price|floatformat:'2' }}</td>
           </tr>
           {% endfor %}

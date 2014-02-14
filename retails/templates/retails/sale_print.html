@@ -4,7 +4,7 @@
 
 {% block css %}
 body {
-  font-family: "Courier New", Courier, monospace;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 .container {
   width: 970px !important;
@@ -15,13 +15,13 @@ body {
 <div class='container'>
   <div class='row'>
     <div class='col-xs-7'>
-      <h1>Cheantar Electronics Sdn. Bhd.</h1>
+      <h2>Cheantar Electronics Sdn. Bhd.</h2>
       <p><strong>HQ:</strong> 4388, Jalan Heng Choon Thian, 12000 Butterworth, Penang.</p>
       <p><strong>Branch:</strong> {{ sale.shop.address }}</p>
     </div>
 
     <div class='col-xs-5'>
-      <h2 class='text-right'>Official Receipt</h2>
+      <h1 class='text-right'>Official Receipt</h1>
       <dl class='dl-horizontal'>
         {% if sale.closed %}
         {% with sale.receipt as receipt %}
@@ -60,7 +60,7 @@ body {
           <tr>
             <td>{{ line.stock.name }}</td>
             <td class='text-right'>{{ line.unit_price|floatformat:'2' }}</td>
-            <td class='text-right'>{{ line.quantity }}</td>
+            <td class='text-right'>{{ line.quantity }} {{ line.stock.uom }}</td>
             <td class='text-right'>{{ line.price|floatformat:'2' }}</td>
           </tr>
           {% endfor %}
