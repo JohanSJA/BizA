@@ -54,7 +54,6 @@ class SaleList(ListView):
 
 class SaleCreate(CreateView):
     model = Sale
-    fields = ['partner', 'served_by', 'term']
 
 
 class SaleDetail(DetailView):
