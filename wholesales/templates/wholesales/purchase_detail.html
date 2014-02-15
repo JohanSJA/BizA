@@ -10,7 +10,7 @@
 {% block content_app %}
 <div class='well well-sm'>
   <div class='btn-toolbar'>
-    {% if not purchase.ordered %}
+    {% if not purchase.ordered and not purchase.invoiced %}
     <div class='btn-group'>
       <a href='{% url "wholesales-purchase-edit" purchase.pk %}' class='btn btn-default'>Edit Info</a>
       <a href='{% url "wholesales-purchase-purchaseline-edit" purchase.pk %}' class='btn btn-default'>Edit Lines</a>
@@ -92,7 +92,7 @@
           {% for line in line_list %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ line.stock.name }}</td>
+            <td><a href='{% url "stocks-stock-detail" line.stock.pk %}'>{{ line.stock.name }}</a></td>
             <td class='text-right'>{{ line.unit_price|floatformat:'2' }}</td>
             <td class='text-right'>{{ line.quantity }} {{ line.stock.uom }}</td>
             <td class='text-right'>{{ line.price|floatformat:'2' }}</td>
