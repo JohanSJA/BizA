@@ -33,7 +33,7 @@
       {% for price in price_list %}
         <tr>
           <td><a href='{% url "wholesales-price-edit" price.pk %}'>{{ forloop.counter }}</a></td>
-          <td>{{ price.stock }}</td>
+          <td><a href='{% url "stocks-stock-detail" price.stock.pk %}'>{{ price.stock }}</a></td>
           <td class='text-right'>{{ price.cost|floatformat:'2' }}</td>
           <td class='text-right'>{{ price.base|floatformat:'2' }}</td>
           <td class='text-right'>{{ price.lowest|floatformat:'2' }}</td>
