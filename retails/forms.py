@@ -16,7 +16,7 @@ class SaleCloseForm(forms.ModelForm):
     def clean(self):
         errors = []
 
-        cleaned_data = super(SaleCloseForm, self).clean()
+        cleaned_data = super().clean()
         sale = self.instance
 
         amount_paid = self.cleaned_data['amount_paid']

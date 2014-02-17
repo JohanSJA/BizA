@@ -25,7 +25,7 @@ class StockDetail(DetailView):
     model = Stock
 
     def get_context_data(self, **kwargs):
-        context = super(StockDetail, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         stock = self.get_object()
         context['components'] = stock.components.all()
         context['packages'] = stock.packages.all()
@@ -42,14 +42,14 @@ class StockCodePrintCreate(FormView):
     form_class = StockCodePrintForm
 
     def get_context_data(self, **kwargs):
-        context = super(StockCodePrintCreate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['stock'] = Stock.objects.get(pk=self.kwargs['pk'])
         return context
 
     def form_valid(self, form):
         self._start = form.cleaned_data['start']
         self._amount = form.cleaned_data['amount']
-        return super(StockCodePrintCreate, self).form_valid(form)
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('stocks-stock-code-print-pdf', kwargs={
@@ -130,7 +130,7 @@ class WarehouseDetail(DetailView):
     model = Warehouse
 
     def get_context_data(self, **kwargs):
-        context = super(WarehouseDetail, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         warehouse = self.get_object()
         context['logs'] = Log.objects.filter(warehouse=warehouse)
         return context
@@ -148,7 +148,7 @@ class LogDetail(DetailView):
     model = Log
 
     def get_context_data(self, **kwargs):
-        context = super(LogDetail, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         entries = self.get_object().entry_set.all()
         context['entries'] = entries
         return context

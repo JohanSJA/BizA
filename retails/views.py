@@ -43,7 +43,7 @@ class SaleCreate(CreateView):
 
         sale.shop = shop
 
-        return super(SaleCreate, self).form_valid(form)
+        return super().form_valid(form)
 
 
 
@@ -51,7 +51,7 @@ class SaleDetail(DetailView):
     model = Sale
 
     def get_context_data(self, **kwargs):
-        context = super(SaleDetail, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         sale = self.get_object()
         if not sale.closed():
@@ -94,7 +94,7 @@ class SaleClose(UpdateView):
             new_entry = Entry(log=log, changes=-(line.quantity), reason='RS')
             new_entry.save()
 
-        return super(SaleClose, self).form_valid(form)
+        return super().form_valid(form)
 
 
 class SalePrint(DetailView):
