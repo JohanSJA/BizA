@@ -9,12 +9,20 @@
 
 {% block content_app %}
 <div class='well well-sm'>
-  <div class='btn-group'>
-    {% if not sale.closed %}
+  <div class='btn-toolbar' role='toolbar'>
+    <div class='btn-group'>
+      {% if not sale.closed %}
       <a href='{% url "wholesales-sale-edit" sale.pk %}' class='btn btn-default'>Edit Info</a>
       <a href='{% url "wholesales-sale-saleline-edit" sale.pk %}' class='btn btn-default'>Edit Lines</a>
-    {% endif %}
-    <a href='{% url "wholesales-sale-print" sale.pk %}' class='btn btn-default'>Print</a>
+      {% endif %}
+    </div>
+    <div class='btn-group'>
+      {% if sale.ordered %}
+      <a href='{% url "wholesales-sale-print" sale.pk %}' class='btn btn-default'>Print</a>
+      {% else %}
+      <a href='{% url "wholesales-sale-place-order" sale.pk %}' class='btn btn-default'>Generate Order</a>
+      {% endif %}
+    </div>
   </div>
 </div>
 
@@ -29,6 +37,19 @@
           <dd><a href='{% url "wholesales-partner-detail" sale.partner.pk %}'>{{ sale.partner.name }}</a></dd>
           <dt>Served By</dt>
           <dd>{{ sale.served_by }}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>Order</div>
+      <div class='panel-body'>
+        <dl class='dl-horizontal'>
+          {% with sale.saleorder as so %}
+          <dt>Number</dt>
+          <dd>{{ so.pk }}</dd>
+          <dt>Term</dt>
+          <dd>{{ so.term }}</dd>
+          {% endwith %}
         </dl>
       </div>
     </div>

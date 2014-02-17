@@ -28,3 +28,7 @@ class PurchaseInvoiceForm(forms.ModelForm):
     class Meta:
         model = PurchaseInvoice
         fields = ['number']
+
+
+
+SalePlaceOrderForm = inlineformset_factory(Sale, SaleOrder, exclude=('closed',))

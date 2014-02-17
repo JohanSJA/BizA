@@ -64,9 +64,13 @@ class SaleUpdate(UpdateView):
     model = Sale
 
 
-class SaleClose(UpdateView):
+class SalePlaceOrder(UpdateView):
     model = Sale
-    fields = ['closed']
+    form_class = SalePlaceOrderForm
+    template_name = 'wholesales/sale_place_order.html'
+
+    def get_success_url(self):
+        return reverse_lazy('wholesales-sale-detail', args=[self.kwargs['pk']])
 
 
 class SalePrint(DetailView):

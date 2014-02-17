@@ -123,6 +123,14 @@ class Sale(models.Model):
             total += line.price()
         return total
 
+    def ordered(self):
+        try:
+            self.saleorder
+            return True
+        except ObjectDoesNotExist:
+            return False
+    ordered.boolean = True
+
 
 class SaleLine(models.Model):
     sale = models.ForeignKey(Sale)
