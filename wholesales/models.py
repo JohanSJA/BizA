@@ -13,8 +13,8 @@ class Price(models.Model):
     lowest = models.DecimalField(max_digits=12, decimal_places=4)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __unicode__(self):
-        return unicode(self.stock)
+    def __str__(self):
+        return self.stock
 
 
 class Partner(models.Model):
@@ -23,8 +23,8 @@ class Partner(models.Model):
     phone = models.CharField(max_length=20)
     note = models.TextField(blank=True)
 
-    def __unicode__(self):
-        return unicode(self.name)
+    def __str__(self):
+        return self.name
 
     def get_absolute_url(self):
         return reverse('wholesales-partner-detail', args=[self.pk])
@@ -35,15 +35,15 @@ class Location(models.Model):
     name = models.CharField(max_length=5)
     address = models.TextField()
 
-    def __unicode__(self):
-        return unicode('{} - {}'.format(self.partner, self.address))
+    def __str__(self):
+        return '{} - {}'.format(self.partner, self.address)
 
 
 class Purchase(models.Model):
     partner = models.ForeignKey(Partner)
 
-    def __unicode__(self):
-        return unicode(self.pk)
+    def __str__(self):
+        return str(self.pk)
 
     def get_absolute_url(self):
         return reverse('wholesales-purchase-detail', args=[self.pk])
@@ -78,8 +78,8 @@ class PurchaseLine(models.Model):
     unit_price = models.DecimalField(max_digits=12, decimal_places=4)
     quantity = models.IntegerField()
 
-    def __unicode__(self):
-        return unicode('{} - {}'.format(self.purchase, self.stock))
+    def __str__(self):
+        return '{} - {}'.format(self.purchase, self.stock)
 
     def price(self):
         return self.unit_price * self.quantity
@@ -88,22 +88,22 @@ class PurchaseLine(models.Model):
 class PurchaseOrder(models.Model):
     purchase = models.OneToOneField(Purchase)
 
-    def __unicode__(self):
-        return unicode(self.pk)
+    def __str__(self):
+        return str(self.pk)
 
 
 class PurchaseInvoice(models.Model):
     purchase = models.OneToOneField(Purchase)
     number = models.CharField(max_length=12)
 
-    def __unicode__(self):
-        return unicode(self.number)
+    def __str__(self):
+        return self.number
 
 
 class Term(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return unicode(self.name)
 
 
@@ -111,8 +111,8 @@ class Sale(models.Model):
     partner = models.ForeignKey(Partner)
     served_by = models.ForeignKey(User)
 
-    def __unicode__(self):
-        return unicode(self.pk)
+    def __str__(self):
+        return str(self.pk)
 
     def get_absolute_url(self):
         return reverse('wholesales-sale-detail', args=[self.pk])
@@ -130,8 +130,8 @@ class SaleLine(models.Model):
     unit_price = models.DecimalField(max_digits=12, decimal_places=4)
     quantity = models.IntegerField()
 
-    def __unicode__(self):
-        return unicode('{} - {}'.format(self.sale, self.stock))
+    def __str__(self):
+        return '{} - {}'.format(self.sale, self.stock)
 
     def price(self):
         return self.unit_price * self.quantity
@@ -144,5 +144,5 @@ class SaleOrder(models.Model):
     term = models.ForeignKey(Term)
     closed = models.BooleanField(default=False)
 
-    def __unicode__(self):
-        return unicode(self.pk)
+    def __str__(self):
+        return str(self.pk)

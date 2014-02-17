@@ -9,7 +9,7 @@ class Uom(models.Model):
         verbose_name = 'unit of measurement'
         verbose_name_plural = 'units of measurement'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -20,7 +20,7 @@ class Stock(models.Model):
     uom = models.ForeignKey(Uom, verbose_name='UOM')
     discontinued = models.BooleanField(default=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_absolute_url(self):
@@ -48,7 +48,7 @@ class Component(models.Model):
     class Meta:
         unique_together = [('stock', 'content')]
 
-    def __unicode__(self):
+    def __str__(self):
         return '{} {} {} in {}'.format(self.quantity, self.content.uom, self.content, self.stock)
 
 
@@ -56,7 +56,7 @@ class Warehouse(models.Model):
     name = models.CharField(max_length=50, unique=True)
     address = models.TextField()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_absolute_url(self):
@@ -76,7 +76,7 @@ class Log(models.Model):
     class Meta:
         unique_together = [('warehouse', 'stock')]
 
-    def __unicode__(self):
+    def __str__(self):
         return '{} in {}'.format(self.stock, self.warehouse)
 
     def get_absolute_url(self):
@@ -107,5 +107,5 @@ class Entry(models.Model):
         get_latest_by = 'timestamp'
         ordering = ['-timestamp']
 
-    def __unicode__(self):
+    def __str__(self):
         return '{} - {}'.format(self.log, self.timestamp)
