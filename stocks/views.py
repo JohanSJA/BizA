@@ -80,7 +80,7 @@ def stock_code_print_pdf(request, pk, start, amount):
     total = start + amount - 1 # total indicate blank sticker + print sticker
     sticker_row = 5
     sticker_col = 5
-    num_col = int(total / sticker_row) + 1
+    num_col = total // sticker_row + 1
     last_row = total % sticker_row
     current_sticker = 1
 
