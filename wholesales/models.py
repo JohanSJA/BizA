@@ -14,7 +14,7 @@ class Price(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.stock
+        return str(self.stock)
 
 
 class Partner(models.Model):
@@ -104,7 +104,7 @@ class Term(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
-        return unicode(self.name)
+        return self.name
 
 
 class Sale(models.Model):
