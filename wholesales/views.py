@@ -62,7 +62,6 @@ class SaleDetail(DetailView):
 
 class SaleUpdate(UpdateView):
     model = Sale
-    fields = ['partner', 'served_by', 'term']
 
 
 class SaleClose(UpdateView):
