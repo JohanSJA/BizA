@@ -3,8 +3,14 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
+from django.http import HttpResponse
 
 from datetime import datetime
+
+from reportlab.lib import pagesizes
+from reportlab.lib.units import mm
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table
+from reportlab.lib.styles import getSampleStyleSheet
 
 from stocks.models import Log, Entry
 
@@ -100,6 +106,52 @@ class SaleClose(UpdateView):
 class SalePrint(DetailView):
     model = Sale
     template_name = 'retails/sale_print.html'
+
+
+def sale_print(request, pk):
+    sale = Sale.objects.get(pk=pk)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="sale_receipt.pdf"'
+
+    page_size = pagesizes.landscape(pagesizes.A5)
+
+    doc = SimpleDocTemplate(response, pagesize=page_size,
+            rightMargin=15*mm, leftMargin=15*mm,
+            topMargin=15*mm, bottomMargin=15*mm)
+
+    styles = getSampleStyleSheet()
+
+    story = []
+
+    text = '<font size=16>Official Receipt</font>'
+    story.append(Paragraph(text, styles['Normal']))
+
+    text = 'Cheantar Electronics Sdn. Bhd.'
+    story.append(Paragraph(text, styles['Normal']))
+
+    text = 'HQ: 4388, Jalan Heng Choon Thian, 12000 Butterworth, Pulau Pinang.'
+    story.append(Paragraph(text, styles['Normal']))
+
+    text = 'Shop: {}'.format(sale.shop.address)
+    story.append(Paragraph(text, styles['Normal']))
+
+    data = [['No.', 'Description', 'Unit Price (RM)', 'Quantity', 'Subtotal (RM)']]
+    for line in sale.line_set.all():
+        data.append(['1', str(line.stock), str(line.unit_price), str(line.quantity), str(line.price())])
+    data.append(['', '', '', 'Total', str(sale.total_price())])
+    t = Table(data)
+    story.append(t)
+
+    text = 'Note:'
+    story.append(Paragraph(text, styles['Normal']))
+
+    text = '1. Goods sold are not returnable or refundable.'
+    story.append(Paragraph(text, styles['Normal']))
+
+    doc.build(story)
+
+    return response
 
 
 class SaleLineUpdate(UpdateView):
