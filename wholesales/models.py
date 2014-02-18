@@ -150,7 +150,15 @@ class SaleOrder(models.Model):
     sale = models.OneToOneField(Sale)
     date = models.DateField(auto_now_add=True)
     term = models.ForeignKey(Term)
-    closed = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.pk)
+        return str(self.sale)
+
+
+class SaleDelivery(models.Model):
+    sale = models.OneToOneField(Sale)
+    date = models.DateField(auto_now_add=True)
+    address = models.ForeignKey(Location)
+
+    def __str__(self):
+        return str(self.sale)

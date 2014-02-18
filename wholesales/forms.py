@@ -31,4 +31,4 @@ class PurchaseInvoiceForm(forms.ModelForm):
 
 
 
-SalePlaceOrderForm = inlineformset_factory(Sale, SaleOrder, exclude=('closed',))
+SalePlaceOrderForm = inlineformset_factory(Sale, SaleOrder)
