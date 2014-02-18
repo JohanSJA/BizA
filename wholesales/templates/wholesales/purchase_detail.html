@@ -20,7 +20,7 @@
       {% if not purchase.ordered %}
       <a href='{% url "wholesales-purchase-place-order" purchase.pk %}' class='btn btn-default'>Place Order</a>
       {% else %}
-      <a href='' class='btn btn-default'>Print Order</a>
+      <a href='{% url "wholesales-purchase-print" purchase.pk %}' class='btn btn-default'>Print Order</a>
       {% endif %}
     </div>
     <div class='btn-group'>

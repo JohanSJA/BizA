@@ -126,6 +126,11 @@ class PurchasePlaceOrder(UpdateView):
         return super().form_valid(form)
 
 
+class PurchasePrint(DetailView):
+    model = Purchase
+    template_name = 'wholesales/purchase_print.html'
+
+
 class PurchaseInvoiceCreate(CreateView):
     model = PurchaseInvoice
     form_class = PurchaseInvoiceForm

@@ -50,6 +50,8 @@ urlpatterns = patterns('',
         name='wholesales-purchase-purchaseline-edit'),
     url(r'^purchase/(?P<pk>\d+)/order/$', login_required(PurchasePlaceOrder.as_view()),
         name='wholesales-purchase-place-order'),
+    url(r'^purchase/(?P<pk>\d+)/print/$', login_required(PurchasePrint.as_view()),
+        name='wholesales-purchase-print'),
     url(r'^purchase/(?P<pk>\d+)/invoice/$', login_required(PurchaseInvoiceCreate.as_view()),
         name='wholesales-purchase-receive-invoice'),
 )
