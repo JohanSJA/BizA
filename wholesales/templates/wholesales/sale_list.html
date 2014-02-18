@@ -17,19 +17,29 @@
     <thead>
       <tr>
         <th>No</th>
+        <th>Partner</th>
         <th>Served By</th>
+        <th>Sale Order</th>
       </tr>
     </thead>
     <tfoot>
       <tr>
-        <td colspan='2'>Total {{ sale_list|length }} sale{{ sale_list|pluralize }}.</td>
+        <td colspan='4'>Total {{ sale_list|length }} sale{{ sale_list|pluralize }}.</td>
       </tr>
     </tfoot>
     <tbody>
       {% for sale in sale_list %}
         <tr>
           <td><a href='{% url "wholesales-sale-detail" sale.pk %}'>{{ sale.pk }}</a></td>
+          <td><a href='{% url "wholesales-partner-detail" sale.partner.pk %}'>{{ sale.partner }}</a></td>
           <td>{{ sale.served_by }}</td>
+          <td>
+            {% if sale.ordered %}
+            {{ sale.saleorder.pk }}
+            {% else %}
+            ----
+            {% endif %}
+          </td>
         </tr>
       {% endfor %}
     </tbody>
