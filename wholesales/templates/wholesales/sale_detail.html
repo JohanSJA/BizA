@@ -18,9 +18,16 @@
     </div>
     <div class='btn-group'>
       {% if sale.ordered %}
-      <a href='{% url "wholesales-sale-print" sale.pk %}' target='_blank' class='btn btn-default'>Print</a>
+      <a href='{% url "wholesales-sale-print" sale.pk %}' target='_blank' class='btn btn-default'>Print Order</a>
       {% else %}
       <a href='{% url "wholesales-sale-place-order" sale.pk %}' class='btn btn-default'>Generate Order</a>
+      {% endif %}
+    </div>
+    <div class='btn-group'>
+      {% if sale.delivered %}
+      <a href='{% url "wholesales-sale-print" sale.pk %}' target='_blank' class='btn btn-default'>Print Delivery</a>
+      {% elif sale.ordered %}
+      <a href='{% url "wholesales-sale-deliver" sale.pk %}' class='btn btn-default'>Generate Delivery</a>
       {% endif %}
     </div>
   </div>
@@ -52,6 +59,23 @@
           <dd>{{ so.date }}</dd>
           <dt>Term</dt>
           <dd>{{ so.term }}</dd>
+          {% endwith %}
+        </dl>
+      </div>
+    </div>
+    {% endif %}
+    {% if sale.delivered %}
+    <div class='panel panel-default'>
+      <div class='panel-heading'>Delivery</div>
+      <div class='panel-body'>
+        <dl class='dl-horizontal'>
+          {% with sale.saledelivery as sd %}
+          <dt>Number</dt>
+          <dd>{{ sd.pk }}</dd>
+          <dt>Date</dt>
+          <dd>{{ sd.date }}</dd>
+          <dt>Address</dt>
+          <dd>{{ sd.address.address|linebreaksbr }}</dd>
           {% endwith %}
         </dl>
       </div>

@@ -87,6 +87,29 @@ class SaleSaleLineUpdate(UpdateView):
         return reverse_lazy('wholesales-sale-detail', args=[self.kwargs['pk']])
 
 
+class SaleDeliver(UpdateView):
+    model = Sale
+    form_class = SaleSaleDeliveryFormSet
+    template_name = 'wholesales/sale_deliver.html'
+
+    def form_valid(self, form):
+        sale = form.instance
+
+        warehouse = form.cleaned_data[0]['warehouse']
+
+        for line in sale.saleline_set.all():
+            log = Log.objects.get(
+                    warehouse=warehouse,
+                    stock=line.stock)
+            new_entry = Entry(log=log, changes=-line.quantity, reason='WS')
+            new_entry.save()
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('wholesales-sale-detail', args=[self.kwargs['pk']])
+
+
 class PurchaseList(ListView):
     model = Purchase
 

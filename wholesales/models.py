@@ -131,6 +131,14 @@ class Sale(models.Model):
             return False
     ordered.boolean = True
 
+    def delivered(self):
+        try:
+            self.saledelivery
+            return True
+        except ObjectDoesNotExist:
+            return False
+    delivered.boolean = True
+
 
 class SaleLine(models.Model):
     sale = models.ForeignKey(Sale)
@@ -158,6 +166,7 @@ class SaleOrder(models.Model):
 class SaleDelivery(models.Model):
     sale = models.OneToOneField(Sale)
     date = models.DateField(auto_now_add=True)
+    warehouse = models.ForeignKey(Warehouse)
     address = models.ForeignKey(Location)
 
     def __str__(self):

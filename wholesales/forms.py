@@ -32,3 +32,6 @@ class PurchaseInvoiceForm(forms.ModelForm):
 
 
 SalePlaceOrderForm = inlineformset_factory(Sale, SaleOrder)
+
+
+SaleSaleDeliveryFormSet = inlineformset_factory(Sale, SaleDelivery)

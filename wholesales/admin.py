@@ -38,6 +38,10 @@ class SaleOrderInline(admin.StackedInline):
     model = SaleOrder
 
 
+class SaleDeliveryInline(admin.StackedInline):
+    model = SaleDelivery
+
+
 class SaleLineInline(admin.TabularInline):
     model = SaleLine
 
@@ -45,7 +49,7 @@ class SaleLineInline(admin.TabularInline):
 class SaleAdmin(admin.ModelAdmin):
     list_display = ['partner', 'total_price']
     list_filter = ['partner']
-    inlines = [SaleOrderInline, SaleLineInline]
+    inlines = [SaleOrderInline, SaleDeliveryInline, SaleLineInline]
 
 
 admin.site.register(Price, PriceAdmin)
