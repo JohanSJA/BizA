@@ -107,7 +107,7 @@
           {% for line in line_list %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ line.stock.name }}</td>
+            <td><a href='{% url "stocks-stock-detail" line.stock.pk %}'>{{ line.stock.name }}</a></td>
             <td class='text-right'>{{ line.unit_price|floatformat:'2' }}</td>
             <td class='text-right'>{{ line.quantity }}</td>
             <td class='text-right'>{{ line.price|floatformat:'2' }}</td>
