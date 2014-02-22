@@ -26,7 +26,9 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+# Allow all host headers
+# According to Heroku settings
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -63,13 +65,9 @@ WSGI_APPLICATION = 'biza.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'biza_dev.sqlite3'),
-    }
-}
+# According to Heroku settings
+import dj_database_url
+DATABASES = {"default": dj_database_url.config()}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -87,8 +85,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
+# According to Heroku settings
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = 'staticfiles'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
@@ -108,3 +109,7 @@ MESSAGE_TAGS = {
     messages.DEBUG: 'warning',
     messages.ERROR: 'danger',
 }
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+# According to Heroku settings
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
