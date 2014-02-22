@@ -52,7 +52,6 @@ class SaleCreate(CreateView):
         return super().form_valid(form)
 
 
-
 class SaleDetail(DetailView):
     model = Sale
 
@@ -67,9 +66,11 @@ class SaleDetail(DetailView):
                         stock=line.stock).first()
                 if log:
                     if log.balance() < line.quantity:
-                        messages.warning(self.request, 'Not enough {} for sale.'.format(line.stock))
+                        messages.warning(self.request,
+                                'Not enough {} for sale.'.format(line.stock))
                 else:
-                    messages.warning(self.request, 'Not {} in warehouse.'.format(line.stock))
+                    messages.warning(self.request,
+                            'Not {} in warehouse.'.format(line.stock))
 
         return context
 
@@ -117,8 +118,8 @@ def sale_print(request, pk):
     page_size = pagesizes.landscape(pagesizes.A5)
 
     doc = SimpleDocTemplate(response, pagesize=page_size,
-            rightMargin=15*mm, leftMargin=15*mm,
-            topMargin=15*mm, bottomMargin=15*mm)
+            rightMargin=15 * mm, leftMargin=15 * mm,
+            topMargin=15 * mm, bottomMargin=15 * mm)
 
     styles = getSampleStyleSheet()
 
@@ -136,9 +137,12 @@ def sale_print(request, pk):
     text = 'Shop: {}'.format(sale.shop.address)
     story.append(Paragraph(text, styles['Normal']))
 
-    data = [['No.', 'Description', 'Unit Price (RM)', 'Quantity', 'Subtotal (RM)']]
+    data = [
+        ['No.', 'Description', 'Unit Price (RM)', 'Quantity', 'Subtotal (RM)']
+    ]
     for line in sale.line_set.all():
-        data.append(['1', str(line.stock), str(line.unit_price), str(line.quantity), str(line.price())])
+        data.append(['1', str(line.stock), str(line.unit_price),
+                str(line.quantity), str(line.price())])
     data.append(['', '', '', 'Total', str(sale.total_price())])
     t = Table(data)
     story.append(t)
