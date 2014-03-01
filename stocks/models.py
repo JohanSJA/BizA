@@ -49,7 +49,8 @@ class Component(models.Model):
         unique_together = [('stock', 'content')]
 
     def __str__(self):
-        return '{} {} {} in {}'.format(self.quantity, self.content.uom, self.content, self.stock)
+        return '{} {} {} in {}'.format(self.quantity, self.content.uom,
+                self.content, self.stock)
 
 
 class Warehouse(models.Model):

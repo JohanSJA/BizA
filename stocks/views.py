@@ -3,7 +3,6 @@ from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic.detail import DetailView
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse_lazy
-from django.db import models
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
@@ -13,15 +12,16 @@ from .models import *
 from .forms import *
 
 
-class StockList(ListView):
+class StockListView(ListView):
     model = Stock
 
 
-class StockCreate(CreateView):
+class StockCreateView(CreateView):
     model = Stock
+    form_class = StockCreateForm
 
 
-class StockDetail(DetailView):
+class StockDetailView(DetailView):
     model = Stock
 
     def get_context_data(self, **kwargs):
@@ -33,11 +33,11 @@ class StockDetail(DetailView):
         return context
 
 
-class StockUpdate(UpdateView):
+class StockUpdateView(UpdateView):
     model = Stock
 
 
-class StockCodePrintCreate(FormView):
+class StockCodePrintCreateView(FormView):
     template_name = 'stocks/stock_code_print_form.html'
     form_class = StockCodePrintForm
 
@@ -53,8 +53,8 @@ class StockCodePrintCreate(FormView):
 
     def get_success_url(self):
         return reverse_lazy('stocks-stock-code-print-pdf', kwargs={
-            'pk': self.kwargs['pk'], 'start': self._start, 'amount': self._amount
-            })
+            'pk': self.kwargs['pk'], 'start': self._start,
+            'amount': self._amount})
 
 
 def stock_code_print_pdf(request, pk, start, amount):
@@ -77,11 +77,10 @@ def stock_code_print_pdf(request, pk, start, amount):
 
     start = int(start)
     amount = int(amount)
-    total = start + amount - 1 # total indicate blank sticker + print sticker
+    total = start + amount - 1  # total indicate blank sticker + print sticker
     sticker_row = 5
     sticker_col = 5
     num_col = total // sticker_row + 1
-    last_row = total % sticker_row
     current_sticker = 1
 
     for col in range(num_col):
@@ -102,14 +101,15 @@ def stock_code_print_pdf(request, pk, start, amount):
         if col == 4 and current_sticker <= total:
             p.showPage()
             p.setFontSize(size=7)
-            code = code39.Standard39(stock.code, barHeight=10 * mm, checksum=0, quiet=0)
+            code = code39.Standard39(stock.code, barHeight=10 * mm,
+                    checksum=0, quiet=0)
 
     p.save()
 
     return response
 
 
-class StockComponentUpdate(UpdateView):
+class StockComponentUpdateView(UpdateView):
     model = Stock
     form_class = StockComponentFormSet
     template_name = 'stocks/stock_component_formset.html'
@@ -118,15 +118,15 @@ class StockComponentUpdate(UpdateView):
         return reverse_lazy('stocks-stock-detail', args=[self.kwargs['pk']])
 
 
-class WarehouseList(ListView):
+class WarehouseListView(ListView):
     model = Warehouse
 
 
-class WarehouseCreate(CreateView):
+class WarehouseCreateView(CreateView):
     model = Warehouse
 
 
-class WarehouseDetail(DetailView):
+class WarehouseDetailView(DetailView):
     model = Warehouse
 
     def get_context_data(self, **kwargs):
@@ -136,15 +136,15 @@ class WarehouseDetail(DetailView):
         return context
 
 
-class WarehouseUpdate(UpdateView):
+class WarehouseUpdateView(UpdateView):
     model = Warehouse
 
 
-class LogList(ListView):
+class LogListView(ListView):
     model = Log
 
 
-class LogDetail(DetailView):
+class LogDetailView(DetailView):
     model = Log
 
     def get_context_data(self, **kwargs):
