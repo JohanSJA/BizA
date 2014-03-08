@@ -14,9 +14,11 @@ class Uom(models.Model):
 
 
 class Stock(models.Model):
-    code = models.CharField(max_length=12, unique=True)
-    name = models.CharField(max_length=50, unique=True)
-    note = models.TextField(blank=True)
+    code = models.CharField(max_length=12, unique=True,
+            help_text='This will be used as barcode as well.')
+    name = models.CharField(max_length=50, unique=True,
+            verbose_name='model')
+    note = models.TextField(blank=True, verbose_name='description')
     uom = models.ForeignKey(Uom, verbose_name='UOM')
     discontinued = models.BooleanField(default=False)
 

@@ -19,21 +19,29 @@
 <div class='row'>
   <div class='col-lg-6'>
     <div class='panel panel-default'>
-      <div class='panel-heading'>Info</div>
-      <div class='panel-body'>
-        <dl class='dl-horizontal'>
-          <dt>Code</dt>
-          <dd>{{ stock.code }}</dd>
-          <dt>Name</dt>
-          <dd>{{ stock.name }}</dd>
-          <dt>Unit</dt>
-          <dd>{{ stock.uom }}</dd>
-          <dt>Discontinued</dt>
-          <dd>{{ stock.discontinued }}</dd>
-          <dt>Note</dt>
-          <dd>{{ stock.note|default:'-' }}</dd>
-        </dl>
+      <div class='panel-heading'>
+        Information
+        {% if stock.discontinued %}
+        <span class='badge'>Discontinued</span>
+        {% endif %}
       </div>
+      <table class='table table-striped table-hover table-bordered table-responsive'>
+        <tr>
+          <td class='text-right'>Code</td>
+          <td>
+            <strong>{{ stock.code }}</strong>
+            <br><small>Will be used as barcode as well.</small>
+          </td>
+        </tr>
+        <tr>
+          <td class='text-right'>Model</td>
+          <td><strong>{{ stock.name }}</strong></td>
+        </tr>
+        <tr>
+          <td class='text-right'>Description</td>
+          <td>{{ stock.note|default:'-'|linebreaksbr }}</td>
+        </tr>
+      </table>
     </div>
   </div>
 
@@ -83,26 +91,19 @@
     {% endif %}
 
     <div class='panel panel-default'>
-      <div class='panel-heading'>Logs</div>
-      <div class='panel-body'>
-        <dl class='dl-horizontal'>
-          <dt>Balance</dt>
-          <dd>{{ stock.balance }}</dd>
-        </dl>
-      </div>
-      <table class='table table-striped table-hover table-responsive'>
+      <div class='panel-heading'>Balance Logs</div>
+      <table class='table table-striped table-hover table-bordered table-responsive'>
         <thead>
           <tr>
             <th>No.</th>
             <th>Warehouse</th>
-            <th class='text-right'>Balance</th>
+            <th class='text-right'>Balance<br>({{ stock.uom }})</th>
           </tr>
         </thead>
         <tfoot>
           <tr>
-            <td colspan='3'>
-              Total {{ logs|length }} log{{ logs|pluralize }}.
-            </td>
+            <td colspan='2' class='text-right'>Total Balance</td>
+            <td class='text-right'>{{ stock.balance }}</td>
           </tr>
         </tfoot>
         <tbody>
@@ -111,6 +112,12 @@
             <td><a href='{% url "stocks-log-detail" log.pk %}'>{{ forloop.counter }}</a></td>
             <td><a href='{% url "stocks-warehouse-detail" log.warehouse.pk %}'>{{ log.warehouse }}</a></td>
             <td class='text-right'>{{ log.balance|default:'0' }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td>-</td>
+            <td>-</td>
+            <td class='text-right'>-</td>
           </tr>
           {% endfor %}
         </tbody>
