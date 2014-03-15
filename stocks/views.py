@@ -2,6 +2,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic.detail import DetailView
 from django.http import HttpResponse
+from django.core.urlresolvers import reverse_lazy
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
