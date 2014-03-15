@@ -43,8 +43,6 @@ INSTALLED_APPS = (
     # Third-party add-ons / apps
     'widget_tweaks',
     # Project apps
-    'common',
-    'pricing',
 )
 
 MIDDLEWARE_CLASSES = (
