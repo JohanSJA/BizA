@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import admin
 admin.autodiscover()
 
-from .views import Home
+from .views import Home, Dashboard
 
 urlpatterns = patterns('',
     # Examples:
@@ -14,7 +14,11 @@ urlpatterns = patterns('',
     url(r'^wholesales/', include('wholesales.urls')),
     url(r'^retails/', include('retails.urls')),
 
-    url(r'^$', login_required(Home.as_view()), name='home'),
+    url(r'^$', Home.as_view(), name='home'),
+
+    url(r'^dashboard/$',
+        login_required(Dashboard.as_view()),
+        name='dashboard'),
 
     url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout_then_login',

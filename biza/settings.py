@@ -41,13 +41,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Third-party add-ons / apps
-    # 'south',
     'widget_tweaks',
     # Project apps
-    'utils',
-    'stocks',
-    'wholesales',
-    'retails',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -103,7 +98,7 @@ TEMPLATE_DIRS = (
 
 # Authentication
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'dashboard'
 
 # Messages tags
 MESSAGE_TAGS = {
