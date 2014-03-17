@@ -14,18 +14,18 @@
     <title>{% block title %}BizA{% endblock %}</title>
 
     <!-- Bootstrap CSS -->
-    {% block before_css %}{% endblock %}
+    {% block css_link %}
     <link href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css' rel='stylesheet'>
-    {% block after_css %}{% endblock %}
+    {% endblock %}
     <link href='{% static "css/bootstrap-sortable.css" %}' rel='stylesheet'>
 
+    {% block css %}
     <style>
-      {% block css %}
       body {
         padding-top: 70px;
       }
-      {% endblock %}
     </style>
+    {% endblock %}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -44,16 +44,50 @@
             <span class='icon-bar'></span>
             <span class='icon-bar'></span>
           </button>
-          {% block navbar_brand %}{% endblock %}
+          <a class='navbar-brand' href='{% url "home" %}'>BizA</a>
         </div>
 
         <div class='collapse navbar-collapse' id='navbar-collapse'>
-          {% block navbar_navs %}{% endblock %}
+          {% if user.is_authenticated %}
+          <ul class='nav navbar-nav'>
+            <li class='dropdown'>
+              <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
+                Products <b class='caret'></b>
+              </a>
+              <ul class='dropdown-menu'>
+                <li><a href='{% url "products_product_list" %}'>Products</a></li>
+                <li class='divider'></li>
+                <li><a href='{% url "products_uom_list" %}'>Units of measure</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class='nav navbar-nav navbar-right'>
+            <li class='dropdown'>
+              <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
+                Logged in as {{ user }} <b class='caret'></b>
+              </a>
+              <ul class='dropdown-menu'>
+                <li><a href='{% url "logout" %}'>Logout</a></li>
+              </ul>
+              </li>
+          </ul>
+          {% endif %}
         </div>
       </div>
     </nav>
 
     <div class='container-fluid'>
+      {% block breadcrumb %}{% endblock %}
+
+      {% if messages %}
+      {% for message in messages %}
+      <div class='alert alert-{{ message.tags }} alert-dismissable'>
+        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+
       {% block content %}{% endblock %}
 
       <hr>
@@ -71,14 +105,15 @@
 
     <!-- Bootstrap core Javascript -->
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
-    {% block before_js %}{% endblock %}
+    {% block js_script %}
     <script src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
-    {% block after_js %}{% endblock %}
+    {% endblock %}
     <script src='{% static "js/moment.min.js" %}'></script>
     <script src='{% static "js/bootstrap-sortable.js" %}'></script>
 
+    {% block js %}
     <script language='javascript' type='text/javascript'>
-      {% block js %}{% endblock %}
     </script>
+    {% endblock %}
   </body>
 </html>

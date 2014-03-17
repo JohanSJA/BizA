@@ -16,7 +16,7 @@
 {% for field in form.visible_fields %}
 <div class='form-group{% if field.errors %} has-error{% endif %}'>
   {% if field|widget_type == 'checkboxinput' %}
-  <div class='col-md-6 col-md-offset-2'>
+  <div class='col-md-5 col-md-offset-2'>
     <div class='checkbox'>
       <label>
         {{ field }} {{ field.label }}
@@ -27,7 +27,7 @@
   <label for='{{ field.id_for_label }}' class='col-md-2 control-label'>
     {{ field.label }}
   </label>
-  <div class='col-md-6'>
+  <div class='col-md-5'>
     {% if field|widget_type == 'select' %}
       {{ field|attr:'data-live-search:true'|add_class:'form-control' }}
     {% elif field|widget_type == 'dateinput' %}
@@ -37,7 +37,7 @@
     {% endif %}
   </div>
   {% endif %}
-  <div class='col-md-4'>
+  <div class='col-md-5'>
     {% if field.errors %}
     <ul class='help-block'>
       {% for error in field.errors %}

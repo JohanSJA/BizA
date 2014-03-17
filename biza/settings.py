@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     # Third-party add-ons / apps
     'widget_tweaks',
     # Project apps
+    'products',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -98,7 +99,7 @@ TEMPLATE_DIRS = (
 
 # Authentication
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_REDIRECT_URL = 'home'
 
 # Messages tags
 MESSAGE_TAGS = {

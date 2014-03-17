@@ -6,20 +6,18 @@ admin.autodiscover()
 
 from .views import Home, Dashboard
 
+
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'biza.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    url(r'^products/', include('products.urls')),
+
     url(r'^$', Home.as_view(), name='home'),
 
-    url(r'^dashboard/$',
-        login_required(Dashboard.as_view()),
-        name='dashboard'),
-
     url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
-    url(r'^logout/$', 'django.contrib.auth.views.logout_then_login',
-        name='logout'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout_then_login', name='logout'),
 
     url(r'^admin/', include(admin.site.urls)),
 )

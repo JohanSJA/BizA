@@ -1,0 +1,10 @@
+{% extends 'base_form.html' %}
+
+{% block breadcrumb %}
+<ul class='breadcrumb'>
+  <li><a href='{% url "home" %}'>Home</a></li>
+  <li>Products</li>
+  <li><a href='{% url "products_product_list" %}'>Products</a></li>
+  <li class='active'>Form</li>
+</ul>
+{% endblock %}
