@@ -3,7 +3,7 @@
 {% block breadcrumb %}
 <ul class='breadcrumb'>
   <li><a href='{% url "home" %}'>Home</a></li>
-  <li>Products</li>
+  <li>Stocks</li>
   <li class='active'>Units of measure</li>
 </ul>
 {% endblock %}
@@ -13,7 +13,7 @@
   <div class='col-md-12'>
     <div class='well well-sm'>
       <div class='btn-group'>
-        <a href='{% url "products_uom_new" %}' class='btn btn-default'>New</a>
+        <a href='{% url "stocks_uom_new" %}' class='btn btn-default'>New</a>
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@
       <tbody>
         {% for uom in uom_list %}
         <tr>
-          <td><a href='{% url "products_uom_detail" uom.pk %}'>{{ uom.name }}</a></td>
+          <td><a href='{% url "stocks_uom_detail" uom.pk %}'>{{ uom.name }}</a></td>
           <td>{{ uom.abbreviation }}</td>
         </tr>
         {% endfor %}

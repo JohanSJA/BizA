@@ -27,7 +27,6 @@
           <th>Code</th>
           <th>Name</th>
           <th>Category</th>
-          <th>Unit of Measure</th>
         </tr>
       </thead>
       <tbody>
@@ -36,7 +35,6 @@
           <td><a href='{% url "products_product_detail" product.pk %}'>{{ product.code }}</a></td>
           <td>{{ product.name }}</td>
           <td><a href='{% url "products_category_detail" product.category.pk %}'>{{ product.category }}</a></td>
-          <td><a href='{% url "products_uom_detail" product.uom.pk %}'>{{ product.uom }}</a></td>
         </tr>
         {% endfor %}
       </tbody>

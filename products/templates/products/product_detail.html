@@ -34,8 +34,6 @@
           <dd>{{ product.description|default:'-' }}</dd>
           <dt>Category</dt>
           <dd><a href='{% url "products_category_detail" product.category.pk %}'>{{ product.category }}</a></dd>
-          <dt>Unit of measure</dt>
-          <dd><a href='{% url "products_uom_detail" product.uom.pk %}'>{{ product.uom }}</a></dd>
           <dt>Note</dt>
           <dd>{{ product.note|linebreaksbr|default:'-' }}</dd>
         </dl>

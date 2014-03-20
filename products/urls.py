@@ -1,18 +1,12 @@
 from django.conf.urls import patterns, url
 
 from .views import (
-    UomListView, UomDetailView, UomCreateView, UomUpdateView,
     CategoryListView, CategoryDetailView, CategoryCreateView, CategoryUpdateView,
     ProductListView, ProductDetailView, ProductCreateView, ProductUpdateView,
 )
 
 
 urlpatterns = patterns('',
-    url(r'^uom/$', UomListView.as_view(), name='products_uom_list'),
-    url(r'^uom/(?P<pk>\d+)/$', UomDetailView.as_view(), name='products_uom_detail'),
-    url(r'^uom/new/$', UomCreateView.as_view(), name='products_uom_new'),
-    url(r'^uom/(?P<pk>\d+)/edit/$', UomUpdateView.as_view(), name='products_uom_edit'),
-
     url(r'^category/$', CategoryListView.as_view(), name='products_category_list'),
     url(r'^category/(?P<pk>\d+)/$', CategoryDetailView.as_view(), name='products_category_detail'),
     url(r'^category/new/$', CategoryCreateView.as_view(), name='products_category_new'),

@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^products/', include('products.urls')),
+    url(r'^stocks/', include('stocks.urls')),
 
     url(r'^$', Home.as_view(), name='home'),
 

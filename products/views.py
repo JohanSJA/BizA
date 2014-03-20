@@ -3,30 +3,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 
-from .models import Uom, Category, Product
-
-
-class UomListView(ListView):
-    model = Uom
-    paginate_by = 25
-
-
-class UomDetailView(DetailView):
-    model = Uom
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        uom = self.get_object()
-        context['product_list'] = uom.product_set.all()
-        return context
-
-
-class UomCreateView(CreateView):
-    model = Uom
-
-
-class UomUpdateView(UpdateView):
-    model = Uom
+from .models import Category, Product
 
 
 class CategoryListView(ListView):

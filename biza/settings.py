@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
     # Project apps
     'products',
+    'stocks',
 )
 
 MIDDLEWARE_CLASSES = (

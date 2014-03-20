@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+<ul class='breadcrumb'>
+  <li><a href='{% url "home" %}'>Home</a></li>
+  <li>Stocks</li>
+  <li><a href='{% url "stocks_uom_list" %}'>Units of measure</a></li>
+  <li class='active'>{{ uom }}</li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class='row'>
+  <div class='col-md-12'>
+    <div class='well well-sm'>
+      <div class='btn-group'>
+        <a href='{% url "stocks_uom_edit" uom.pk %}' class='btn btn-default'>Edit</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='col-md-4'>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>Basic information</div>
+      <div class='panel-body'>
+        <dl class='dl-horizontal'>
+          <dt>Name</dt>
+          <dd>{{ uom.name }}</dd>
+          <dt>Abbreviation</dt>
+          <dd>{{ uom.abbreviation }}</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
