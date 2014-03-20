@@ -31,7 +31,7 @@
       <tbody>
         {% for uom in uom_list %}
         <tr>
-          <td><a href='{% url "products_uom_edit" uom.pk %}'>{{ uom.name }}</a></td>
+          <td><a href='{% url "products_uom_detail" uom.pk %}'>{{ uom.name }}</a></td>
           <td>{{ uom.abbreviation }}</td>
         </tr>
         {% endfor %}

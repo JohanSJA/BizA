@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import admin
 admin.autodiscover()
 
-from .views import Home, Dashboard
+from .views import Home
 
 
 urlpatterns = patterns('',

@@ -54,11 +54,11 @@
       {% if field.errors %}
       <ul class='help-block'>
         {% for error in field.errors %}
-          <li>{{ error }}</li>
+          <li>{{ error|safe }}</li>
         {% endfor %}
       </ul>
       {% elif field.help_text %}
-      <p class='help-block'>{{ field.help_text }}</p>
+      <p class='help-block'>{{ field.help_text|safe }}</p>
       {% endif %}
     </div>
   </div>
