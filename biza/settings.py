@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Third-party add-ons / apps
+    'south',
     'widget_tweaks',
     # Project apps
     'products',
