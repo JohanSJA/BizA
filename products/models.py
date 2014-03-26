@@ -17,14 +17,14 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    code = models.CharField(max_length=10, unique=True,
-            help_text='Unique code to identify the product.')
-    name = models.CharField(max_length=50, unique=True,
-            help_text='Unique name to identify the product.')
+    code = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=200, blank=True,
-            help_text='This will be used in printing instead of name if provided.')
-    category = models.ForeignKey(Category)
+            help_text='Will be used in printing if provided.')
+    barcode = models.CharField(max_length=30, unique=True,
+            blank=True, null=True)
     note = models.TextField(blank=True)
+    category = models.ForeignKey(Category)
 
     class Meta:
         ordering = ['code']

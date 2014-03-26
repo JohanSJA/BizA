@@ -18,11 +18,12 @@ class Migration(SchemaMigration):
         # Adding model 'Product'
         db.create_table('products_product', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('code', self.gf('django.db.models.fields.CharField')(max_length=10, unique=True)),
+            ('code', self.gf('django.db.models.fields.CharField')(max_length=30, unique=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=50, unique=True)),
             ('description', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Category'])),
+            ('barcode', self.gf('django.db.models.fields.CharField')(max_length=30, unique=True, blank=True, null=True)),
             ('note', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Category'])),
         ))
         db.send_create_signal('products', ['Product'])
 
@@ -43,8 +44,9 @@ class Migration(SchemaMigration):
         },
         'products.product': {
             'Meta': {'ordering': "['code']", 'object_name': 'Product'},
+            'barcode': ('django.db.models.fields.CharField', [], {'max_length': '30', 'unique': 'True', 'blank': 'True', 'null': 'True'}),
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Category']"}),
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '10', 'unique': 'True'}),
+            'code': ('django.db.models.fields.CharField', [], {'max_length': '30', 'unique': 'True'}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'}),
