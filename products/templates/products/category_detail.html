@@ -38,22 +38,7 @@
   <div class='col-md-8'>
     <div class='panel panel-default'>
       <div class='panel-heading'>Products</div>
-      <table class='table table-striped table-bordered table-hover table-responsive'>
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for product in product_list %}
-          <tr>
-            <td><a href='{% url "products_product_detail" product.pk %}'>{{ product.code }}</a></td>
-            <td>{{ product.name }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      {% include 'products/product_table.html' %}
     </div>
   </div>
 </div>
