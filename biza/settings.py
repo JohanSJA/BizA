@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # Third-party add-ons / apps
     'south',
+    'crispy_forms',
     'widget_tweaks',
     # Project apps
     'products',
@@ -95,15 +96,18 @@ STATICFILES_DIRS = (
 )
 
 # List of locations of template source files
+
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
 
 # Authentication
+
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 
 # Messages tags
+
 MESSAGE_TAGS = {
     messages.DEBUG: 'warning',
     messages.ERROR: 'danger',
@@ -111,4 +115,8 @@ MESSAGE_TAGS = {
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 # According to Heroku settings
+
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# For django-crispy-forms app
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

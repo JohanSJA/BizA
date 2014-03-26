@@ -32,7 +32,12 @@ class CategoryCreateView(LoginRequiredMixin,
     success_url = reverse_lazy('products_category_list')
 
 
-class CategoryUpdateView(LoginRequiredMixin, UpdateView):
+class CategoryUpdateView(LoginRequiredMixin,
+                         PermissionRequiredMixin,
+                         UpdateView):
+    permission_required = 'auth.change_category'
+    raise_exception = True
+
     model = Category
     success_url = reverse_lazy('products_category_list')
 
