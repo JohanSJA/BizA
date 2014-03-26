@@ -13,7 +13,9 @@
   <div class='col-md-12'>
     <div class='well well-sm'>
       <div class='btn-group'>
+        {% if perms.products.can_create_category %}
         <a href='{% url "products_category_new" %}' class='btn btn-default'>New</a>
+        {% endif %}
       </div>
     </div>
   </div>
