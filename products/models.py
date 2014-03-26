@@ -21,10 +21,10 @@ class Product(models.Model):
     name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=200, blank=True,
             help_text='Will be used in printing if provided.')
+    category = models.ForeignKey(Category)
     barcode = models.CharField(max_length=30, unique=True,
             blank=True, null=True)
     note = models.TextField(blank=True)
-    category = models.ForeignKey(Category)
 
     class Meta:
         ordering = ['code']
