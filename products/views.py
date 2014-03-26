@@ -29,7 +29,6 @@ class CategoryCreateView(LoginRequiredMixin,
     raise_exception = True
 
     model = Category
-    success_url = reverse_lazy('products_category_list')
 
 
 class CategoryUpdateView(LoginRequiredMixin,
@@ -39,7 +38,6 @@ class CategoryUpdateView(LoginRequiredMixin,
     raise_exception = True
 
     model = Category
-    success_url = reverse_lazy('products_category_list')
 
 
 class ProductListView(LoginRequiredMixin, ListView):
