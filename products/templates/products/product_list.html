@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+{% if perms.products.can_add_product %}
 <div class='row'>
   <div class='col-md-12'>
     <div class='well well-sm'>
@@ -18,6 +19,7 @@
     </div>
   </div>
 </div>
+{% endif %}
 
 <div class='row'>
   <div class='col-md-12'>

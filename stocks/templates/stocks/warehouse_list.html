@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+<ul class='breadcrumb'>
+  <li><a href='{% url "home" %}'>Home</a></li>
+  <li>Stocks</li>
+  <li class='active'>Warehouses</li>
+</ul>
+{% endblock %}
+
+{% block content %}
+{% if perms.stocks.can_create_warehouse %}
+<div class='row'>
+  <div class='col-md-12'>
+    <div class='well well-sm'>
+      <div class='btn-group'>
+        <a href='{% url "stocks_warehouse_new" %}' class='btn btn-default'>New</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class='row'>
+  <div class='col-md-12'>
+    <table class='table table-striped table-bordered table-hover table-responsive'>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for warehouse in warehouse_list %}
+        <tr>
+          <td><a href='{% url "stocks_warehouse_detail" warehouse.pk %}'>{{ warehouse.name }}</a></td>
+          <td>{{ warehouse.address|linebreaksbr }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

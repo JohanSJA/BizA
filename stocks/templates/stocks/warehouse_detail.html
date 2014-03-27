@@ -4,18 +4,18 @@
 <ul class='breadcrumb'>
   <li><a href='{% url "home" %}'>Home</a></li>
   <li>Stocks</li>
-  <li><a href='{% url "stocks_uom_list" %}'>Units of measure</a></li>
-  <li class='active'>{{ uom }}</li>
+  <li><a href='{% url "stocks_warehouse_list" %}'>Warehouses</a></li>
+  <li class='active'>{{ warehouse }}</li>
 </ul>
 {% endblock %}
 
 {% block content %}
-{% if perms.stocks.can_change_uom %}
+{% if perms.stocks.can_update_warehouse %}
 <div class='row'>
   <div class='col-md-12'>
     <div class='well well-sm'>
       <div class='btn-group'>
-        <a href='{% url "stocks_uom_edit" uom.pk %}' class='btn btn-default'>Edit</a>
+        <a href='{% url "stocks_warehouse_edit" warehouse.pk %}' class='btn btn-default'>Edit</a>
       </div>
     </div>
   </div>
@@ -29,9 +29,9 @@
       <div class='panel-body'>
         <dl class='dl-horizontal'>
           <dt>Name</dt>
-          <dd>{{ uom.name }}</dd>
-          <dt>Abbreviation</dt>
-          <dd>{{ uom.abbreviation }}</dd>
+          <dd>{{ warehouse.name }}</dd>
+          <dt>Address</dt>
+          <dd>{{ warehouse.address|linebreaksbr }}</dd>
         </dl>
       </div>
     </div>

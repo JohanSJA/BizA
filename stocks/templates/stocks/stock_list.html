@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+<ul class='breadcrumb'>
+  <li><a href='{% url "home" %}'>Home</a></li>
+  <li>Stocks</li>
+  <li class='active'>Stocks</li>
+</ul>
+{% endblock %}
+
+{% block content %}
+{% if perms.stocks.can_create_stock %}
+<div class='row'>
+  <div class='col-md-12'>
+    <div class='well well-sm'>
+      <div class='btn-group'>
+        <a href='{% url "stocks_stock_new" %}' class='btn btn-default'>New</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class='row'>
+  <div class='col-md-12'>
+    <table class='table table-striped table-bordered table-hover table-responsive'>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th class='text-right'>Total Amount</th>
+          <th>Unit of Measure</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stock in stock_list %}
+        <tr>
+          <td><a href='{% url "stocks_stock_detail" stock.pk %}'>{{ stock.product }}</a></td>
+          <td class='text-right'>{{ stock.total_amount|default:"0" }}</td>
+          <td>{{ stock.uom }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

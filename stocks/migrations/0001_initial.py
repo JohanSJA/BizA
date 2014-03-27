@@ -11,15 +11,15 @@ class Migration(SchemaMigration):
         # Adding model 'Uom'
         db.create_table('stocks_uom', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=50, unique=True)),
-            ('abbreviation', self.gf('django.db.models.fields.CharField')(blank=True, max_length=5, unique=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=50)),
+            ('abbreviation', self.gf('django.db.models.fields.CharField')(unique=True, blank=True, max_length=5)),
         ))
         db.send_create_signal('stocks', ['Uom'])
 
         # Adding model 'Stock'
         db.create_table('stocks_stock', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('product', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['products.Product'], unique=True)),
+            ('product', self.gf('django.db.models.fields.related.OneToOneField')(unique=True, to=orm['products.Product'])),
             ('uom', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['stocks.Uom'])),
         ))
         db.send_create_signal('stocks', ['Stock'])
@@ -27,7 +27,7 @@ class Migration(SchemaMigration):
         # Adding model 'Warehouse'
         db.create_table('stocks_warehouse', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=50, unique=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=50)),
             ('address', self.gf('django.db.models.fields.TextField')(unique=True)),
         ))
         db.send_create_signal('stocks', ['Warehouse'])
@@ -35,27 +35,28 @@ class Migration(SchemaMigration):
         # Adding model 'Log'
         db.create_table('stocks_log', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('product', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Product'])),
+            ('stock', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['stocks.Stock'])),
             ('warehouse', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['stocks.Warehouse'])),
         ))
         db.send_create_signal('stocks', ['Log'])
 
-        # Adding unique constraint on 'Log', fields ['product', 'warehouse']
-        db.create_unique('stocks_log', ['product_id', 'warehouse_id'])
+        # Adding unique constraint on 'Log', fields ['stock', 'warehouse']
+        db.create_unique('stocks_log', ['stock_id', 'warehouse_id'])
 
         # Adding model 'LogEntry'
         db.create_table('stocks_logentry', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('log', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['stocks.Log'])),
-            ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('created_at', self.gf('django.db.models.fields.DateTimeField')(blank=True, auto_now_add=True)),
+            ('description', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('amount', self.gf('django.db.models.fields.IntegerField')()),
         ))
         db.send_create_signal('stocks', ['LogEntry'])
 
 
     def backwards(self, orm):
-        # Removing unique constraint on 'Log', fields ['product', 'warehouse']
-        db.delete_unique('stocks_log', ['product_id', 'warehouse_id'])
+        # Removing unique constraint on 'Log', fields ['stock', 'warehouse']
+        db.delete_unique('stocks_log', ['stock_id', 'warehouse_id'])
 
         # Deleting model 'Uom'
         db.delete_table('stocks_uom')
@@ -75,49 +76,51 @@ class Migration(SchemaMigration):
 
     models = {
         'products.category': {
-            'Meta': {'ordering': "['name']", 'object_name': 'Category'},
+            'Meta': {'object_name': 'Category', 'ordering': "['name']"},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'})
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
         },
         'products.product': {
-            'Meta': {'ordering': "['code']", 'object_name': 'Product'},
+            'Meta': {'object_name': 'Product', 'ordering': "['code']"},
+            'barcode': ('django.db.models.fields.CharField', [], {'unique': 'True', 'blank': 'True', 'null': 'True', 'max_length': '30'}),
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Category']"}),
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '10', 'unique': 'True'}),
+            'code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'}),
             'description': ('django.db.models.fields.CharField', [], {'blank': 'True', 'max_length': '200'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'}),
             'note': ('django.db.models.fields.TextField', [], {'blank': 'True'})
         },
         'stocks.log': {
-            'Meta': {'unique_together': "(['product', 'warehouse'],)", 'ordering': "['product', 'warehouse']", 'object_name': 'Log'},
+            'Meta': {'unique_together': "(['stock', 'warehouse'],)", 'object_name': 'Log', 'ordering': "['stock', 'warehouse']"},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'product': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Product']"}),
+            'stock': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['stocks.Stock']"}),
             'warehouse': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['stocks.Warehouse']"})
         },
         'stocks.logentry': {
             'Meta': {'object_name': 'LogEntry'},
             'amount': ('django.db.models.fields.IntegerField', [], {}),
-            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'blank': 'True', 'auto_now_add': 'True'}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'log': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['stocks.Log']"})
         },
         'stocks.stock': {
-            'Meta': {'ordering': "['product']", 'object_name': 'Stock'},
+            'Meta': {'object_name': 'Stock', 'ordering': "['product']"},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'product': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['products.Product']", 'unique': 'True'}),
+            'product': ('django.db.models.fields.related.OneToOneField', [], {'unique': 'True', 'to': "orm['products.Product']"}),
             'uom': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['stocks.Uom']"})
         },
         'stocks.uom': {
-            'Meta': {'ordering': "['name']", 'object_name': 'Uom'},
-            'abbreviation': ('django.db.models.fields.CharField', [], {'blank': 'True', 'max_length': '5', 'unique': 'True'}),
+            'Meta': {'object_name': 'Uom', 'ordering': "['name']"},
+            'abbreviation': ('django.db.models.fields.CharField', [], {'unique': 'True', 'blank': 'True', 'max_length': '5'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'})
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
         },
         'stocks.warehouse': {
-            'Meta': {'ordering': "['name']", 'object_name': 'Warehouse'},
+            'Meta': {'object_name': 'Warehouse', 'ordering': "['name']"},
             'address': ('django.db.models.fields.TextField', [], {'unique': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'})
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
         }
     }
 
