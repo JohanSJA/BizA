@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
-from .models import Uom, Warehouse, Stock, Log
+from .models import Uom, Warehouse, Log
 
 
 class UomListView(LoginRequiredMixin, ListView):
@@ -50,26 +50,3 @@ class WarehouseUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
     raise_exception = True
 
     model = Warehouse
-
-
-
-class StockListView(LoginRequiredMixin, ListView):
-    model = Stock
-
-
-class StockDetailView(LoginRequiredMixin, DetailView):
-    model = Stock
-
-
-class StockCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    permission_required = 'auth.add_stock'
-    raise_exception = True
-
-    model = Stock
-
-
-class StockUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
-    permission_required = 'auth.change_stock'
-    raise_exception = True
-
-    model = Stock

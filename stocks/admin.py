@@ -3,19 +3,19 @@ from django.contrib import admin
 from products.models import Product
 from products.admin import ProductAdmin
 
-from .models import Uom, Stock, Warehouse, Log, LogEntry
+from .models import Uom, ProductUom, Warehouse, Log, LogEntry
 
 
 class UomAdmin(admin.ModelAdmin):
     list_display = ['name', 'abbreviation']
 
 
-class StockInline(admin.StackedInline):
-    model = Stock
+class ProductUomInline(admin.StackedInline):
+    model = ProductUom
 
 
 class ProductAdminWithInlines(ProductAdmin):
-    inlines = [StockInline,]
+    inlines = [ProductUomInline,]
 
 
 class WarehouseAdmin(admin.ModelAdmin):
@@ -27,8 +27,8 @@ class LogEntryInline(admin.TabularInline):
 
 
 class LogAdmin(admin.ModelAdmin):
-    list_display = ['stock', 'warehouse', 'total_amount']
-    list_filter = ['stock', 'warehouse']
+    list_display = ['product', 'warehouse', 'total_amount']
+    list_filter = ['product', 'warehouse']
     inlines = [LogEntryInline,]
 
 

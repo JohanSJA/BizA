@@ -29,7 +29,7 @@ class Uom(models.Model):
             return self.name
 
 
-class Stock(models.Model):
+class ProductUom(models.Model):
     product = models.OneToOneField(Product)
     uom = models.ForeignKey(Uom, verbose_name='Unit of measure')
 
@@ -41,9 +41,6 @@ class Stock(models.Model):
 
     def get_absolute_url(self):
         return reverse('stocks_stock_detail', kwargs={'pk': self.pk})
-
-    def total_amount(self):
-        return LogEntry.objects.filter(log__stock=self).aggregate(Sum('amount'))['amount__sum']
 
 
 class Warehouse(models.Model):
@@ -64,15 +61,15 @@ class Warehouse(models.Model):
 
 
 class Log(models.Model):
-    stock = models.ForeignKey(Stock)
+    product = models.ForeignKey(Product)
     warehouse = models.ForeignKey(Warehouse)
 
     class Meta:
-        unique_together = ['stock', 'warehouse']
-        ordering = ['stock', 'warehouse']
+        unique_together = ['product', 'warehouse']
+        ordering = ['product', 'warehouse']
 
     def __str__(self):
-        return '{} in {}'.format(self.stock, self.warehouse)
+        return '{} in {}'.format(self.product, self.warehouse)
 
     def get_absolute_url(self):
         return reverse('stocks_log_detail', kwargs={'pk': self.pk})
