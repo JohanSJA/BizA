@@ -1,12 +1,15 @@
 from django.conf.urls import patterns, url
 
 from .views import (
+    HomeView,
     CategoryListView, CategoryDetailView, CategoryCreateView, CategoryUpdateView,
     ProductListView, ProductDetailView, ProductCreateView, ProductUpdateView,
 )
 
 
 urlpatterns = patterns('',
+    url(r'^$', HomeView.as_view(), name='products_home'),
+
     url(r'^category/$', CategoryListView.as_view(), name='products_category_list'),
     url(r'^category/(?P<pk>\d+)/$', CategoryDetailView.as_view(), name='products_category_detail'),
     url(r'^category/new/$', CategoryCreateView.as_view(), name='products_category_new'),
