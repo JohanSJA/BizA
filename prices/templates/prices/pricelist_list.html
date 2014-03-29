@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+<ul class='breadcrumb'>
+  <li><a href='{% url "home" %}'>Home</a></li>
+  <li>Prices</li>
+  <li class='active'>Pricelists</li>
+</ul>
+{% endblock %}
+
+{% block content %}
+{% if perms.stocks.can_create_pricelist %}
+<div class='row'>
+  <div class='col-md-12'>
+    <div class='well well-sm'>
+      <div class='btn-group'>
+        <a href='' class='btn btn-default'>New</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class='row'>
+  <div class='col-md-12'>
+    <table class='table table-striped table-bordered table-hover table-responsive'>
+      <thead>
+        <tr>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pricelist in pricelist_list %}
+        <tr>
+          <td><a href='{% url "prices_pricelist_detail" pricelist.pk %}'>{{ pricelist.name }}</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
