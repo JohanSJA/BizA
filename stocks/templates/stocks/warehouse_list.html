@@ -28,6 +28,7 @@
         <tr>
           <th>Name</th>
           <th>Address</th>
+          <th class='text-right'>Total Stock</th>
         </tr>
       </thead>
       <tbody>
@@ -35,6 +36,7 @@
         <tr>
           <td><a href='{% url "stocks_warehouse_detail" warehouse.pk %}'>{{ warehouse.name }}</a></td>
           <td>{{ warehouse.address|linebreaksbr }}</td>
+          <td class='text-right'>{{ warehouse.total_amount|default:'0' }}</td>
         </tr>
         {% endfor %}
       </tbody>
