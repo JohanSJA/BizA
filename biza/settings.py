@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.formtools',
     # Third-party add-ons / apps
     'south',
     'crispy_forms',
@@ -50,6 +51,7 @@ INSTALLED_APPS = (
     'partners',
     'purchases',
     'wholesales',
+    'creators',
 )
 
 MIDDLEWARE_CLASSES = (
