@@ -43,7 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.formtools',
     # Third-party add-ons / apps
     'south',
-    'crispy_forms',
+    'widget_tweaks',
     # Project apps
     'products',
     'stocks',
