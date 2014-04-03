@@ -12,9 +12,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'biza.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^products/', include('products.urls')),
     url(r'^stocks/', include('stocks.urls')),
-    url(r'^prices/', include('prices.urls')),
     url(r'^creators/', include('creators.urls')),
 
     url(r'^$', Home.as_view(), name='home'),

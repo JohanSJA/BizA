@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block breadcrumb %}
 {% if user.is_authenticated %}
 <ul class='breadcrumb'>
   <li class='active'>Home</li>
 </ul>
-{% else %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if not user.is_authenticated %}
 <div class='jumbotron'>
   <h1>Warning!</h1>
   <p>This site is strictly for authorized personnel only.</p>

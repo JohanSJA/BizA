@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView
 
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
-from .models import Uom, Warehouse, Stock, Log
+from .models import Uom, Warehouse, Category, Product, Log
 
 
 class UomListView(LoginRequiredMixin, ListView):
@@ -52,23 +52,55 @@ class WarehouseUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
 
 
 
-class StockListView(LoginRequiredMixin, ListView):
-    model = Stock
+class ProductListView(LoginRequiredMixin, ListView):
+    model = Product
 
 
-class StockDetailView(LoginRequiredMixin, DetailView):
-    model = Stock
+class ProductDetailView(LoginRequiredMixin, DetailView):
+    model = Product
 
 
-class StockCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    permission_required = 'auth.add_stock'
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = 'auth.add_product'
     raise_exception = True
 
-    model = Stock
+    model = Product
 
 
-class StockUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
-    permission_required = 'auth.change_stock'
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = 'auth.change_product'
     raise_exception = True
 
-    model = Stock
+    model = Product
+
+
+class CategoryListView(LoginRequiredMixin, ListView):
+    model = Category
+
+
+class CategoryDetailView(LoginRequiredMixin, DetailView):
+    model = Category
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = self.get_object()
+        context['product_list'] = category.product_set.all()
+        return context
+
+
+class CategoryCreateView(LoginRequiredMixin,
+                         PermissionRequiredMixin,
+                         CreateView):
+    permission_required = 'auth.add_category'
+    raise_exception = True
+
+    model = Category
+
+
+class CategoryUpdateView(LoginRequiredMixin,
+                         PermissionRequiredMixin,
+                         UpdateView):
+    permission_required = 'auth.change_category'
+    raise_exception = True
+
+    model = Category

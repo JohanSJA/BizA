@@ -9,7 +9,7 @@
   <tbody>
     {% for product in product_list %}
     <tr>
-      <td><a href='{% url "products_product_detail" product.pk %}'>{{ product.code }}</a></td>
+      <td><a href='{% url "stocks_product_detail" product.pk %}'>{{ product.code }}</a></td>
       <td>{{ product.name }}</td>
       <td>{{ product.description }}</td>
     </tr>

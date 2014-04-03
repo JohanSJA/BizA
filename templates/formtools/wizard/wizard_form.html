@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-{% load widget_tweaks %}
-
 {% block head %}
   {{ block.super }}
   {{ wizard.form.media }}
@@ -16,31 +14,19 @@
     {% if wizard.form.forms %}
       {{ wizard.form.management_form }}
       {% for form in wizard.form.forms %}
-        {% for field in form %}
-          <div class='form-group'>
-            <label for='{{ field.id_for_label }}' class='col-md-3 control-label'>{{ field.label }}</label>
-            <div class='col-md-4'>
-              {{ field|add_class:'form-control' }}
-            </div>
-          </div>
-        {% endfor %}
+        {% include 'form.html' %}
       {% endfor %}
     {% else %}
-      {% for field in form %}
-        <div class='form-group'>
-          <label for='{{ field.id_for_label }}' class='col-md-3 control-label'>{{ field.label }}</label>
-          <div class='col-md-4'>
-            {{ field|add_class:'form-control' }}
-          </div>
-        </div>
-      {% endfor %}
+      {% include 'form.html' %}
     {% endif %}
 
     <div class='form-group'>
-      <div class='col-md-4 col-md-offset-3'>
+      <div class='col-md-3'>
         {% if wizard.steps.prev %}
           <button type='submit' class='btn btn-default' value='{{ wizard.steps.prev }}'>Previous step</button>
         {% endif %}
+      </div>
+      <div class='col-md-4'>
         <input type='submit' class='btn btn-default' value='Save' />
       </div>
     </div>

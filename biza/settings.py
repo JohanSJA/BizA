@@ -45,9 +45,7 @@ INSTALLED_APPS = (
     'south',
     'widget_tweaks',
     # Project apps
-    'products',
     'stocks',
-    'prices',
     'partners',
     'purchases',
     'wholesales',

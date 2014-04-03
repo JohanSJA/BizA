@@ -3,7 +3,8 @@ from django.conf.urls import patterns, url
 from .views import (
     UomListView, UomDetailView, UomCreateView, UomUpdateView,
     WarehouseListView, WarehouseDetailView, WarehouseCreateView, WarehouseUpdateView,
-    StockListView, StockDetailView, StockCreateView, StockUpdateView,
+    ProductListView, ProductDetailView, ProductCreateView, ProductUpdateView,
+    CategoryListView, CategoryDetailView, CategoryCreateView, CategoryUpdateView,
 )
 
 
@@ -18,8 +19,13 @@ urlpatterns = patterns('',
     url(r'^warehouse/new/$', WarehouseCreateView.as_view(), name='stocks_warehouse_new'),
     url(r'^warehouse/(?P<pk>\d+)/edit/$', WarehouseUpdateView.as_view(), name='stocks_warehouse_edit'),
 
-    url(r'^stock/$', StockListView.as_view(), name='stocks_stock_list'),
-    url(r'^stock/(?P<pk>\d+)/$', StockDetailView.as_view(), name='stocks_stock_detail'),
-    url(r'^stock/new/$', StockCreateView.as_view(), name='stocks_stock_new'),
-    url(r'^stock/(?P<pk>\d+)/edit/$', StockUpdateView.as_view(), name='stocks_stock_edit'),
+    url(r'^product/$', ProductListView.as_view(), name='stocks_product_list'),
+    url(r'^product/(?P<pk>\d+)/$', ProductDetailView.as_view(), name='stocks_product_detail'),
+    url(r'^product/new/$', ProductCreateView.as_view(), name='stocks_product_new'),
+    url(r'^product/(?P<pk>\d+)/edit/$', ProductUpdateView.as_view(), name='stocks_product_edit'),
+
+    url(r'^category/$', CategoryListView.as_view(), name='stocks_category_list'),
+    url(r'^category/(?P<pk>\d+)/$', CategoryDetailView.as_view(), name='stocks_category_detail'),
+    url(r'^category/new/$', CategoryCreateView.as_view(), name='stocks_category_new'),
+    url(r'^category/(?P<pk>\d+)/edit/$', CategoryUpdateView.as_view(), name='stocks_category_edit'),
 )

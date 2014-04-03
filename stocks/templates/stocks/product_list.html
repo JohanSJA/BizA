@@ -3,18 +3,18 @@
 {% block breadcrumb %}
 <ul class='breadcrumb'>
   <li><a href='{% url "home" %}'>Home</a></li>
-  <li><a href='{% url "products_home" %}'>Products</a></li>
-  <li class='active'>Products</li>
+  <li>Stocks</li>
+  <li class='active'>Stocks</li>
 </ul>
 {% endblock %}
 
 {% block content %}
-{% if perms.products.can_add_product %}
+{% if perms.stocks.can_create_product %}
 <div class='row'>
   <div class='col-md-12'>
     <div class='well well-sm'>
       <div class='btn-group'>
-        <a href='{% url "products_product_new" %}' class='btn btn-default'>New</a>
+        <a href='{% url "stocks_product_new" %}' class='btn btn-default'>New</a>
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@
 
 <div class='row'>
   <div class='col-md-12'>
-    {% include 'products/product_table.html' %}
+    {% include 'stocks/product_table.html' %}
   </div>
 </div>
 {% endblock %}

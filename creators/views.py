@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django.contrib.formtools.wizard.views import SessionWizardView
+from django.contrib import messages
 
 from .forms import (
     PartnerForm, AddressForm, ContactMethodForm,
@@ -12,4 +13,5 @@ class PartnerWizardView(SessionWizardView):
             SupplierForm, CustomerForm]
 
     def done(self, form_list, **kwargs):
-        return render(self.request, 'base.html')
+        messages.info(self.request, 'Partner created.')
+        return redirect('home')

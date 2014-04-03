@@ -4,18 +4,18 @@
 <ul class='breadcrumb'>
   <li><a href='{% url "home" %}'>Home</a></li>
   <li>Stocks</li>
-  <li><a href='{% url "stocks_stock_list" %}'>Stocks</a></li>
-  <li class='active'>{{ stock }}</li>
+  <li><a href='{% url "stocks_category_list" %}'>Categories</a></li>
+  <li class='active'>{{ category }}</li>
 </ul>
 {% endblock %}
 
 {% block content %}
-{% if perms.stocks.can_update_stock %}
+{% if perms.stocks.can_create_category %}
 <div class='row'>
   <div class='col-md-12'>
     <div class='well well-sm'>
       <div class='btn-group'>
-        <a href='{% url "stocks_stock_edit" stock.pk %}' class='btn btn-default'>Edit</a>
+        <a href='{% url "stocks_category_edit" category.pk %}' class='btn btn-default'>Edit</a>
       </div>
     </div>
   </div>
@@ -28,12 +28,17 @@
       <div class='panel-heading'>Basic information</div>
       <div class='panel-body'>
         <dl class='dl-horizontal'>
-          <dt>Product</dt>
-          <dd><a href='{% url "products_product_detail" stock.product.pk %}'>{{ stock.product }}</a></dd>
-          <dt>Unit of measure</dt>
-          <dd><a href='{% url "stocks_uom_detail" stock.uom.pk %}'>{{ stock.uom }}</a></dd>
+          <dt>Name</dt>
+          <dd>{{ category.name }}</dd>
         </dl>
       </div>
+    </div>
+  </div>
+
+  <div class='col-md-8'>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>Products</div>
+      {% include 'stocks/product_table.html' %}
     </div>
   </div>
 </div>

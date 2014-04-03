@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+<ul class='breadcrumb'>
+  <li><a href='{% url "home" %}'>Home</a></li>
+  <li>Stocks</li>
+  <li><a href='{% url "stocks_product_list" %}'>Products</a></li>
+  <li class='active'>{{ product.code }}</li>
+</ul>
+{% endblock %}
+
+{% block content %}
+{% if perms.stocks.can_update_product %}
+<div class='row'>
+  <div class='col-md-12'>
+    <div class='well well-sm'>
+      <div class='btn-group'>
+        <a href='{% url "stocks_product_edit" product.pk %}' class='btn btn-default'>Edit</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class='row'>
+  <div class='col-md-5'>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>Basic information</div>
+      <div class='panel-body'>
+        <dl class='dl-horizontal'>
+          <dt>Code</dt>
+          <dd>{{ product.code }}</dd>
+          <dt>Category</dt>
+          <dd><a href='{% url "stocks_category_detail" product.category.pk %}'>{{ product.category }}</a></dd>
+          <dt>Name</dt>
+          <dd>{{ product.name }}</dd>
+          <dt>Description</dt>
+          <dd>{{ product.description }}</dd>
+          <dt>Note</dt>
+          <dd>{{ product.note|default:'-' }}</dd>
+          <dt>Unit of measure</dt>
+          <dd><a href='{% url "stocks_uom_detail" product.uom.pk %}'>{{ product.uom }}</a></dd>
+          <dt>Barcode</dt>
+          <dd>{{ product.barcode|default:'-' }}</dd>
+          <dt>Cost price</dt>
+          <dd>{{ product.cost_price|floatformat:'2'|default:'-' }}</dd>
+          <dt>Wholesale price</dt>
+          <dd>{{ product.wholesales_price|floatformat:'2'|default:'-' }}</dd>
+          <dt>Retail price</dt>
+          <dd>{{ product.retail_price|floatformat:'2'|default:'-' }}</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
