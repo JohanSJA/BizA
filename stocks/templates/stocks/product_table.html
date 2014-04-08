@@ -6,6 +6,11 @@
       <th>Description</th>
     </tr>
   </thead>
+  <tfoot>
+    <tr>
+      <td colspan="3">Total {{ product_list|length }} product{{ product_list|pluralize }}</td>
+    </tr>
+  </tfoot>
   <tbody>
     {% for product in product_list %}
     <tr>

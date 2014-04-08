@@ -19,6 +19,12 @@ class UomListView(LoginRequiredMixin, ListView):
 class UomDetailView(LoginRequiredMixin, DetailView):
     model = Uom
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        uom = self.get_object()
+        context['product_list'] = uom.product_set.all()
+        return context
+
 
 class UomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = 'auth.add_uom'
