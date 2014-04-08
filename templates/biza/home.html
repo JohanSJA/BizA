@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
 
 {% block breadcrumb %}
-{% if user.is_authenticated %}
-<ul class='breadcrumb'>
-  <li class='active'>Home</li>
+<ul class="breadcrumb">
+  <li class="active">Home</li>
 </ul>
-{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -14,6 +12,15 @@
   <h1>Warning!</h1>
   <p>This site is strictly for authorized personnel only.</p>
   <p><a href='{% url "login" %}' class='btn btn-default btn-lg'>Login</a></p>
+</div>
+{% else %}
+<div class="row">
+  <div class="col-md-12">
+    <h2>Goto</h2>
+    <ul>
+      <li><a href="{% url 'stocks_product_list' %}">Products</a></li>
+    </ul>
+  </div>
 </div>
 {% endif %}
 {% endblock %}

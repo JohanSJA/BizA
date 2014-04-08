@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 
 from .views import (
+    StockHomeView,
     UomListView, UomDetailView, UomCreateView, UomUpdateView,
     WarehouseListView, WarehouseDetailView, WarehouseCreateView, WarehouseUpdateView,
     ProductListView, ProductDetailView, ProductCreateView, ProductUpdateView,
@@ -9,6 +10,8 @@ from .views import (
 
 
 urlpatterns = patterns('',
+    url(r"^$", StockHomeView.as_view(), name="stocks_home"),
+
     url(r'^uom/$', UomListView.as_view(), name='stocks_uom_list'),
     url(r'^uom/(?P<pk>\d+)/$', UomDetailView.as_view(), name='stocks_uom_detail'),
     url(r'^uom/new/$', UomCreateView.as_view(), name='stocks_uom_new'),

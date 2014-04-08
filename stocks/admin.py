@@ -1,8 +1,5 @@
 from django.contrib import admin
 
-from products.models import Product
-from products.admin import ProductAdmin
-
 from .models import Uom, Product, Warehouse, Log, LogEntry
 
 

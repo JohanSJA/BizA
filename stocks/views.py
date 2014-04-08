@@ -1,3 +1,4 @@
+from django.views.generic import TemplateView
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
@@ -5,6 +6,10 @@ from django.views.generic.edit import CreateView, UpdateView
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
 from .models import Uom, Warehouse, Category, Product, Log
+
+
+class StockHomeView(TemplateView):
+    template_name = 'stocks/home.html'
 
 
 class UomListView(LoginRequiredMixin, ListView):

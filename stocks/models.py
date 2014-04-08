@@ -66,7 +66,7 @@ class Product(models.Model):
         ordering = ['code']
 
     def __str__(self):
-        return str(self.product)
+        return self.code
 
     def get_absolute_url(self):
         return reverse('stocks_product_detail', kwargs={'pk': self.pk})
