@@ -1,11 +1,13 @@
 from django.views.generic import TemplateView
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, FormView
+from django.core.urlresolvers import reverse_lazy
 
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
 from .models import Uom, Warehouse, Category, Product, Log
+from .forms import ProductLogForm
 
 
 class StockHomeView(TemplateView):
@@ -115,3 +117,20 @@ class CategoryUpdateView(LoginRequiredMixin,
     raise_exception = True
 
     model = Category
+
+
+class ProductLogFormView(LoginRequiredMixin,
+                         FormView):
+    template_name = "stocks/product_log_form.html"
+    form_class = ProductLogForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["product"] = Product.objects.get(pk=self.kwargs["pk"])
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy("stocks_product_detail", kwargs={"pk": self.kwargs["pk"]})
+
+    def form_valid(self, form):
+        return super().form_valid(form)
