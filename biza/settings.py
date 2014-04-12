@@ -46,6 +46,8 @@ INSTALLED_APPS = (
     # Own apps
     "products",
     "stocks",
+    "pricelists",
+    "partners",
 )
 
 MIDDLEWARE_CLASSES = (
