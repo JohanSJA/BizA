@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     "south",
     # Own apps
     "products",
+    "stocks",
 )
 
 MIDDLEWARE_CLASSES = (
