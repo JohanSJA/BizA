@@ -1,8 +1,9 @@
 from django.contrib import admin
 
 from .models import (
-    Supplier, PurchaseOrder, PurchaseOrderLine, Invoice, InvoiceLine,
-    DeliveryOrder, DeliveryOrderLine
+    Supplier, PurchaseOrder, PurchaseOrderLine,
+    PurchaseInvoice, PurchaseInvoiceLine,
+    PurchaseDeliveryOrder, PurchaseDeliveryOrderLine
 )
 
 
@@ -19,31 +20,31 @@ class PurchaseOrderAdmin(admin.ModelAdmin):
     inlines = [PurchaseOrderLineInline]
 
 
-class InvoiceLineInline(admin.TabularInline):
-    model = InvoiceLine
+class PurchaseInvoiceLineInline(admin.TabularInline):
+    model = PurchaseInvoiceLine
 
 
-class InvoiceAdmin(admin.ModelAdmin):
+class PurchaseInvoiceAdmin(admin.ModelAdmin):
     list_display = [
         "serial_number", "supplier", "issuing_date", "payment_due_date",
         "payment_made_date", "total_price"
     ]
-    inlines = [InvoiceLineInline]
+    inlines = [PurchaseInvoiceLineInline]
 
 
-class DeliveryOrderLineInline(admin.TabularInline):
-    model = DeliveryOrderLine
+class PurchaseDeliveryOrderLineInline(admin.TabularInline):
+    model = PurchaseDeliveryOrderLine
 
 
-class DeliveryOrderAdmin(admin.ModelAdmin):
+class PurchaseDeliveryOrderAdmin(admin.ModelAdmin):
     list_display = [
         "serial_number", "supplier", "issuing_date", "good_received_date",
         "total_quantity"
     ]
-    inlines = [DeliveryOrderLineInline]
+    inlines = [PurchaseDeliveryOrderLineInline]
 
 
 admin.site.register(Supplier, SupplierAdmin)
 admin.site.register(PurchaseOrder, PurchaseOrderAdmin)
-admin.site.register(Invoice, InvoiceAdmin)
-admin.site.register(DeliveryOrder, DeliveryOrderAdmin)
+admin.site.register(PurchaseInvoice, PurchaseInvoiceAdmin)
+admin.site.register(PurchaseDeliveryOrder, PurchaseDeliveryOrderAdmin)
