@@ -8,20 +8,36 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Adding model 'Salesperson'
+        db.create_table('wholesales_salesperson', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+        ))
+        db.send_create_signal('wholesales', ['Salesperson'])
+
+        # Adding model 'SalesTerm'
+        db.create_table('wholesales_salesterm', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=60)),
+            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
+        ))
+        db.send_create_signal('wholesales', ['SalesTerm'])
+
         # Adding model 'Customer'
         db.create_table('wholesales_customer', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('code', self.gf('django.db.models.fields.CharField')(max_length=10, unique=True)),
             ('partner', self.gf('django.db.models.fields.related.OneToOneField')(unique=True, to=orm['partners.Partner'])),
+            ('salesperson', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['wholesales.Salesperson'])),
+            ('sales_term', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['wholesales.SalesTerm'])),
         ))
         db.send_create_signal('wholesales', ['Customer'])
 
         # Adding model 'SalesOrder'
         db.create_table('wholesales_salesorder', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('serial_number', self.gf('django.db.models.fields.CharField')(max_length=20, unique=True)),
             ('customer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['wholesales.Customer'])),
             ('issuing_date', self.gf('django.db.models.fields.DateField')()),
+            ('sales_term', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['wholesales.SalesTerm'])),
         ))
         db.send_create_signal('wholesales', ['SalesOrder'])
 
@@ -31,36 +47,15 @@ class Migration(SchemaMigration):
             ('sales_order', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['wholesales.SalesOrder'])),
             ('product', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Product'])),
             ('quantity', self.gf('django.db.models.fields.IntegerField')()),
-            ('unit_price', self.gf('django.db.models.fields.DecimalField')(decimal_places=4, max_digits=12)),
+            ('unit_price', self.gf('django.db.models.fields.DecimalField')(max_digits=12, decimal_places=4)),
         ))
         db.send_create_signal('wholesales', ['SalesOrderLine'])
-
-        # Adding model 'SalesInvoice'
-        db.create_table('wholesales_salesinvoice', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('serial_number', self.gf('django.db.models.fields.CharField')(max_length=20, unique=True)),
-            ('customer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['wholesales.Customer'])),
-            ('issuing_date', self.gf('django.db.models.fields.DateField')()),
-            ('payment_due_date', self.gf('django.db.models.fields.DateField')()),
-            ('payment_received_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-        ))
-        db.send_create_signal('wholesales', ['SalesInvoice'])
-
-        # Adding model 'SalesInvoiceLine'
-        db.create_table('wholesales_salesinvoiceline', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('invoice', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['wholesales.SalesInvoice'])),
-            ('product', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Product'])),
-            ('quantity', self.gf('django.db.models.fields.IntegerField')()),
-            ('price', self.gf('django.db.models.fields.DecimalField')(decimal_places=4, max_digits=12)),
-        ))
-        db.send_create_signal('wholesales', ['SalesInvoiceLine'])
 
         # Adding model 'SalesDeliveryOrder'
         db.create_table('wholesales_salesdeliveryorder', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('serial_number', self.gf('django.db.models.fields.CharField')(max_length=20, unique=True)),
             ('customer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['wholesales.Customer'])),
+            ('address', self.gf('django.db.models.fields.TextField')()),
             ('issuing_date', self.gf('django.db.models.fields.DateField')()),
             ('good_sent_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
         ))
@@ -77,6 +72,12 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
+        # Deleting model 'Salesperson'
+        db.delete_table('wholesales_salesperson')
+
+        # Deleting model 'SalesTerm'
+        db.delete_table('wholesales_salesterm')
+
         # Deleting model 'Customer'
         db.delete_table('wholesales_customer')
 
@@ -85,12 +86,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'SalesOrderLine'
         db.delete_table('wholesales_salesorderline')
-
-        # Deleting model 'SalesInvoice'
-        db.delete_table('wholesales_salesinvoice')
-
-        # Deleting model 'SalesInvoiceLine'
-        db.delete_table('wholesales_salesinvoiceline')
 
         # Deleting model 'SalesDeliveryOrder'
         db.delete_table('wholesales_salesdeliveryorder')
@@ -102,21 +97,21 @@ class Migration(SchemaMigration):
     models = {
         'partners.partner': {
             'Meta': {'object_name': 'Partner'},
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'fax': ('django.db.models.fields.CharField', [], {'max_length': '15', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'blank': 'True', 'max_length': '75'}),
+            'fax': ('django.db.models.fields.CharField', [], {'blank': 'True', 'max_length': '15'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'}),
-            'telephone': ('django.db.models.fields.CharField', [], {'max_length': '15', 'blank': 'True'})
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
+            'telephone': ('django.db.models.fields.CharField', [], {'blank': 'True', 'max_length': '15'})
         },
         'products.category': {
             'Meta': {'object_name': 'Category'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'})
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
         },
         'products.product': {
             'Meta': {'object_name': 'Product'},
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Category']"}),
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '12', 'unique': 'True'}),
+            'code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '12'}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
@@ -124,17 +119,18 @@ class Migration(SchemaMigration):
         },
         'wholesales.customer': {
             'Meta': {'object_name': 'Customer'},
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '10', 'unique': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'partner': ('django.db.models.fields.related.OneToOneField', [], {'unique': 'True', 'to': "orm['partners.Partner']"})
+            'partner': ('django.db.models.fields.related.OneToOneField', [], {'unique': 'True', 'to': "orm['partners.Partner']"}),
+            'sales_term': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wholesales.SalesTerm']"}),
+            'salesperson': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wholesales.Salesperson']"})
         },
         'wholesales.salesdeliveryorder': {
             'Meta': {'object_name': 'SalesDeliveryOrder'},
+            'address': ('django.db.models.fields.TextField', [], {}),
             'customer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wholesales.Customer']"}),
             'good_sent_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'issuing_date': ('django.db.models.fields.DateField', [], {}),
-            'serial_number': ('django.db.models.fields.CharField', [], {'max_length': '20', 'unique': 'True'})
+            'issuing_date': ('django.db.models.fields.DateField', [], {})
         },
         'wholesales.salesdeliveryorderline': {
             'Meta': {'object_name': 'SalesDeliveryOrderLine'},
@@ -143,29 +139,12 @@ class Migration(SchemaMigration):
             'product': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Product']"}),
             'quantity': ('django.db.models.fields.IntegerField', [], {})
         },
-        'wholesales.salesinvoice': {
-            'Meta': {'object_name': 'SalesInvoice'},
-            'customer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wholesales.Customer']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'issuing_date': ('django.db.models.fields.DateField', [], {}),
-            'payment_due_date': ('django.db.models.fields.DateField', [], {}),
-            'payment_received_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'serial_number': ('django.db.models.fields.CharField', [], {'max_length': '20', 'unique': 'True'})
-        },
-        'wholesales.salesinvoiceline': {
-            'Meta': {'object_name': 'SalesInvoiceLine'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'invoice': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wholesales.SalesInvoice']"}),
-            'price': ('django.db.models.fields.DecimalField', [], {'decimal_places': '4', 'max_digits': '12'}),
-            'product': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Product']"}),
-            'quantity': ('django.db.models.fields.IntegerField', [], {})
-        },
         'wholesales.salesorder': {
             'Meta': {'object_name': 'SalesOrder'},
             'customer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wholesales.Customer']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'issuing_date': ('django.db.models.fields.DateField', [], {}),
-            'serial_number': ('django.db.models.fields.CharField', [], {'max_length': '20', 'unique': 'True'})
+            'sales_term': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wholesales.SalesTerm']"})
         },
         'wholesales.salesorderline': {
             'Meta': {'object_name': 'SalesOrderLine'},
@@ -173,7 +152,18 @@ class Migration(SchemaMigration):
             'product': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Product']"}),
             'quantity': ('django.db.models.fields.IntegerField', [], {}),
             'sales_order': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wholesales.SalesOrder']"}),
-            'unit_price': ('django.db.models.fields.DecimalField', [], {'decimal_places': '4', 'max_digits': '12'})
+            'unit_price': ('django.db.models.fields.DecimalField', [], {'max_digits': '12', 'decimal_places': '4'})
+        },
+        'wholesales.salesperson': {
+            'Meta': {'object_name': 'Salesperson'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+        },
+        'wholesales.salesterm': {
+            'Meta': {'object_name': 'SalesTerm'},
+            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         }
     }
 

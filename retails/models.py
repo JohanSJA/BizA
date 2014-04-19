@@ -1,7 +1,6 @@
 from django.db import models
 
-from stocks.models import Warehouse
-from products.models import Product
+from products.models import Product, Warehouse
 
 
 class Store(models.Model):

@@ -11,7 +11,6 @@ class Migration(SchemaMigration):
         # Adding model 'Supplier'
         db.create_table('purchases_supplier', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('code', self.gf('django.db.models.fields.CharField')(max_length=10, unique=True)),
             ('partner', self.gf('django.db.models.fields.related.OneToOneField')(unique=True, to=orm['partners.Partner'])),
         ))
         db.send_create_signal('purchases', ['Supplier'])
@@ -19,14 +18,10 @@ class Migration(SchemaMigration):
         # Adding model 'PurchaseOrder'
         db.create_table('purchases_purchaseorder', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('serial_number', self.gf('django.db.models.fields.CharField')(max_length=20)),
             ('supplier', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['purchases.Supplier'])),
             ('issuing_date', self.gf('django.db.models.fields.DateField')()),
         ))
         db.send_create_signal('purchases', ['PurchaseOrder'])
-
-        # Adding unique constraint on 'PurchaseOrder', fields ['serial_number', 'supplier']
-        db.create_unique('purchases_purchaseorder', ['serial_number', 'supplier_id'])
 
         # Adding model 'PurchaseOrderLine'
         db.create_table('purchases_purchaseorderline', (
@@ -34,46 +29,18 @@ class Migration(SchemaMigration):
             ('purchase_order', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['purchases.PurchaseOrder'])),
             ('product', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Product'])),
             ('quantity', self.gf('django.db.models.fields.IntegerField')()),
-            ('unit_price', self.gf('django.db.models.fields.DecimalField')(decimal_places=4, max_digits=12)),
+            ('unit_price', self.gf('django.db.models.fields.DecimalField')(max_digits=12, decimal_places=4)),
         ))
         db.send_create_signal('purchases', ['PurchaseOrderLine'])
-
-        # Adding model 'PurchaseInvoice'
-        db.create_table('purchases_purchaseinvoice', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('serial_number', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('supplier', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['purchases.Supplier'])),
-            ('issuing_date', self.gf('django.db.models.fields.DateField')()),
-            ('payment_due_date', self.gf('django.db.models.fields.DateField')()),
-            ('payment_made_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-        ))
-        db.send_create_signal('purchases', ['PurchaseInvoice'])
-
-        # Adding unique constraint on 'PurchaseInvoice', fields ['serial_number', 'supplier']
-        db.create_unique('purchases_purchaseinvoice', ['serial_number', 'supplier_id'])
-
-        # Adding model 'PurchaseInvoiceLine'
-        db.create_table('purchases_purchaseinvoiceline', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('invoice', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['purchases.PurchaseInvoice'])),
-            ('product', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Product'])),
-            ('quantity', self.gf('django.db.models.fields.IntegerField')()),
-            ('price', self.gf('django.db.models.fields.DecimalField')(decimal_places=4, max_digits=12)),
-        ))
-        db.send_create_signal('purchases', ['PurchaseInvoiceLine'])
 
         # Adding model 'PurchaseDeliveryOrder'
         db.create_table('purchases_purchasedeliveryorder', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('serial_number', self.gf('django.db.models.fields.CharField')(max_length=20)),
             ('supplier', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['purchases.Supplier'])),
             ('issuing_date', self.gf('django.db.models.fields.DateField')()),
             ('good_received_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
         ))
         db.send_create_signal('purchases', ['PurchaseDeliveryOrder'])
-
-        # Adding unique constraint on 'PurchaseDeliveryOrder', fields ['serial_number', 'supplier']
-        db.create_unique('purchases_purchasedeliveryorder', ['serial_number', 'supplier_id'])
 
         # Adding model 'PurchaseDeliveryOrderLine'
         db.create_table('purchases_purchasedeliveryorderline', (
@@ -86,15 +53,6 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        # Removing unique constraint on 'PurchaseDeliveryOrder', fields ['serial_number', 'supplier']
-        db.delete_unique('purchases_purchasedeliveryorder', ['serial_number', 'supplier_id'])
-
-        # Removing unique constraint on 'PurchaseInvoice', fields ['serial_number', 'supplier']
-        db.delete_unique('purchases_purchaseinvoice', ['serial_number', 'supplier_id'])
-
-        # Removing unique constraint on 'PurchaseOrder', fields ['serial_number', 'supplier']
-        db.delete_unique('purchases_purchaseorder', ['serial_number', 'supplier_id'])
-
         # Deleting model 'Supplier'
         db.delete_table('purchases_supplier')
 
@@ -103,12 +61,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'PurchaseOrderLine'
         db.delete_table('purchases_purchaseorderline')
-
-        # Deleting model 'PurchaseInvoice'
-        db.delete_table('purchases_purchaseinvoice')
-
-        # Deleting model 'PurchaseInvoiceLine'
-        db.delete_table('purchases_purchaseinvoiceline')
 
         # Deleting model 'PurchaseDeliveryOrder'
         db.delete_table('purchases_purchasedeliveryorder')
@@ -141,11 +93,10 @@ class Migration(SchemaMigration):
             'remark': ('django.db.models.fields.TextField', [], {'blank': 'True'})
         },
         'purchases.purchasedeliveryorder': {
-            'Meta': {'unique_together': "(['serial_number', 'supplier'],)", 'object_name': 'PurchaseDeliveryOrder'},
+            'Meta': {'object_name': 'PurchaseDeliveryOrder'},
             'good_received_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'issuing_date': ('django.db.models.fields.DateField', [], {}),
-            'serial_number': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'supplier': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['purchases.Supplier']"})
         },
         'purchases.purchasedeliveryorderline': {
@@ -155,28 +106,10 @@ class Migration(SchemaMigration):
             'product': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Product']"}),
             'quantity': ('django.db.models.fields.IntegerField', [], {})
         },
-        'purchases.purchaseinvoice': {
-            'Meta': {'unique_together': "(['serial_number', 'supplier'],)", 'object_name': 'PurchaseInvoice'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'issuing_date': ('django.db.models.fields.DateField', [], {}),
-            'payment_due_date': ('django.db.models.fields.DateField', [], {}),
-            'payment_made_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
-            'serial_number': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
-            'supplier': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['purchases.Supplier']"})
-        },
-        'purchases.purchaseinvoiceline': {
-            'Meta': {'object_name': 'PurchaseInvoiceLine'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'invoice': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['purchases.PurchaseInvoice']"}),
-            'price': ('django.db.models.fields.DecimalField', [], {'decimal_places': '4', 'max_digits': '12'}),
-            'product': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Product']"}),
-            'quantity': ('django.db.models.fields.IntegerField', [], {})
-        },
         'purchases.purchaseorder': {
-            'Meta': {'unique_together': "(['serial_number', 'supplier'],)", 'object_name': 'PurchaseOrder'},
+            'Meta': {'object_name': 'PurchaseOrder'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'issuing_date': ('django.db.models.fields.DateField', [], {}),
-            'serial_number': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'supplier': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['purchases.Supplier']"})
         },
         'purchases.purchaseorderline': {
@@ -185,11 +118,10 @@ class Migration(SchemaMigration):
             'product': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Product']"}),
             'purchase_order': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['purchases.PurchaseOrder']"}),
             'quantity': ('django.db.models.fields.IntegerField', [], {}),
-            'unit_price': ('django.db.models.fields.DecimalField', [], {'decimal_places': '4', 'max_digits': '12'})
+            'unit_price': ('django.db.models.fields.DecimalField', [], {'max_digits': '12', 'decimal_places': '4'})
         },
         'purchases.supplier': {
             'Meta': {'object_name': 'Supplier'},
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '10', 'unique': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'partner': ('django.db.models.fields.related.OneToOneField', [], {'unique': 'True', 'to': "orm['partners.Partner']"})
         }

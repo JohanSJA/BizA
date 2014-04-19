@@ -5,7 +5,6 @@ from products.models import Product
 
 
 class Supplier(models.Model):
-    code = models.CharField(max_length=10, unique=True)
     partner = models.OneToOneField(Partner)
 
     def __str__(self):
@@ -13,15 +12,11 @@ class Supplier(models.Model):
 
 
 class PurchaseOrder(models.Model):
-    serial_number = models.CharField(max_length=20)
     supplier = models.ForeignKey(Supplier)
     issuing_date = models.DateField()
 
-    class Meta:
-        unique_together = ["serial_number", "supplier"]
-
     def __str__(self):
-        return "{} - {}".format(self.supplier, self.serial_number)
+        return self.id
 
     def total_price(self):
         total = 0
@@ -43,50 +38,13 @@ class PurchaseOrderLine(models.Model):
         return self.quantity * self.unit_price
 
 
-class PurchaseInvoice(models.Model):
-    serial_number = models.CharField(max_length=20)
-    supplier = models.ForeignKey(Supplier)
-    issuing_date = models.DateField()
-    payment_due_date = models.DateField()
-    payment_made_date = models.DateField(null=True, blank=True)
-
-    class Meta:
-        unique_together = ["serial_number", "supplier"]
-
-    def __str__(self):
-        return "{} - {}".format(self.serial_number, self.supplier)
-
-    def total_price(self):
-        total = 0
-        for line in self.purchaseinvoiceline_set.all():
-            total += line.total_price()
-        return total
-
-
-class PurchaseInvoiceLine(models.Model):
-    invoice = models.ForeignKey(PurchaseInvoice)
-    product = models.ForeignKey(Product)
-    quantity = models.IntegerField()
-    price = models.DecimalField(max_digits=12, decimal_places=4)
-
-    def __str__(self):
-        return "{} in {}".format(self.product, self.purchase)
-
-    def total_price(self):
-        return self.quantity * self.price
-
-
 class PurchaseDeliveryOrder(models.Model):
-    serial_number = models.CharField(max_length=20)
     supplier = models.ForeignKey(Supplier)
     issuing_date = models.DateField()
     good_received_date = models.DateField(null=True, blank=True)
 
-    class Meta:
-        unique_together = ["serial_number", "supplier"]
-
     def __str__(self):
-        return "{} - {}".format(self.serial_number, self.supplier)
+        return self.id
 
     def total_quantity(self):
         total = 0
