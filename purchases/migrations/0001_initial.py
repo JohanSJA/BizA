@@ -11,7 +11,10 @@ class Migration(SchemaMigration):
         # Adding model 'Supplier'
         db.create_table('purchases_supplier', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('partner', self.gf('django.db.models.fields.related.OneToOneField')(unique=True, to=orm['partners.Partner'])),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100, unique=True)),
+            ('telephone', self.gf('django.db.models.fields.CharField')(max_length=15, blank=True)),
+            ('fax', self.gf('django.db.models.fields.CharField')(max_length=15, blank=True)),
+            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75, blank=True)),
         ))
         db.send_create_signal('purchases', ['Supplier'])
 
@@ -70,14 +73,6 @@ class Migration(SchemaMigration):
 
 
     models = {
-        'partners.partner': {
-            'Meta': {'object_name': 'Partner'},
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'fax': ('django.db.models.fields.CharField', [], {'max_length': '15', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'}),
-            'telephone': ('django.db.models.fields.CharField', [], {'max_length': '15', 'blank': 'True'})
-        },
         'products.category': {
             'Meta': {'object_name': 'Category'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -86,11 +81,17 @@ class Migration(SchemaMigration):
         'products.product': {
             'Meta': {'object_name': 'Product'},
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Category']"}),
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '12', 'unique': 'True'}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'remark': ('django.db.models.fields.TextField', [], {'blank': 'True'})
+            'model': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'}),
+            'remark': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'uom': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Uom']"})
+        },
+        'products.uom': {
+            'Meta': {'object_name': 'Uom'},
+            'abbreviation': ('django.db.models.fields.CharField', [], {'max_length': '5'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'})
         },
         'purchases.purchasedeliveryorder': {
             'Meta': {'object_name': 'PurchaseDeliveryOrder'},
@@ -122,8 +123,11 @@ class Migration(SchemaMigration):
         },
         'purchases.supplier': {
             'Meta': {'object_name': 'Supplier'},
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
+            'fax': ('django.db.models.fields.CharField', [], {'max_length': '15', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'partner': ('django.db.models.fields.related.OneToOneField', [], {'unique': 'True', 'to': "orm['partners.Partner']"})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'}),
+            'telephone': ('django.db.models.fields.CharField', [], {'max_length': '15', 'blank': 'True'})
         }
     }
 

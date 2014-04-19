@@ -20,12 +20,15 @@ class SalesTerm(models.Model):
 
 
 class Customer(models.Model):
-    partner = models.OneToOneField(Partner)
+    name = models.CharField(max_length=100, unique=True)
+    telephone = models.CharField(max_length=15, blank=True)
+    fax = models.CharField(max_length=15, blank=True)
+    email = models.EmailField(blank=True)
     salesperson = models.ForeignKey(Salesperson)
     sales_term = models.ForeignKey(SalesTerm)
 
     def __str__(self):
-        return str(self.partner)
+        return self.name
 
 
 class SalesOrder(models.Model):

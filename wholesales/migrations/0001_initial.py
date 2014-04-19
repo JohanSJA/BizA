@@ -26,7 +26,10 @@ class Migration(SchemaMigration):
         # Adding model 'Customer'
         db.create_table('wholesales_customer', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('partner', self.gf('django.db.models.fields.related.OneToOneField')(unique=True, to=orm['partners.Partner'])),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100, unique=True)),
+            ('telephone', self.gf('django.db.models.fields.CharField')(max_length=15, blank=True)),
+            ('fax', self.gf('django.db.models.fields.CharField')(max_length=15, blank=True)),
+            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75, blank=True)),
             ('salesperson', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['wholesales.Salesperson'])),
             ('sales_term', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['wholesales.SalesTerm'])),
         ))
@@ -95,34 +98,35 @@ class Migration(SchemaMigration):
 
 
     models = {
-        'partners.partner': {
-            'Meta': {'object_name': 'Partner'},
-            'email': ('django.db.models.fields.EmailField', [], {'blank': 'True', 'max_length': '75'}),
-            'fax': ('django.db.models.fields.CharField', [], {'blank': 'True', 'max_length': '15'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
-            'telephone': ('django.db.models.fields.CharField', [], {'blank': 'True', 'max_length': '15'})
-        },
         'products.category': {
             'Meta': {'object_name': 'Category'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'})
         },
         'products.product': {
             'Meta': {'object_name': 'Product'},
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Category']"}),
-            'code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '12'}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'remark': ('django.db.models.fields.TextField', [], {'blank': 'True'})
+            'model': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'}),
+            'remark': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'uom': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Uom']"})
+        },
+        'products.uom': {
+            'Meta': {'object_name': 'Uom'},
+            'abbreviation': ('django.db.models.fields.CharField', [], {'max_length': '5'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'})
         },
         'wholesales.customer': {
             'Meta': {'object_name': 'Customer'},
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
+            'fax': ('django.db.models.fields.CharField', [], {'max_length': '15', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'partner': ('django.db.models.fields.related.OneToOneField', [], {'unique': 'True', 'to': "orm['partners.Partner']"}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'}),
             'sales_term': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wholesales.SalesTerm']"}),
-            'salesperson': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wholesales.Salesperson']"})
+            'salesperson': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wholesales.Salesperson']"}),
+            'telephone': ('django.db.models.fields.CharField', [], {'max_length': '15', 'blank': 'True'})
         },
         'wholesales.salesdeliveryorder': {
             'Meta': {'object_name': 'SalesDeliveryOrder'},

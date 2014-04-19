@@ -34,8 +34,28 @@ class Product(models.Model):
         return self.model
 
     def balance(self):
-        summary = LogEntry.objects.filter(log__warehouse=self).aggregate(Sum("amount"))
+        summary = BalanceLogEntry.objects.filter(balance_log__product=self).aggregate(Sum("amount"))
         return summary["amount__sum"]
+
+class Pricelist(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    base = models.ForeignKey("self", null=True, blank=True)
+    base_derivation = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class PricelistEntry(models.Model):
+    pricelist = models.ForeignKey(Pricelist)
+    product = models.ForeignKey(Product)
+    price = models.DecimalField(max_digits=12, decimal_places=4)
+
+    class Meta:
+        unique_together = ["pricelist", "product"]
+
+    def __str__(self):
+        return "{} in {}".format(self.product, self.pricelist)
 
 
 class Warehouse(models.Model):
@@ -46,11 +66,11 @@ class Warehouse(models.Model):
         return self.id
 
     def balance(self):
-        summary = LogEntry.objects.filter(log__warehouse=self).aggregate(Sum("amount"))
+        summary = BalanceLogEntry.objects.filter(balance_log__warehouse=self).aggregate(Sum("amount"))
         return summary["amount__sum"]
 
 
-class Log(models.Model):
+class BalanceLog(models.Model):
     product = models.ForeignKey(Product)
     warehouse = models.ForeignKey(Warehouse)
 
@@ -60,13 +80,13 @@ class Log(models.Model):
     def __str__(self):
         return "{} at {}".format(self.product, self.warehouse)
 
-    def balance(self):
-        summary = self.logentry_set.aggregate(Sum("amount"))
+    def total_amount(self):
+        summary = self.balancelogentry_set.aggregate(Sum("amount"))
         return summary["amount__sum"]
 
 
-class LogEntry(models.Model):
-    log = models.ForeignKey(Log)
+class BalanceLogEntry(models.Model):
+    balance_log = models.ForeignKey(BalanceLog)
     timestamp = models.DateTimeField(auto_now_add=True)
     description = models.CharField(max_length=100)
     amount = models.IntegerField()

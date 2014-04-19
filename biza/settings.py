@@ -45,8 +45,6 @@ INSTALLED_APPS = (
     "south",
     # Own apps
     "products",
-    "pricelists",
-    "partners",
     "purchases",
     "wholesales",
     "retails",
