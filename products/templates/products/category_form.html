@@ -1,0 +1,15 @@
+{% extends "base_form.html" %}
+
+{% block breadcrumb %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li>Products</li>
+    <li><a href="{% url 'products_category_list' %}">Categories</a></li>
+    {% if form.instance.pk %}
+      <li><a href="{% url 'products_category_detail' category.pk %}">{{ category.name }}</a></li>
+      <li class="active">Edit</li>
+    {% else %}
+      <li class="active">New</li>
+    {% endif %}
+  </ol>
+{% endblock %}

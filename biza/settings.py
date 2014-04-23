@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # Third party apps
     "south",
+    "widget_tweaks",
     # Own apps
     "products",
     "purchases",
@@ -104,3 +105,12 @@ STATICFILES_DIRS = (
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 # Heroku recommended
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# Template directory
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, "templates"),
+)
+
+# User authentication related
+LOGIN_URL = "/login"
+LOGIN_REDIRECT_URL = "/"

@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 
 class Category(models.Model):
@@ -9,6 +10,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("products_category_detail", kwargs={"pk": self.pk})
 
 
 class Uom(models.Model):

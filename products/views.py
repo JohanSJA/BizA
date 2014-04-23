@@ -1,3 +1,20 @@
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView
 
-# Create your views here.
+from .models import Category
+
+
+class CategoryListView(ListView):
+    model = Category
+
+
+class CategoryDetailView(DetailView):
+    model = Category
+
+
+class CategoryCreateView(CreateView):
+    model = Category
+
+
+class CategoryUpdateView(UpdateView):
+    model = Category
