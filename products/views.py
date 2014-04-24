@@ -1,7 +1,11 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from .models import Category
+
+
+class ProductHomeView(TemplateView):
+    template_name = "products/home.html"
 
 
 class CategoryListView(ListView):
