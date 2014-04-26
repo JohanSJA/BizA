@@ -26,20 +26,27 @@ class Uom(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("products_uom_detail", kwargs={"pk": self.pk})
+
 
 class Product(models.Model):
     model = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=255, help_text="Used in printing.")
     category = models.ForeignKey(Category)
-    uom = models.ForeignKey(Uom)
+    uom = models.ForeignKey(Uom, verbose_name="unit of measurement")
     remark = models.TextField(blank=True)
 
     def __str__(self):
         return self.model
 
+    def get_absolute_url(self):
+        return reverse("products_product_detail", kwargs={"pk": self.pk})
+
     def balance(self):
         summary = BalanceLogEntry.objects.filter(balance_log__product=self).aggregate(Sum("amount"))
         return summary["amount__sum"]
+
 
 class Pricelist(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -48,6 +55,9 @@ class Pricelist(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("products_pricelist_detail", kwargs={"pk": self.pk})
 
 
 class PricelistEntry(models.Model):

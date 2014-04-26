@@ -2,15 +2,48 @@
 
 {% load widget_tweaks %}
 
+{% block breadcrumb %}
+  <ol class="breadcrumb">
+    <li><a href="../../../">..</a></li>
+    <li><a href="../../">..</a></li>
+    <li><a href="../">..</a></li>
+    {% if form.instance.pk %}
+      <li><a href="../">{{ form.instance }}</a></li>
+      <li class="active">Edit</li>
+    {% else %}
+      <li class="active">New</li>
+    {% endif %}
+  </ol>
+{% endblock %}
+
 {% block content %}
   <form method="post" class="form-horizontal" role="form">
     {% csrf_token %}
 
+    {% if form.non_field_errors %}
+      <div class="alert alert-error alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <ol>
+          {% for error in form.non_field_errors %}
+            {{ error }}
+          {% endfor %}
+        </ol>
+    {% endif %}
+
     {% for field in form %}
-      <div class="form-group">
+      <div class="form-group{% if field.errors %} has-error{% endif %}">
         <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">{{ field.label }}</label>
         <div class="col-sm-4">
           {{ field|add_class:"form-control" }}
+        </div>
+        <div class="col-sm-5">
+          <span class="help-block">
+            {% if field.errors %}
+              {{ field.errors }}
+            {% else %}
+              {{ field.help_text }}
+            {% endif %}
+          </span>
         </div>
       </div>
     {% endfor %}

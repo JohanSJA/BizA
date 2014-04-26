@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block breadcrumb %}
   <ol class="breadcrumb">
     <li><a href="{% url 'home' %}">Home</a></li>
     <li><a href="{% url 'products_home' %}">Products</a></li>
     <li class="active">Categories</li>
   </ol>
+{% endblock %}
 
+{% block content %}
   <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
       <a href="{% url 'products_category_create' %}" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> New</a>

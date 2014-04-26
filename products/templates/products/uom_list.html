@@ -1,0 +1,19 @@
+{% extends "base_list.html" %}
+
+{% block breadcrumb %}
+  <ol class="breadcrumb">
+    <li><a href="../../">Home</a></li>
+    <li><a href="../">Products</a></li>
+    <li class="active">Units of measurement</li>
+  </ol>
+{% endblock %}
+
+{% block heading %}
+  <td>Name</td>
+  <td>Abbreviation</td>
+{% endblock %}
+
+{% block row %}
+  <td><a href="{% url 'products_uom_detail' object.pk %}">{{ object.name }}</a></td>
+  <td>{{ object.abbreviation }}</td>
+{% endblock %}

@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     "south",
     "widget_tweaks",
     # Own apps
+    "utils",
     "products",
     "purchases",
     "wholesales",

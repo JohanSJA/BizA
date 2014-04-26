@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block breadcrumb %}
+  <ol class="breadcrumb">
+    <li><a href="../../../">..</a></li>
+    <li><a href="../../">..</a></li>
+    <li><a href="../">..</a></li>
+    <li class="active">{{ object }}</li>
+  </ol>
+{% endblock %}
+
+{% block content %}
+  <div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+      <a href="edit/" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+    </div>
+  </div>
+
+  {% block object %}
+    <h1>{{ object }}</h1>
+  {% endblock %}
+{% endblock %}

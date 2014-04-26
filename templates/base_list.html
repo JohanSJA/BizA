@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block breadcrumb %}
+  <ol class="breadcrumb">
+    <li><a href="../../">..</a></li>
+    <li><a href="../">..</a></li>
+    <li class="active">.</li>
+  </ol>
+{% endblock %}
+
+{% block content %}
+  <div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+      <a href="new/" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> New</a>
+    </div>
+  </div>
+
+  <table class="table table-striped table-hover table-responsive">
+    <thead>
+      <tr>
+        {% block heading %}
+          <th>Object</th>
+        {% endblock %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in object_list %}
+        <tr>
+          {% block row %}
+            <td><a href="{{ object.pk }}/">{{ object }}</a></td>
+          {% endblock %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
