@@ -2,11 +2,12 @@
 
 {% block breadcrumb %}
   <ol class="breadcrumb">
+    <li><a href="../../../../">..</a></li>
     <li><a href="../../../">..</a></li>
     <li><a href="../../">..</a></li>
     <li><a href="../">..</a></li>
     {% if form.instance.pk %}
-      <li><a href="../">..</a></li>
+      <li><a href="../">{{ form.instance }}</a></li>
       <li class="active">Edit</li>
     {% else %}
       <li class="active">New</li>
@@ -18,7 +19,14 @@
   <form method="post" class="form-horizontal" role="form">
     {% csrf_token %}
 
-    {% include "fields_horizontal_snippet.html" %}
+    {{ form.management_form }}
+
+    {% for f in form %}
+      <fieldset>
+        <legend>{% if f.instance.pk %}{{ f.instance }}{% endif %}</legend>
+        {% include "fields_horizontal_snippet.html" with form=f %}
+      </fieldset>
+    {% endfor %}
 
     <div class="form-group">
       <div class="col-sm-4 col-sm-offset-3">

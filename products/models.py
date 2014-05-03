@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.db.models import Sum
 
 
 class Category(models.Model):
@@ -73,11 +74,14 @@ class PricelistEntry(models.Model):
 
 
 class Warehouse(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     address = models.TextField()
 
     def __str__(self):
-        return self.id
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("products_warehouse_detail", kwargs={"pk": self.pk})
 
     def balance(self):
         summary = BalanceLogEntry.objects.filter(balance_log__warehouse=self).aggregate(Sum("amount"))
@@ -94,6 +98,9 @@ class BalanceLog(models.Model):
     def __str__(self):
         return "{} at {}".format(self.product, self.warehouse)
 
+    def get_absolute_url(self):
+        return reverse("products_balancelog_detail", kwargs={"pk": self.pk})
+
     def total_amount(self):
         summary = self.balancelogentry_set.aggregate(Sum("amount"))
         return summary["amount__sum"]
@@ -104,6 +111,9 @@ class BalanceLogEntry(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     description = models.CharField(max_length=100)
     amount = models.IntegerField()
+
+    class Meta:
+        verbose_name_plural = "balance log entries"
 
     def __str__(self):
         return "{} at {}".format(self.amount, self.timestamp)

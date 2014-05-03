@@ -20,6 +20,17 @@
 
     {% include "fields_horizontal_snippet.html" %}
 
+    {% for formset in inlines %}
+      {{ formset.management_form }}
+
+      {% for form in formset %}
+        <fieldset>
+          <legend>{% if form.instance.pk %}{{ form.instance }}{% endif %}</legend>
+          {% include "fields_horizontal_snippet.html" %}
+        </fieldset>
+      {% endfor %}
+    {% endfor %}
+
     <div class="form-group">
       <div class="col-sm-4 col-sm-offset-3">
         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-save"></span> Save</button>

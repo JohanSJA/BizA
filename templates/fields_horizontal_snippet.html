@@ -1,0 +1,36 @@
+{% load widget_tweaks %}
+
+{% if form.non_field_errors %}
+  <div class="alert alert-danger alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{ form.non_field_errors }}
+  </div>
+{% endif %}
+
+{% for field in form.visible_fields %}
+  <div class="form-group{% if field.errors %} has-error{% endif %}">
+    {% if field|widget_type == "checkboxinput" %}
+      <label for="{{ field.id_for_label }}" class="col-sm-4 col-sm-offset-3">
+        {{ field }} {{ field.label }}
+      </label>
+    {% else %}
+      <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">{{ field.label }}</label>
+      <div class="col-sm-4">
+        {{ field|add_class:"form-control" }}
+      </div>
+    {% endif %}
+    <div class="col-sm-5">
+      <span class="help-block">
+        {% if field.errors %}
+          {{ field.errors }}
+        {% else %}
+          {{ field.help_text }}
+        {% endif %}
+      </span>
+    </div>
+  </div>
+{% endfor %}
+
+{% for field in form.hidden_fields %}
+  {{ field }}
+{% endfor %}

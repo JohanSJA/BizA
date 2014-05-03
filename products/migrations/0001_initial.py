@@ -11,14 +11,14 @@ class Migration(SchemaMigration):
         # Adding model 'Category'
         db.create_table('products_category', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=50)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=50, unique=True)),
         ))
         db.send_create_signal('products', ['Category'])
 
         # Adding model 'Uom'
         db.create_table('products_uom', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=50)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=50, unique=True)),
             ('abbreviation', self.gf('django.db.models.fields.CharField')(max_length=5)),
         ))
         db.send_create_signal('products', ['Uom'])
@@ -26,7 +26,7 @@ class Migration(SchemaMigration):
         # Adding model 'Product'
         db.create_table('products_product', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('model', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
+            ('model', self.gf('django.db.models.fields.CharField')(max_length=100, unique=True)),
             ('description', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Category'])),
             ('uom', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Uom'])),
@@ -37,7 +37,7 @@ class Migration(SchemaMigration):
         # Adding model 'Pricelist'
         db.create_table('products_pricelist', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100, unique=True)),
             ('base', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['products.Pricelist'], blank=True)),
             ('base_derivation', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
         ))
@@ -58,7 +58,7 @@ class Migration(SchemaMigration):
         # Adding model 'Warehouse'
         db.create_table('products_warehouse', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100, unique=True)),
             ('address', self.gf('django.db.models.fields.TextField')()),
         ))
         db.send_create_signal('products', ['Warehouse'])
@@ -78,7 +78,7 @@ class Migration(SchemaMigration):
         db.create_table('products_balancelogentry', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('balance_log', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.BalanceLog'])),
-            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(blank=True, auto_now_add=True)),
             ('description', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('amount', self.gf('django.db.models.fields.IntegerField')()),
         ))
@@ -130,19 +130,19 @@ class Migration(SchemaMigration):
             'balance_log': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.BalanceLog']"}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'timestamp': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'})
+            'timestamp': ('django.db.models.fields.DateTimeField', [], {'blank': 'True', 'auto_now_add': 'True'})
         },
         'products.category': {
             'Meta': {'object_name': 'Category'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'})
         },
         'products.pricelist': {
             'Meta': {'object_name': 'Pricelist'},
             'base': ('django.db.models.fields.related.ForeignKey', [], {'null': 'True', 'to': "orm['products.Pricelist']", 'blank': 'True'}),
             'base_derivation': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'})
         },
         'products.pricelistentry': {
             'Meta': {'object_name': 'PricelistEntry', 'unique_together': "(['pricelist', 'product'],)"},
@@ -156,7 +156,7 @@ class Migration(SchemaMigration):
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Category']"}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
+            'model': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'}),
             'remark': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'uom': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Uom']"})
         },
@@ -164,13 +164,13 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Uom'},
             'abbreviation': ('django.db.models.fields.CharField', [], {'max_length': '5'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'})
         },
         'products.warehouse': {
             'Meta': {'object_name': 'Warehouse'},
             'address': ('django.db.models.fields.TextField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'})
         }
     }
 

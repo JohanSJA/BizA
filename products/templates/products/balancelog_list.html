@@ -1,0 +1,15 @@
+{% extends "base_list.html" %}
+
+{% block heading %}
+  <th>No.</th>
+  <th>Product</th>
+  <th>Warehouse</th>
+  <th class="text-right">Total Amount</th>
+{% endblock %}
+
+{% block row %}
+  <td><a href="{{ object.pk }}/">{{ forloop.counter }}</a></td>
+  <td>{{ object.product }}</td>
+  <td>{{ object.warehouse }}</td>
+  <td class="text-right">{{ object.total_amount|default:"0" }}</td>
+{% endblock %}

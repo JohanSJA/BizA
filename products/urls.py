@@ -6,6 +6,8 @@ from .views import (
     UomListView, UomDetailView, UomCreateView, UomUpdateView,
     ProductListView, ProductDetailView, ProductCreateView, ProductUpdateView,
     PricelistListView, PricelistDetailView, PricelistCreateView, PricelistUpdateView,
+    WarehouseListView, WarehouseDetailView, WarehouseCreateView, WarehouseUpdateView,
+    BalanceLogListView, BalanceLogDetailView, BalanceLogCreateView, BalanceLogUpdateView,
 )
 
 
@@ -31,4 +33,14 @@ urlpatterns = patterns('',
     url(r"^pricelist/(?P<pk>\d+)/$", PricelistDetailView.as_view(), name="products_pricelist_detail"),
     url(r"^pricelist/new/$", PricelistCreateView.as_view(), name="products_pricelist_create"),
     url(r"^pricelist/(?P<pk>\d+)/edit/$", PricelistUpdateView.as_view(), name="products_pricelist_update"),
+
+    url(r"^warehouse/$", WarehouseListView.as_view(), name="products_warehouse_list"),
+    url(r"^warehouse/(?P<pk>\d+)/$", WarehouseDetailView.as_view(), name="products_warehouse_detail"),
+    url(r"^warehouse/new/$", WarehouseCreateView.as_view(), name="products_warehouse_create"),
+    url(r"^warehouse/(?P<pk>\d+)/edit/$", WarehouseUpdateView.as_view(), name="products_warehouse_update"),
+
+    url(r"^balancelog/$", BalanceLogListView.as_view(), name="products_balancelog_list"),
+    url(r"^balancelog/(?P<pk>\d+)/$", BalanceLogDetailView.as_view(), name="products_balancelog_detail"),
+    url(r"^balancelog/new/$", BalanceLogCreateView.as_view(), name="products_balancelog_create"),
+    url(r"^balancelog/(?P<pk>\d+)/edit/$", BalanceLogUpdateView.as_view(), name="products_balancelog_update"),
 )
