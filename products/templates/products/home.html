@@ -11,18 +11,18 @@
   <div class="row">
     <div class="col-md-3">
         <h2>Products</h2>
-        <ul>
-          <li><a href="{% url 'products_product_list' %}">List</a></li>
-          <li><a href="{% url 'products_product_create' %}">New</a></li>
-        </ul>
+        <div class="btn-group">
+          <a href="{% url 'products_product_list' %}" class="btn btn-default">List</a>
+          <a href="{% url 'products_product_create' %}" class="btn btn-default">New</a>
+        </div>
     </div>
 
     <div class="col-md-3">
         <h2>Categories</h2>
-        <ul>
-          <li><a href="{% url 'products_category_list' %}">List</a></li>
-          <li><a href="{% url 'products_category_create' %}">New</a></li>
-        </ul>
+        <div class="btn-group">
+          <a href="{% url 'products_category_list' %}" class="btn btn-default">List</a>
+          <a href="{% url 'products_category_create' %}" class="btn btn-default">New</a>
+        </div>
     </div>
   </div>
 {% endblock %}
