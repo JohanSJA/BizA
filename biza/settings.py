@@ -47,9 +47,9 @@ INSTALLED_APPS = (
     # Own apps
     "utils",
     "products",
-    "purchases",
-    "wholesales",
-    "retails",
+    #"purchases",
+    #"wholesales",
+    #"retails",
 )
 
 MIDDLEWARE_CLASSES = (

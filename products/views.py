@@ -19,6 +19,12 @@ class CategoryListView(ListView):
 class CategoryDetailView(DetailView):
     model = Category
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = self.get_object()
+        context["product_list"] = category.product_set.all()
+        return context
+
 class CategoryCreateView(CreateView):
     model = Category
 
@@ -47,26 +53,15 @@ class PricelistEntryInlineFormSet(InlineFormSet):
 
 class ProductListView(ListView):
     model = Product
-    template_name = "base_list.html"
 
 class ProductDetailView(DetailView):
     model = Product
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        product = self.get_object()
-        context["pricelistentry_list"] = product.pricelistentry_set.all()
-        return context
-
-class ProductCreateView(CreateWithInlinesView):
+class ProductCreateView(CreateView):
     model = Product
-    inlines = [PricelistEntryInlineFormSet]
-    template_name = "base_form_with_inlines.html"
 
-class ProductUpdateView(UpdateWithInlinesView):
+class ProductUpdateView(UpdateView):
     model = Product
-    inlines = [PricelistEntryInlineFormSet]
-    template_name = "base_form_with_inlines.html"
 
 
 class PricelistListView(ListView):

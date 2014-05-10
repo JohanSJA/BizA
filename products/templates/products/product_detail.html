@@ -1,41 +1,26 @@
 {% extends "base_detail.html" %}
 
-{% block object %}
-  <div class="row">
-    <div class="col-md-4">
-      <h1>{{ product.model }}</h1>
-      <dl class="dl-horizontal">
-        <dt>Description</dt>
-        <dd>{{ product.description }}</dd>
-        <dt>Category</dt>
-        <dd>{{ product.category }}</dd>
-        <dt>Unit of measurement</dt>
-        <dd>{{ product.uom }}</dd>
-        <dt>Remark</dt>
-        <dd>{{ product.remark }}</dd>
-      </dl>
+{% block breadcrumb %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'products_home' %}">Products</a></li>
+    <li><a href="{% url 'products_product_list' %}">Products</a></li>
+    <li class="active">{{ product }}</li>
+  </ol>
+{% endblock %}
 
-      <h2>Prices</h2>
-      <table class="table table-striped table-hover table-responsive">
-        <thead>
-          <tr>
-            <th>Pricelist</th>
-            <th class="text-right">Price (RM)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for entry in pricelistentry_list %}
-            <tr>
-              <td>{{ entry.pricelist }}</td>
-              <td class="text-right">{{ entry.price|floatformat:"2" }}</td>
-            </tr>
-          {% empty %}
-            <tr>
-              <td colspan="2">No entries</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
+{% block object %}
+  <h1>{{ product.model }}</h1>
+  <dl class="dl-horizontal">
+    <dt>ID</dt>
+    <dd>{{ product.id }}</dd>
+    <dt>Description</dt>
+    <dd>{{ product.description }}</dd>
+    <dt>Category</dt>
+    <dd><a href="{% url 'products_category_detail' product.category.pk %}">{{ product.category }}</a></dd>
+    <dt>Barcode</dt>
+    <dd>{{ product.barcode|default:"-" }}</dd>
+    <dt>Remark</dt>
+    <dd>{{ product.remark|default:"-" }}</dd>
+  </dl>
 {% endblock %}

@@ -15,9 +15,8 @@ class BalanceLogInline(admin.TabularInline):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ["model", "category", "uom", "balance"]
+    list_display = ["model", "category"]
     list_filter = ["category"]
-    inlines = [BalanceLogInline]
 
 
 class PricelistEntryInline(admin.TabularInline):

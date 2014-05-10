@@ -1,0 +1,27 @@
+{% extends "base_list.html" %}
+
+{% block breadcrumb %}
+  <ul class="breadcrumb">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'products_home' %}">Products</a></li>
+    <li class="active">Products</li>
+  </ul>
+{% endblock %}
+
+{% block heading %}
+  <th>ID</th>
+  <th>Model</th>
+  <th>Description</th>
+  <th>Category</th>
+{% endblock %}
+
+{% block summary_row %}
+  <td colspan="4">Total {{ object_list|length }} product{{ object_list|pluralize }}.</td>
+{% endblock %}
+
+{% block row %}
+  <td><a href="{% url 'products_product_detail' object.pk %}">{{ object.id }}</a></td>
+  <td>{{ object.model }}</td>
+  <td>{{ object.description }}</td>
+  <td>{{ object.category }}</td>
+{% endblock %}

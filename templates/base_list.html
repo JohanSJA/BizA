@@ -11,7 +11,7 @@
 {% block content %}
   <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-      <a href="new/" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> New</a>
+      <a href="new/" class="btn btn-default">New</a>
     </div>
   </div>
 
@@ -23,6 +23,13 @@
         {% endblock %}
       </tr>
     </thead>
+    <tfoot>
+      <tr>
+        {% block summary_row %}
+          <td>Total {{ object_list|length }} object{{ object_list|pluralize }}.</td>
+        {% endblock %}
+      </tr>
+    </tfoot>
     <tbody>
       {% for object in object_list %}
         <tr>

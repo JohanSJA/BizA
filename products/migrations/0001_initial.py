@@ -29,7 +29,7 @@ class Migration(SchemaMigration):
             ('model', self.gf('django.db.models.fields.CharField')(max_length=100, unique=True)),
             ('description', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Category'])),
-            ('uom', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Uom'])),
+            ('barcode', self.gf('django.db.models.fields.CharField')(max_length=20, blank=True)),
             ('remark', self.gf('django.db.models.fields.TextField')(blank=True)),
         ))
         db.send_create_signal('products', ['Product'])
@@ -48,7 +48,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('pricelist', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Pricelist'])),
             ('product', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.Product'])),
-            ('price', self.gf('django.db.models.fields.DecimalField')(max_digits=12, decimal_places=4)),
+            ('price', self.gf('django.db.models.fields.DecimalField')(decimal_places=4, max_digits=12)),
         ))
         db.send_create_signal('products', ['PricelistEntry'])
 
@@ -78,7 +78,7 @@ class Migration(SchemaMigration):
         db.create_table('products_balancelogentry', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('balance_log', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['products.BalanceLog'])),
-            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(blank=True, auto_now_add=True)),
+            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('description', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('amount', self.gf('django.db.models.fields.IntegerField')()),
         ))
@@ -130,7 +130,7 @@ class Migration(SchemaMigration):
             'balance_log': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.BalanceLog']"}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'timestamp': ('django.db.models.fields.DateTimeField', [], {'blank': 'True', 'auto_now_add': 'True'})
+            'timestamp': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'})
         },
         'products.category': {
             'Meta': {'object_name': 'Category'},
@@ -147,18 +147,18 @@ class Migration(SchemaMigration):
         'products.pricelistentry': {
             'Meta': {'object_name': 'PricelistEntry', 'unique_together': "(['pricelist', 'product'],)"},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'price': ('django.db.models.fields.DecimalField', [], {'max_digits': '12', 'decimal_places': '4'}),
+            'price': ('django.db.models.fields.DecimalField', [], {'decimal_places': '4', 'max_digits': '12'}),
             'pricelist': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Pricelist']"}),
             'product': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Product']"})
         },
         'products.product': {
             'Meta': {'object_name': 'Product'},
+            'barcode': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Category']"}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'}),
-            'remark': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'uom': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['products.Uom']"})
+            'remark': ('django.db.models.fields.TextField', [], {'blank': 'True'})
         },
         'products.uom': {
             'Meta': {'object_name': 'Uom'},

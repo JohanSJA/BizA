@@ -35,7 +35,7 @@ class Product(models.Model):
     model = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=255, help_text="Used in printing.")
     category = models.ForeignKey(Category)
-    uom = models.ForeignKey(Uom, verbose_name="unit of measurement")
+    barcode = models.CharField(max_length=20, blank=True)
     remark = models.TextField(blank=True)
 
     def __str__(self):
