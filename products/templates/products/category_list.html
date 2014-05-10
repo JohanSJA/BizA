@@ -21,6 +21,9 @@
         <th>Name</th>
       </tr>
     </thead>
+    <tfoot>
+      <tr>
+        <td>Total {{ category_list|length }} categor{{ category_list|pluralize:"y,ies" }}.</td>
     <tbody>
       {% for category in category_list %}
         <tr>
