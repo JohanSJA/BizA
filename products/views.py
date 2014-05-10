@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
-from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
+#from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
 
 from .models import (
     Category, Uom, Product, Pricelist, PricelistEntry, Warehouse,
@@ -47,8 +47,8 @@ class UomUpdateView(UpdateView):
     template_name = "base_form.html"
 
 
-class PricelistEntryInlineFormSet(InlineFormSet):
-    model = PricelistEntry
+#class PricelistEntryInlineFormSet(InlineFormSet):
+#    model = PricelistEntry
 
 
 class ProductListView(ListView):
@@ -77,14 +77,12 @@ class PricelistDetailView(DetailView):
         context["pricelistentry_list"] = pricelist.pricelistentry_set.all()
         return context
 
-class PricelistCreateView(CreateWithInlinesView):
+class PricelistCreateView(CreateView):
     model = Pricelist
-    inlines = [PricelistEntryInlineFormSet]
     template_name = "base_form_with_inlines.html"
 
-class PricelistUpdateView(UpdateWithInlinesView):
+class PricelistUpdateView(UpdateView):
     model = Pricelist
-    inlines = [PricelistEntryInlineFormSet]
     template_name = "base_form_with_inlines.html"
 
 
