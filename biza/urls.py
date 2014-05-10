@@ -3,8 +3,6 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-from django.conf import settings
-
 from biza.views import Home
 
 urlpatterns = patterns('',
@@ -21,8 +19,3 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 )
-
-if not settings.DEBUG:
-    urlpatterns += patterns("",
-        (r"^static/(?<path>.*)$", "django.views.static.serve", {"document_root": settings.STATIC_ROOT}),
-    )
