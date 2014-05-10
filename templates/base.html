@@ -17,11 +17,6 @@
       body {
         padding-top: 70px;
       }
-      footer {
-        margin-top: 40px;
-        padding-top: 20px;
-        border-top: 1px solid #aaa;
-      }
       .btn-toolbar {
         margin-bottom: 20px;
       }
@@ -66,9 +61,16 @@
 
       {% block content %}{% endblock %}
 
-      <footer>
-        <p>&copy; PAW 2014</p>
-      </footer>
+      <hr />
+
+      <div class="row">
+        <div class="col-md-6">
+          <p>&copy; PAW 2014</p>
+        </div>
+        <div class="col-md-6">
+          <p class="text-right">Last reloaded on: {% now "SHORT_DATETIME_FORMAT" %}</p>
+        </div>
+      </div>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's Javascript plugins) -->
