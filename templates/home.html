@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
 {% block breadcrumb %}
   {% if user.is_authenticated %}
     <ul class="breadcrumb">
@@ -19,7 +21,7 @@
     </div>
   {% else %}
     <div class="jumbotron">
-      <h1>BizA</h1>
+      <h1><img src="{% static 'ico/logo-180.png' %}" class="img-responsive" alt="BizA"></h1>
       <p>Built for Cheantar Electronics Sdn. Bhd.</p>
       <p><a href="{% url 'login' %}" class="btn btn-primary btn-lg">Login</a></p>
     </div>

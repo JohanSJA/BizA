@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 
 <html>
@@ -29,6 +31,9 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <link rel="apple-touch-icon-recomposed" sizes="144x144" href="{% static 'ico/icon-144.png' %}">
+    <link rel="shortcut icon" href="{% static 'ico/icon-144.png' %}">
   </head>
 
   <body>
@@ -41,7 +46,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url 'home' %}">BizA</a>
+          <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'ico/logo-24.png' %}" class="img-responsive" alt="BizA"></a>
         </div>
         <div class="collapse navbar-collapse">
           {% if user.is_authenticated %}
