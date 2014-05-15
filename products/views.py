@@ -52,7 +52,20 @@ class UomUpdateView(UpdateView):
 
 
 class ProductListView(ListView):
-    model = Product
+    def get_queryset(self):
+        product_list = Product.objects.all()
+        if self.request.GET:
+            if "search" in self.request.GET:
+                product_list = product_list.filter(model__icontains=self.request.GET["search"])
+        return product_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category_list"] = Category.objects.all()
+        if self.request.GET:
+            if "search" in self.request.GET:
+                context["search_term"] = self.request.GET["search"]
+        return context
 
 class ProductDetailView(DetailView):
     model = Product

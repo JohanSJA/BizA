@@ -12,7 +12,7 @@ from .views import (
 
 
 urlpatterns = patterns('',
-    url(r"^$", ProductHomeView.as_view(), name="products_home"),
+    url(r"^$", ProductListView.as_view(), name="products_home"),
 
     url(r"^category/$", CategoryListView.as_view(), name="products_category_list"),
     url(r"^category/(?P<pk>\d+)/$", CategoryDetailView.as_view(), name="products_category_detail"),
