@@ -1,33 +1,32 @@
 {% load widget_tweaks %}
 
 {% if form.non_field_errors %}
-  <div class="alert alert-danger alert-dismissable">
+  <div class="ink-alert block" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h2>Error{{ form.non_field_errors|pluralize }}!</h2>
     {{ form.non_field_errors }}
   </div>
 {% endif %}
 
 {% for field in form.visible_fields %}
-  <div class="form-group{% if field.errors %} has-error{% endif %}">
+  <div class="control-group column-group horizontal-gutters{% if field.errors %} validation error{% endif %}">
     {% if field|widget_type == "checkboxinput" %}
       <label for="{{ field.id_for_label }}" class="col-sm-4 col-sm-offset-3">
         {{ field }} {{ field.label }}
       </label>
     {% else %}
-      <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">{{ field.label }}</label>
-      <div class="col-sm-4">
-        {{ field|add_class:"form-control" }}
+      <label for="{{ field.id_for_label }}" class="all-30 align-right">{{ field.label }}</label>
+      <div class="control all-70">
+        {{ field }}
+        <p class="tip">
+          {% if field.errors %}
+            {{ field.errors }}
+          {% else %}
+            {{ field.help_text }}
+          {% endif %}
+        </p>
       </div>
     {% endif %}
-    <div class="col-sm-5">
-      <span class="help-block">
-        {% if field.errors %}
-          {{ field.errors }}
-        {% else %}
-          {{ field.help_text }}
-        {% endif %}
-      </span>
-    </div>
   </div>
 {% endfor %}
 

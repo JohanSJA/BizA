@@ -1,15 +1,17 @@
 {% extends "base_form.html" %}
 
 {% block breadcrumb %}
-  <ol class="breadcrumb">
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'products_home' %}">Products</a></li>
-    <li><a href="{% url 'products_product_list' %}">Products</a></li>
-    {% if form.instance.pk %}
-      <li><a href="{% url 'products_product_detail' form.instance.pk %}">{{ form.instance }}</a></li>
-      <li class="active">Edit</li>
-    {% else %}
-      <li class="active">New</li>
-    {% endif %}
-  </ol>
+  <nav class="ink-navigation">
+    <ul class="breadcrumbs grey">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'products_home' %}">Products</a></li>
+      <li><a href="{% url 'products_product_list' %}">Products</a></li>
+      {% if form.instance.pk %}
+        <li><a href="{% url 'products_product_detail' form.instance.pk %}">{{ form.instance }}</a></li>
+        <li class="active"><a href="#">Edit</a></li>
+      {% else %}
+        <li class="active"><a href="#">New</a></li>
+      {% endif %}
+    </ul>
+  </nav>
 {% endblock %}
