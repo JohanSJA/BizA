@@ -1,22 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-md-3">
+  <div class="column-group gutters">
+    <div class="all-25">
       <h2>Search</h2>
-      <form method="get" role="search">
-        <div class="form-group">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="input-group">
-                <input id="search" name="search" type="text" class="form-control"{% if search_term %} value="{{ search_term }}"{% endif %}>
-                <span class="input-group-btn">
-                  <button type="submit" class="btn btn-default">
-                    <span class="glyphicon glyphicon-search"></span>
-                  </button>
-                </span>
-              </div>
-            </div>
+      <form method="get" class="ink-form" role="search">
+        <div class="control-group">
+          <div class="control append-button" role="search">
+            <span><input id="search" name="search" type="text" {% if search_term %} value="{{ search_term }}"{% endif %}></span>
+            <button type="submit" class="ink-button">
+              <i class="fa fa-search"></i>
+            </button>
           </div>
         </div>
       </form>
@@ -37,21 +31,23 @@
       </ul>
     </div>
 
-    <div class="col-md-9">
+    <div class="all-75">
+      <div class="button-group push-right">
+        <a href="{% url 'products_product_create' %}" class="ink-button">
+          <i class="fa fa-plus"></i>
+        </a>
+      </div>
       <h1>
         Products
-        <a href="{% url 'products_product_create' %}" class="btn btn-default">
-          <span class="glyphicon glyphicon-plus"></span>
-        </a>
       </h1>
-      <table class="table table-striped table-hover table-responsive">
+      <table class="ink-table alternating hover">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Model</th>
-            <th>Description</th>
-            <th>Barcode</th>
-            <th>Remark</th>
+            <th class="align-left">ID</th>
+            <th class="align-left">Model</th>
+            <th class="align-left">Description</th>
+            <th class="align-left">Barcode</th>
+            <th class="align-left">Remark</th>
           </tr>
         </thead>
         <tfoot>

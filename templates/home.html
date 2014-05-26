@@ -4,26 +4,26 @@
 
 {% block breadcrumb %}
   {% if user.is_authenticated %}
-    <ul class="breadcrumb">
-      <li class="active">Home</li>
-    </ul>
+    <nav class="ink-navigation">
+      <ul class="breadcrumbs grey">
+        <li class="active"><a href="#">Home</a></li>
+      </ul>
+    </nav>
   {% endif %}
 {% endblock %}
 
 {% block content %}
   {% if user.is_authenticated %}
-    <div class="row">
-      <div class="col-md-4">
+    <div class="column-group">
+      <div class="all-33">
         <h2>Products</h2>
         <p>Manage all products related stuffs.</p>
-        <p><a href="{% url 'products_home' %}" class="btn btn-default">Go</a></p>
+        <p><a href="{% url 'products_home' %}" class="ink-button">Go</a></p>
       </div>
     </div>
   {% else %}
-    <div class="jumbotron">
-      <h1><img src="{% static 'ico/logo-180.png' %}" class="img-responsive" alt="BizA"></h1>
-      <p>Built for Cheantar Electronics Sdn. Bhd.</p>
-      <p><a href="{% url 'login' %}" class="btn btn-primary btn-lg">Login</a></p>
-    </div>
+    <h1><img src="{% static 'ico/logo-180.png' %}" alt="BizA"></h1>
+    <p>Built for Cheantar Electronics Sdn. Bhd.</p>
+    <p><a href="{% url 'login' %}" class="ink-button">Login</a></p>
   {% endif %}
 {% endblock %}
