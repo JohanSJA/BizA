@@ -4,11 +4,13 @@
 
 {% block content %}
   <div class="column-group">
-    <div class="all-40 small-100 all-push-center">
+    <div class="all-40 small-100 push-center">
       <h1>Login</h1>
 
+      <hr>
+
       {% if form.errors %}
-        <div class="ink-alert basic" role="alert">
+        <div class="ink-alert basic error" role="alert">
           <button class="ink-dismiss">&times;</button>
           <p>Your username and password didn't match. Please try again.</p>
         </div>
@@ -24,14 +26,15 @@
           </div>
         </div>
 
-        <div class="control-group column-group gutters">
+        <div class="control-group column-group horizontal-gutters">
           <label for="{{ form.password.id_for_label }}" class="all-30 align-right">{{ form.password.label }}</label>
           <div class="control all-70">
             {{ form.password|add_class:"form-control" }}
           </div>
         </div>
 
-        <div class="control-group column-group">
+        <div class="control-group column-group horizontal-gutters">
+          <div class="all-30"></div>
           <div class="all-70 push-right">
             <input type="submit" value="Login" class="ink-button">
           </div>

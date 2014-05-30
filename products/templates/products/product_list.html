@@ -3,63 +3,61 @@
 {% block content %}
   <div class="column-group gutters">
     <div class="all-25">
-      <h2>Search</h2>
-      <form method="get" class="ink-form" role="search">
-        <div class="control-group">
-          <div class="control append-button" role="search">
-            <span><input id="search" name="search" type="text" {% if search_term %} value="{{ search_term }}"{% endif %}></span>
-            <button type="submit" class="ink-button">
-              <i class="fa fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
-
+      <h1>Products</h1>
       <hr>
 
-      <h2>
-        Categories
-        <a href="{% url 'products_category_create' %}" class="btn btn-default">
-          <span class="glyphicon glyphicon-plus"></span>
-        </a>
-      </h2>
+      <h2>Categories</h2>
       <ul>
         <li>All</li>
         {% for category in category_list %}
           <li>{{ category }}</li>
         {% endfor %}
+        <li>
+          <a href="{% url 'products_category_create' %}">
+            <i class="fa fa-plus"></i> New
+          </a>
+        </li>
       </ul>
     </div>
 
     <div class="all-75">
-      <div class="button-group push-right">
-        <a href="{% url 'products_product_create' %}" class="ink-button">
-          <i class="fa fa-plus"></i>
-        </a>
+      <div class="column-group">
+        <div class="all-50">
+          <div class="button-group">
+            <a href="{% url 'products_product_create' %}" class="ink-button">
+              <i class="fa fa-plus"></i> New
+            </a>
+          </div>
+        </div>
+
+        <div class="all-50">
+          <form method="get" class="ink-form" role="search">
+            <div class="control-group">
+              <div class="control append-button" role="search">
+                <span><input id="search" name="search" type="text" {% if search_term %} value="{{ search_term }}"{% endif %}></span>
+                <button type="submit" class="ink-button">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-      <h1>
-        Products
-      </h1>
-      <table class="ink-table alternating hover">
+
+      <table id="product-table" class="ink-table alternating hover"
+        data-page-size="50" data-pagination="table-paginator">
         <thead>
           <tr>
-            <th class="align-left">ID</th>
-            <th class="align-left">Model</th>
+            <th class="align-left" data-sortable="true">Model</th>
             <th class="align-left">Description</th>
             <th class="align-left">Barcode</th>
             <th class="align-left">Remark</th>
           </tr>
         </thead>
-        <tfoot>
-          <tr>
-            <td colspan="5">Total {{ product_list|length }} product{{ product_list|pluralize }}.</td>
-          </tr>
-        </tfoot>
         <tbody>
           {% for product in product_list %}
             <tr>
-              <td><a href="{% url 'products_product_detail' product.pk %}">{{ product.id }}</a></td>
-              <td>{{ product.model }}</td>
+              <td><a href="{% url 'products_product_detail' product.pk %}">{{ product.model }}</a></td>
               <td>{{ product.description }}</td>
               <td>{{ product.barcode|default:"-" }}</td>
               <td>{{ product.remark|default:"-" }}</td>
@@ -67,6 +65,10 @@
           {% endfor %}
         </tbody>
       </table>
+
+      <nav class="ink-navigation" id="table-paginator">
+        <ul class="pagination"></ul>
+      </nav>
     </div>
   </div>
 {% endblock %}
