@@ -72,9 +72,11 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(CreateView):
     model = Product
+    template_name = "base_form.html"
 
 class ProductUpdateView(UpdateView):
     model = Product
+    template_name = "base_form.html"
 
 
 class PricelistListView(ListView):

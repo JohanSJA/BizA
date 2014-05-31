@@ -2,28 +2,18 @@
 
 {% load staticfiles %}
 
-{% block breadcrumb %}
-  {% if user.is_authenticated %}
-    <nav class="ink-navigation bottom-space">
-      <ul class="breadcrumbs grey">
-        <li class="active"><a href="#">Home</a></li>
-      </ul>
-    </nav>
-  {% endif %}
-{% endblock %}
-
 {% block content %}
   {% if user.is_authenticated %}
-    <div class="column-group">
-      <div class="all-33">
+    <div class="uk-grid">
+      <div class="uk-width-1-3">
         <h2>Products</h2>
         <p>Manage all products related stuffs.</p>
-        <p><a href="{% url 'products_home' %}" class="ink-button">Go</a></p>
+        <p><a href="{% url 'products_home' %}" class="uk-button">Go</a></p>
       </div>
     </div>
   {% else %}
     <h1><img src="{% static 'ico/logo-180.png' %}" alt="BizA"></h1>
     <p>Built for Cheantar Electronics Sdn. Bhd.</p>
-    <p><a href="{% url 'login' %}" class="ink-button">Login</a></p>
+    <p><a href="{% url 'login' %}" class="uk-button uk-button-primary uk-button-large">Login</a></p>
   {% endif %}
 {% endblock %}

@@ -1,19 +1,7 @@
 {% extends "base_detail.html" %}
 
-{% block breadcrumb %}
-  <nav class="ink-navigation">
-    <ul class="breadcrumbs grey">
-      <li><a href="{% url 'home' %}">Home</a></li>
-      <li><a href="{% url 'products_home' %}">Products</a></li>
-      <li><a href="{% url 'products_product_list' %}">Products</a></li>
-      <li class="active"><a href="#">{{ product }}</a></li>
-    </ul>
-  </nav>
-{% endblock %}
-
 {% block object %}
-  <h1>{{ product.model }}</h1>
-  <dl>
+  <dl class="uk-description-list-horizontal">
     <dt>ID</dt>
     <dd>{{ product.id }}</dd>
     <dt>Description</dt>

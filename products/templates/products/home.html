@@ -1,28 +1,23 @@
 {% extends "base.html" %}
 
-{% block breadcrumb %}
-  <ol class="breadcrumb">
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li class="active">Products</li>
-  </ol>
-{% endblock %}
-
 {% block content %}
-  <div class="row">
-    <div class="col-md-3">
-        <h2>Products</h2>
-        <div class="btn-group">
-          <a href="{% url 'products_product_list' %}" class="btn btn-default">List</a>
-          <a href="{% url 'products_product_create' %}" class="btn btn-default">New</a>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <h2>Categories</h2>
-        <div class="btn-group">
-          <a href="{% url 'products_category_list' %}" class="btn btn-default">List</a>
-          <a href="{% url 'products_category_create' %}" class="btn btn-default">New</a>
-        </div>
+  <div class="uk-grid">
+    <div class="uk-width-1-4">
+      <ul class="uk-nav uk-nav-parent-icon" data-uk-nav>
+        <li class="uk-parent">
+          <a href="#">Products</a>
+          <ul class="uk-nav-sub">
+            <li><a href="{% url 'products_product_list' %}">List</a></li>
+            <li><a href="{% url 'products_product_create' %}">New</a></li>
+          </ul>
+        </li>
+        <li class="uk-parent">
+          <a href="#">Categories</a>
+          <ul class="uk-nav-sub">
+            <li><a href="{% url 'products_category_list' %}">List</a></li>
+            <li><a href="{% url 'products_category_create' %}" class="btn btn-default">New</a></li>
+          </ul>
+      </ul>
     </div>
   </div>
 {% endblock %}

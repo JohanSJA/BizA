@@ -1,19 +1,10 @@
 {% extends "base.html" %}
 
-{% block breadcrumb %}
-  <ol class="breadcrumb">
-    <li><a href="../../../">..</a></li>
-    <li><a href="../../">..</a></li>
-    <li><a href="../">..</a></li>
-    <li class="active">{{ object }}</li>
-  </ol>
-{% endblock %}
-
 {% block content %}
-  <div class="button-toolbar">
-    <div class="button-group">
-      <a href="edit/" class="ink-button"><i class="fa fa-pencil"></i> Edit</a>
-    </div>
+  <h1>{{ product.model }}</h1>
+
+  <div class="uk-button-group">
+    <a href="edit/" class="uk-button"><i class="uk-icon-pencil"></i> Edit</a>
   </div>
 
   {% block object %}

@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 
+{% block head_extra %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.6.0/js/addons/search.js"></script>
+{% endblock %}
+
 {% block content %}
-  <div class="column-group gutters">
-    <div class="all-25">
+  <div class="uk-grid">
+    <div class="uk-width-1-4">
       <h1>Products</h1>
       <hr>
 
@@ -14,44 +18,41 @@
         {% endfor %}
         <li>
           <a href="{% url 'products_category_create' %}">
-            <i class="fa fa-plus"></i> New
+            <i class="uk-icon-plus"></i> New
           </a>
         </li>
       </ul>
     </div>
 
-    <div class="all-75">
-      <div class="column-group">
-        <div class="all-50">
+    <div class="uk-width-3-4">
+      <div class="uk-grid">
+        <div class="uk-width-1-2">
           <div class="button-group">
-            <a href="{% url 'products_product_create' %}" class="ink-button">
-              <i class="fa fa-plus"></i> New
+            <a href="{% url 'products_product_create' %}" class="uk-button">
+              <i class="uk-icon-plus"></i> New
             </a>
           </div>
         </div>
 
-        <div class="all-50">
-          <form method="get" class="ink-form" role="search">
-            <div class="control-group">
-              <div class="control append-button" role="search">
-                <span><input id="search" name="search" type="text" {% if search_term %} value="{{ search_term }}"{% endif %}></span>
-                <button type="submit" class="ink-button">
-                  <i class="fa fa-search"></i>
-                </button>
-              </div>
+        <div class="uk-width-1-2">
+          <div class="uk-clearfix">
+            <div class="uk-float-right">
+              <form class="uk-search" data-uk-search>
+                <input id="search" name="search" class="uk-search-field" type="search" placeholder="{% if search_term %}{{ search_term }}{% else %}search...{% endif %}">
+                <button class="uk-search-close" type="reset"></button>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       </div>
 
-      <table id="product-table" class="ink-table alternating hover"
-        data-page-size="50" data-pagination="table-paginator">
+      <table class="uk-table uk-table-hover uk-table-striped">
         <thead>
           <tr>
-            <th class="align-left" data-sortable="true">Model</th>
-            <th class="align-left">Description</th>
-            <th class="align-left">Barcode</th>
-            <th class="align-left">Remark</th>
+            <th>Model</th>
+            <th>Description</th>
+            <th>Barcode</th>
+            <th>Remark</th>
           </tr>
         </thead>
         <tbody>
@@ -65,10 +66,6 @@
           {% endfor %}
         </tbody>
       </table>
-
-      <nav class="ink-navigation" id="table-paginator">
-        <ul class="pagination"></ul>
-      </nav>
     </div>
   </div>
 {% endblock %}

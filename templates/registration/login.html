@@ -3,8 +3,8 @@
 {% load widget_tweaks %}
 
 {% block content %}
-  <div class="column-group">
-    <div class="all-40 small-100 push-center">
+  <div class="uk-grid">
+    <div class="uk-width-1-2">
       <h1>Login</h1>
 
       <hr>
@@ -16,27 +16,26 @@
         </div>
       {% endif %}
 
-      <form class="ink-form" method="post" action="{% url 'login' %}">
+      <form class="uk-form uk-form-horizontal" method="post" action="{% url 'login' %}">
         {% csrf_token %}
 
-        <div class="control-group column-group horizontal-gutters">
-          <label for="{{ form.username.id_for_label }}" class="all-30 align-right">{{ form.username.label }}</label>
-          <div class="control all-70">
-            {{ form.username|add_class:"form-control" }}
+        <div class="uk-form-row">
+          <label class="uk-form-label uk-text-right" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+          <div class="uk-form-controls">
+            {{ form.username }}
           </div>
         </div>
 
-        <div class="control-group column-group horizontal-gutters">
-          <label for="{{ form.password.id_for_label }}" class="all-30 align-right">{{ form.password.label }}</label>
-          <div class="control all-70">
-            {{ form.password|add_class:"form-control" }}
+        <div class="uk-form-row">
+          <label class="uk-form-label uk-text-right" for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+          <div class="uk-form-controls">
+            {{ form.password }}
           </div>
         </div>
 
-        <div class="control-group column-group horizontal-gutters">
-          <div class="all-30"></div>
-          <div class="all-70 push-right">
-            <input type="submit" value="Login" class="ink-button">
+        <div class="uk-form-row">
+          <div class="uk-form-controls">
+            <input type="submit" value="Login" class="uk-button">
           </div>
         </div>
       </form>

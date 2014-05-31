@@ -5,74 +5,53 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>BizA</title>
 
-    <link rel="apple-touch-icon-recomposed" sizes="144x144" href="{% static 'ico/icon-144.png' %}">
     <link rel="shortcut icon" href="{% static 'ico/icon-144.png' %}">
+    <link rel="apple-touch-icon-recomposed" sizes="144x144" href="{% static 'ico/icon-144.png' %}">
 
-    <!-- Load Ink CSS from CDN -->
-    <link rel="stylesheet" type="text/css" href="http://cdn.ink.sapo.pt/3.0.2/css/ink-flex.min.css" />
-    <link rel="stylesheet" type="text/css" href="http://cdn.ink.sapo.pt/3.0.2/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.6.0/css/uikit.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.6.0/css/addons/uikit.addons.min.css">
 
-    <!-- Load Ink CSS for IE8 -->
-    <!--[if lt IE 9]>
-      <link rel="stylesheet" href="http://cdn.ink.sapo.pt/3.0.2/css/ink-ie.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
-    <![endif]-->
-
-    <!-- Test browser for flexbox support and load legacy grid if unsupported -->
-    <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.0.2/js/modernizr.js"></script>
-    <script type="text/javascript">
-      Modernizr.load({
-        test: Modernizr.flexbox,
-        nope: "http://cdn.ink.sapo.pt/3.0.2/css/ink-legacy.min.css"
-      });
-    </script>
-
-    <!-- Load Ink javascript from CDN -->
-    <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.0.2/js/holder.js"></script>
-    <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.0.2/js/ink-all.min.js"></script>
-    <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.0.2/js/autoload.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.6.0/js/uikit.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.6.0/js/addons/sticky.min.js"></script>
 
     {% block head_extra %}{% endblock %}
   </head>
 
   <body>
-    <nav class="ink-navigation ink-sticky bottom-space">
-      {% if user.is_authenticated %}
-        <ul class="menu horizontal black push-right">
-          <li class="disabled"><a href="#">Logged in as {{ user }}</a></li>
-          <li><a href="{% url 'logout' %}">Logout</a></li>
-        </ul>
-      {% endif %}
-      <ul class="menu horizontal black">
-        <li class="heading"><a href="{% url 'home' %}"><img src="{% static 'ico/logo-24.png' %}" alt="BizA"></a></li>
-      </ul>
-    </nav>
+    <div data-uk-sticky>
+      <nav class="uk-navbar uk-navbar-attached">
+        <a href="{% url 'home' %}" class="uk-navbar-brand"><img src="{% static 'ico/logo-24.png' %}" alt="BizA"></a>
+        {% if user.is_authenticated %}
+          <div class="uk-navbar-flip">
+            <div class="uk-navbar-content">Logged in as {{ user }}</div>
+            <ul class="uk-navbar-nav">
+              <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+          </div>
+        {% endif %}
+      </nav>
+    </div>
 
-    <div class="ink-grid">
-      {% block breadcrumb %}{% endblock %}
-
+    <div class="uk-container uk-container-center uk-margin-top">
       {% block content %}{% endblock %}
 
       <hr />
 
-      <div class="column-group">
-        <div class="all-60">
+      <div class="uk-grid">
+        <div class="uk-width-1-3">
           <p>&copy; PAW 2014</p>
         </div>
-        <div class="all-40">
-          <p class="align-right">Last reloaded on: {% now "SHORT_DATETIME_FORMAT" %}</p>
+        <div class="uk-width-2-3">
+          <p class="uk-text-right">Last reloaded on: {% now "SHORT_DATETIME_FORMAT" %}</p>
         </div>
       </div>
-    </div>
 
-    {% block body_extra %}{% endblock %}
+      {% block body_extra %}{% endblock %}
+    </div>
   </body>
 </html>
