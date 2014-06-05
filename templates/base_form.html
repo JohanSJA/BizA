@@ -1,14 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <form method="post" class="uk-form uk-form-horizontal" role="form">
+  <h1>
+    {% if form.instance.pk %}
+      Edit
+    {% else %}
+      New
+    {% endif %}
+    {% block object_name %}
+    {%endblock %}
+  </h1>
+  <hr>
+
+  <div class="ink-button-group bottom-space">
+    <a href=".." class="ink-button">
+      <i class="fa fa-arrow-left"></i> Back
+    </a>
+  </div>
+
+  <form class="ink-form" method="post">
     {% csrf_token %}
 
     {% include "fields_horizontal_snippet.html" %}
 
-    <div class="uk-form-row">
-      <div class="uk-form-controls">
-        <input type="submit" value="Save" class="uk-button">
+    <div class="control-group column-group horizontal-gutters">
+      <div class="all-33"></div>
+      <div class="all-66">
+        <input type="submit" value="Save" class="ink-button">
       </div>
     </div>
   </form>

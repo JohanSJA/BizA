@@ -1,20 +1,19 @@
 {% load widget_tweaks %}
 
 {% if form.non_field_errors %}
-  <div class="uk-alert uk-alert-danger">
+  <div class="ink-alert block error" role="alert">
     <h2>Error{{ form.non_field_errors|pluralize }}!</h2>
     {{ form.non_field_errors }}
   </div>
 {% endif %}
 
 {% for field in form.visible_fields %}
-  <div class="uk-form-row">
-    <label class="uk-form-label uk-text-right" for="{{ field.id_for_label }}">{{ field.label }}</label>
-    <div class="uk-form-controls">
-      {{ field|add_error_class:"uk-form-danger" }}
-      <span class="uk-form-help-inline">{{ field.help_text }}</span>
+  <div class="control-group column-group horizontal-gutters{% if field.errors %} validation error{% endif %}">
+    <label class="all-33 align-right" for="{{ field.id_for_label }}">{{ field.label }}</label>
+    <div class="control all-66">
+      {{ field }}
       {% if field.errors %}
-        <ul class="uk-form-help-block">
+        <ul class="tip">
           {% for error in field.errors %}
             <li>{{ error }}</li>
           {% endfor %}
@@ -22,27 +21,6 @@
       {% endif %}
     </div>
   </div>
-  <!--
-  <div class="control-group column-group horizontal-gutters{% if field.errors %} validation error{% endif %}">
-    {% if field|widget_type == "checkboxinput" %}
-      <label for="{{ field.id_for_label }}" class="col-sm-4 col-sm-offset-3">
-        {{ field }} {{ field.label }}
-      </label>
-    {% else %}
-      <label for="{{ field.id_for_label }}" class="all-30 align-right">{{ field.label }}</label>
-      <div class="control all-70">
-        {{ field }}
-        <p class="tip">
-          {% if field.errors %}
-            {{ field.errors }}
-          {% else %}
-            {{ field.help_text }}
-          {% endif %}
-        </p>
-      </div>
-    {% endif %}
-  </div>
-  -->
 {% endfor %}
 
 {% for field in form.hidden_fields %}

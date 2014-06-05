@@ -1,73 +1,17 @@
-{% extends "base.html" %}
+{% extends "base_list.html" %}
 
-{% block head_extra %}
-  <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.6.0/js/addons/search.js"></script>
+{% block object_list_title %}Products{% endblock %}
+
+{% block object_list_head %}
+  <th>Model</th>
+  <th>Description</th>
+  <th>Barcode</th>
+  <th>Remark</th>
 {% endblock %}
 
-{% block content %}
-  <div class="uk-grid">
-    <div class="uk-width-1-4">
-      <h1>Products</h1>
-      <hr>
-
-      <h2>Categories</h2>
-      <ul>
-        <li>All</li>
-        {% for category in category_list %}
-          <li>{{ category }}</li>
-        {% endfor %}
-        <li>
-          <a href="{% url 'products_category_create' %}">
-            <i class="uk-icon-plus"></i> New
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="uk-width-3-4">
-      <div class="uk-grid">
-        <div class="uk-width-1-2">
-          <div class="button-group">
-            <a href="{% url 'products_product_create' %}" class="uk-button">
-              <i class="uk-icon-plus"></i> New
-            </a>
-          </div>
-        </div>
-
-        <div class="uk-width-1-2">
-          <div class="uk-clearfix">
-            <div class="uk-float-right">
-              <form class="uk-search" data-uk-search>
-                <input id="search" name="search" class="uk-search-field" type="search" placeholder="{% if search_term %}{{ search_term }}{% else %}search...{% endif %}">
-                <button class="uk-search-close" type="reset"></button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <table class="uk-table uk-table-hover uk-table-striped">
-        <thead>
-          <tr>
-            <th>Model</th>
-            <th>Description</th>
-            <th>Barcode</th>
-            <th>Remark</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for product in product_list %}
-            <tr>
-              <td><a href="{% url 'products_product_detail' product.pk %}">{{ product.model }}</a></td>
-              <td>{{ product.description }}</td>
-              <td>{{ product.barcode|default:"-" }}</td>
-              <td>{{ product.remark|default:"-" }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
+{% block object_list_body %}
+  <td><a href="{% url 'products_product_detail' object.pk %}">{{ object.model }}</a></td>
+  <td>{{ object.description }}</td>
+  <td>{{ object.barcode|default:"-" }}</td>
+  <td>{{ object.remark|default:"-" }}</td>
 {% endblock %}
-
-

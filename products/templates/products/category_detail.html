@@ -1,27 +1,18 @@
-{% extends "base.html" %}
+{% extends "base_detail.html" %}
 
-{% block content %}
-  <h1>{{ category.name }}</h1>
-  <hr>
+{% block object_title %}
+  {{ category.name }}
+{% endblock %}
 
-  <div class="uk-button-group">
-    <a href="{% url 'products_category_update' category.pk %}" class="uk-button"><i class="uk-button-pencil"></i> Edit</a>
-  </div>
-
-  <h2>Products</h2>
-
-  <table class="uk-table uk-table-hover uk-table-striped">
+{% block object %}
+  <table class="ink-table alternating hover">
+    <caption>Products</caption>
     <thead>
       <tr>
         <th>Model</th>
         <th>Description</th>
       </tr>
     </thead>
-    <tfoot>
-      <tr>
-        <td colspan="3">Total {{ product_list|length }} product{{ product_list|pluralize }}.</td>
-      </tr>
-    </tfoot>
     <tbody>
       {% for product in product_list %}
         <tr>

@@ -1,43 +1,42 @@
 {% extends "base.html" %}
 
-{% block breadcrumb %}
-  <ol class="breadcrumb">
-    <li><a href="../../">..</a></li>
-    <li><a href="../">..</a></li>
-    <li class="active">.</li>
-  </ol>
-{% endblock %}
-
 {% block content %}
-  <div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-      <a href="new/" class="btn btn-default">New</a>
+  <h1>{% block object_list_title %}{% endblock %}</h1>
+  <hr>
+
+  <div class="column-group gutters">
+    <div class="all-66">
+      <a href="new/" class="ink-button">
+        <i class="fa fa-plus"></i> New
+      </a>
+    </div>
+
+    <div class="all-33">
+      <form class="ink-form">
+        <div class="control-group">
+          <div class="control append-button" role="search">
+            <span><input id="search" name="search" class="uk-search-field" type="search" {% if search_term %}value="{{ search_term }}"{% endif %} placeholder="Search..."></span>
+            <button class="ink-button"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 
-  <table class="table table-striped table-hover table-responsive">
-    <thead>
-      <tr>
-        {% block heading %}
-          <th>Object</th>
-        {% endblock %}
-      </tr>
-    </thead>
-    <tfoot>
-      <tr>
-        {% block summary_row %}
-          <td>Total {{ object_list|length }} object{{ object_list|pluralize }}.</td>
-        {% endblock %}
-      </tr>
-    </tfoot>
-    <tbody>
-      {% for object in object_list %}
+  {% block object_list %}
+    <table class="ink-table alternating hover">
+      <thead>
         <tr>
-          {% block row %}
-            <td><a href="{{ object.pk }}/">{{ object }}</a></td>
-          {% endblock %}
+          {% block object_list_head %}{% endblock %}
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for object in object_list %}
+          <tr>
+            {% block object_list_body %}{% endblock %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endblock %}
 {% endblock %}

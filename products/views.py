@@ -61,7 +61,6 @@ class ProductListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["category_list"] = Category.objects.all()
         if self.request.GET:
             if "search" in self.request.GET:
                 context["search_term"] = self.request.GET["search"]
@@ -72,11 +71,9 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(CreateView):
     model = Product
-    template_name = "base_form.html"
 
 class ProductUpdateView(UpdateView):
     model = Product
-    template_name = "base_form.html"
 
 
 class PricelistListView(ListView):
