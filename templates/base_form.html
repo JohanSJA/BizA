@@ -12,21 +12,18 @@
   </h1>
   <hr>
 
-  <div class="ink-button-group bottom-space">
-    <a href=".." class="ink-button">
-      <i class="fa fa-arrow-left"></i> Back
-    </a>
-  </div>
+  <a href=".." class="uk-button">
+    <i class="uk-icon-arrow-left"></i> Back
+  </a>
 
-  <form class="ink-form" method="post">
+  <form class="uk-form uk-form-horizontal" method="post">
     {% csrf_token %}
 
     {% include "fields_horizontal_snippet.html" %}
 
-    <div class="control-group column-group horizontal-gutters">
-      <div class="all-33"></div>
-      <div class="all-66">
-        <input type="submit" value="Save" class="ink-button">
+    <div class="uk-form-row">
+      <div class="uk-form-controls">
+        <input type="submit" value="Save" class="uk-button uk-button-primary uk-button-large">
       </div>
     </div>
   </form>
