@@ -1,0 +1,15 @@
+{% extends "base_list.html" %}
+
+{% block object_list_title %}Pricelists{% endblock %}
+
+{% block object_list_head %}
+  <th>Name</th>
+  <th>Base</th>
+  <th class="uk-text-right">Base Derivation</th>
+{% endblock %}
+
+{% block object_list_body %}
+  <td><a href="{% url 'products_pricelist_detail' object.pk %}">{{ object.name }}</a></td>
+  <td>{{ object.base|default:"-" }}</td>
+  <td class="uk-text-right">{{ object.base_derivation|default:"-" }}</td>
+{% endblock %}

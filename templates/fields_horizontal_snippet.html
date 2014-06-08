@@ -9,9 +9,14 @@
 
 {% for field in form.visible_fields %}
   <div class="uk-form-row">
-    <label class="uk-form-label" for="{{ form.username.id_for_label }}">{{ field.label }}</label>
-    <div class="uk-form-controls">
+    {% if field|widget_type != "checkboxinput" %}
+      <label class="uk-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {% endif %}
+    <div class="uk-form-controls{% if field|widget_type == 'checkboxinput' %} uk-form-controls-text{% endif %}">
       {{ field|add_error_class:"uk-form-danger" }}
+      {% if field|widget_type == "checkboxinput" %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {% endif %}
       {% if field.help_text %}
         <span class="uk-form-help-inline">{{ field.help_text }}</span>
       {% endif %}

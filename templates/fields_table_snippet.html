@@ -1,0 +1,40 @@
+{% load widget_tweaks %}
+
+<tbody>
+  {% if form.non_field_errors %}
+    <tr>
+      <td colspan="{{ form.visible_fields|length }}">
+        <div class="uk-alert uk-alert-danger uk-alert-large" role="alert">
+          <h2>Error{{ form.non_field_errors|pluralize }}!</h2>
+          {{ form.non_field_errors }}
+        </div>
+      </td>
+    </tr>
+  {% endif %}
+
+  <tr>
+    {% for field in form.visible_fields %}
+      <td>
+        <div class="uk-form-row">
+          <div class="{% if field|widget_type == 'checkboxinput' %}uk-form-controls-text{% endif %}">
+            {{ field|add_error_class:"uk-form-danger" }}
+            {% if field.help_text %}
+              <span class="uk-form-help-inline">{{ field.help_text }}</span>
+            {% endif %}
+            {% if field.errors %}
+              <ul class="uk-form-help-block uk-text-danger">
+                {% for error in field.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      </td>
+    {% endfor %}
+
+    {% for field in form.hidden_fields %}
+      <td class="uk-hidden">{{ field }}</td>
+    {% endfor %}
+  </tr>
+</tbody>

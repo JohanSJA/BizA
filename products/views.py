@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
-#from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
 
 from .models import (
     Category, Uom, Product, Pricelist, PricelistEntry, Warehouse,
@@ -47,8 +47,8 @@ class UomUpdateView(UpdateView):
     template_name = "base_form.html"
 
 
-#class PricelistEntryInlineFormSet(InlineFormSet):
-#    model = PricelistEntry
+class PricelistEntryInlineFormSet(InlineFormSet):
+    model = PricelistEntry
 
 
 class ProductListView(ListView):
@@ -69,16 +69,23 @@ class ProductListView(ListView):
 class ProductDetailView(DetailView):
     model = Product
 
-class ProductCreateView(CreateView):
-    model = Product
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.get_object()
+        context["pricelistentry_list"] = product.pricelistentry_set.all()
+        return context
 
-class ProductUpdateView(UpdateView):
+class ProductCreateView(CreateWithInlinesView):
     model = Product
+    inlines = [PricelistEntryInlineFormSet,]
+
+class ProductUpdateView(UpdateWithInlinesView):
+    model = Product
+    inlines = [PricelistEntryInlineFormSet,]
 
 
 class PricelistListView(ListView):
     model = Pricelist
-    template_name = "base_list.html"
 
 class PricelistDetailView(DetailView):
     model = Pricelist
@@ -89,13 +96,13 @@ class PricelistDetailView(DetailView):
         context["pricelistentry_list"] = pricelist.pricelistentry_set.all()
         return context
 
-class PricelistCreateView(CreateView):
+class PricelistCreateView(CreateWithInlinesView):
     model = Pricelist
-    template_name = "base_form_with_inlines.html"
+    inlines = [PricelistEntryInlineFormSet,]
 
-class PricelistUpdateView(UpdateView):
+class PricelistUpdateView(UpdateWithInlinesView):
     model = Pricelist
-    template_name = "base_form_with_inlines.html"
+    inlines = [PricelistEntryInlineFormSet,]
 
 
 class WarehouseListView(ListView):

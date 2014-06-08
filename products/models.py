@@ -38,6 +38,9 @@ class Product(models.Model):
     barcode = models.CharField(max_length=20, blank=True)
     remark = models.TextField(blank=True)
 
+    class Meta:
+        ordering = ["model"]
+
     def __str__(self):
         return self.model
 

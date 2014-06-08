@@ -37,6 +37,7 @@
             <ul class="uk-nav">
               <li class="uk-nav-header">Products</li>
               <li><a href="{% url 'products_product_list' %}">Products</a></li>
+              <li><a href="{% url 'products_pricelist_list' %}">Pricelists</a></li>
               <li><a href="{% url 'products_category_list' %}">Categories</a></li>
               </li>
             </ul>
@@ -46,10 +47,12 @@
           <div class="uk-width-1-1">
         {% endif %}
           {% block content %}{% endblock %}
+
+          <br>
         </div>
       </div>
 
-      <hr class="uk-margin-large-top" />
+      <hr />
 
       <div class="uk-grid uk-margin-large-bottom">
         <div class="uk-width-1-3">

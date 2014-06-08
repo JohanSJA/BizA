@@ -1,39 +1,52 @@
 {% extends "base.html" %}
 
-{% block breadcrumb %}
-  <ol class="breadcrumb">
-    <li><a href="../../../">..</a></li>
-    <li><a href="../../">..</a></li>
-    <li><a href="../">..</a></li>
-    {% if form.instance.pk %}
-      <li><a href="../">..</a></li>
-      <li class="active">Edit</li>
-    {% else %}
-      <li class="active">New</li>
-    {% endif %}
-  </ol>
-{% endblock %}
-
 {% block content %}
-  <form method="post" class="form-horizontal" role="form">
+  <h1>
+    {% if form.instance.pk %}
+      Edit
+    {% else %}
+      New
+    {% endif %}
+    {% block object_name %}
+    {%endblock %}
+  </h1>
+  <hr>
+
+  <div class="uk-margin-bottom">
+    <a href=".." class="uk-button">
+      <i class="uk-icon-arrow-left"></i> Back
+    </a>
+  </div>
+
+  <form class="uk-form uk-form-horizontal" method="post">
     {% csrf_token %}
 
     {% include "fields_horizontal_snippet.html" %}
 
+    <hr>
+
     {% for formset in inlines %}
       {{ formset.management_form }}
 
-      {% for form in formset %}
-        <fieldset>
-          <legend>{% if form.instance.pk %}{{ form.instance }}{% endif %}</legend>
-          {% include "fields_horizontal_snippet.html" %}
-        </fieldset>
-      {% endfor %}
+      <table class="uk-table uk-table-hover uk-table-striped">
+        {% for form in formset %}
+          {% if forloop.counter == 1 %}
+            <thead>
+              <tr>
+                {% for field in form.visible_fields %}
+                  <td>{{ field.label }}</td>
+                {% endfor %}
+              </tr>
+            </thead>
+          {% endif %}
+          {% include "fields_table_snippet.html" %}
+        {% endfor %}
+      </table>
     {% endfor %}
 
-    <div class="form-group">
-      <div class="col-sm-4 col-sm-offset-3">
-        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-save"></span> Save</button>
+    <div class="uk-form-row">
+      <div class="uk-form-controls">
+        <input type="submit" value="Save" class="uk-button uk-button-primary uk-button-large">
       </div>
     </div>
   </form>

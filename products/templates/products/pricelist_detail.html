@@ -1,21 +1,31 @@
 {% extends "base_detail.html" %}
 
 {% block object %}
-  <h1>{{ pricelist }}</h1>
+  <dl class="uk-description-list uk-description-list-horizontal">
+    <dt>Base</dt>
+    <dd>
+      {% if object.base %}
+        <a href="{% url 'products_pricelist_detail' object.base.pk %}">{{ object.base|default:"-" }}</a>
+      {% else %}
+        {{ object.base|default:"-" }}
+      {% endif %}
+    </dd>
+    <dt>Base derivation</dt>
+    <dd>{{ object.base_derivation|default:"-" }}</dd>
+  </dl>
 
-  <h2>Entries</h2>
-  <table class="table table-striped table-hover table-responsive">
+  <table class="uk-table uk-table-hover uk-table-striped">
     <thead>
       <tr>
         <th>Product</th>
-        <th class="text-right">Price (RM)</th>
+        <th class="uk-text-right">Price (RM)</th>
       </tr>
     </thead>
     <tbody>
       {% for entry in pricelistentry_list %}
         <tr>
-          <td>{{ entry.product }}</td>
-          <td class="text-right">{{ entry.price|floatformat:"2" }}</td>
+          <td><a href="{% url 'products_product_detail' entry.product.pk %}">{{ entry.product }}</a></td>
+          <td class="uk-text-right">{{ entry.price|floatformat:"2" }}</td>
         </tr>
       {% empty %}
         <tr>
