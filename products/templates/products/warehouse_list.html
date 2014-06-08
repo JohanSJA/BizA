@@ -1,11 +1,13 @@
 {% extends "base_list.html" %}
 
-{% block heading %}
+{% block object_list_title %}Warehouses{% endblock %}
+
+{% block object_list_head %}
   <th>Name</th>
   <th>Address</th>
 {% endblock %}
 
-{% block row %}
+{% block object_list_body %}
   <td><a href="{{ object.pk }}/">{{ object.name }}</a></td>
   <td>{{ object.address|linebreaksbr }}</td>
 {% endblock %}

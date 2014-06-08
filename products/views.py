@@ -110,15 +110,12 @@ class WarehouseListView(ListView):
 
 class WarehouseDetailView(DetailView):
     model = Warehouse
-    template_name = "base_detail.html"
 
 class WarehouseCreateView(CreateView):
     model = Warehouse
-    template_name = "base_form.html"
 
 class WarehouseUpdateView(UpdateView):
     model = Warehouse
-    template_name = "base_form.html"
 
 
 class BalanceLogListView(ListView):

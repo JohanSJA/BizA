@@ -1,0 +1,8 @@
+{% extends "base_detail.html" %}
+
+{% block object %}
+  <dl class="uk-description-list uk-description-list-horizontal">
+    <dt>Address</dt>
+    <dd>{{ warehouse.address|linebreaksbr }}</dd>
+  </dl>
+{% endblock %}
