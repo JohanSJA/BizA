@@ -39,8 +39,8 @@ urlpatterns = patterns('',
     url(r"^warehouse/new/$", WarehouseCreateView.as_view(), name="products_warehouse_create"),
     url(r"^warehouse/(?P<pk>\d+)/edit/$", WarehouseUpdateView.as_view(), name="products_warehouse_update"),
 
-#    url(r"^balancelog/$", BalanceLogListView.as_view(), name="products_balancelog_list"),
-#    url(r"^balancelog/(?P<pk>\d+)/$", BalanceLogDetailView.as_view(), name="products_balancelog_detail"),
-#    url(r"^balancelog/new/$", BalanceLogCreateView.as_view(), name="products_balancelog_create"),
-#    url(r"^balancelog/(?P<pk>\d+)/edit/$", BalanceLogUpdateView.as_view(), name="products_balancelog_update"),
+    url(r"^balancelog/$", BalanceLogListView.as_view(), name="products_balancelog_list"),
+    url(r"^balancelog/(?P<pk>\d+)/$", BalanceLogDetailView.as_view(), name="products_balancelog_detail"),
+    url(r"^balancelog/new/$", BalanceLogCreateView.as_view(), name="products_balancelog_create"),
+    url(r"^balancelog/(?P<pk>\d+)/edit/$", BalanceLogUpdateView.as_view(), name="products_balancelog_update"),
 )

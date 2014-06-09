@@ -118,6 +118,10 @@ class WarehouseUpdateView(UpdateView):
     model = Warehouse
 
 
+class BalanceLogEntryInlineFormSet(InlineFormSet):
+    model = BalanceLogEntry
+
+
 class BalanceLogListView(ListView):
     model = BalanceLog
 
@@ -130,10 +134,10 @@ class BalanceLogDetailView(DetailView):
         context["balancelogentry_list"] = balancelog.balancelogentry_set.all()
         return context
 
-class BalanceLogCreateView(CreateView):
+class BalanceLogCreateView(CreateWithInlinesView):
     model = BalanceLog
-    template_name = "base_form.html"
+    inlines = [BalanceLogEntryInlineFormSet]
+    template_name = "products/balancelog_form_with_inlines.html"
 
 class BalanceLogUpdateView(UpdateView):
     model = BalanceLog
-    template_name = "base_form.html"
