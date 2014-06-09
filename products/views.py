@@ -7,6 +7,7 @@ from .models import (
     Category, Uom, Product, Pricelist, PricelistEntry, Warehouse,
     BalanceLog, BalanceLogEntry
 )
+from .forms import PricelistForm
 
 
 class ProductHomeView(TemplateView):
@@ -77,11 +78,11 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(CreateWithInlinesView):
     model = Product
-    inlines = [PricelistEntryInlineFormSet,]
+    inlines = [PricelistEntryInlineFormSet]
 
 class ProductUpdateView(UpdateWithInlinesView):
     model = Product
-    inlines = [PricelistEntryInlineFormSet,]
+    inlines = [PricelistEntryInlineFormSet]
 
 
 class PricelistListView(ListView):
@@ -98,11 +99,13 @@ class PricelistDetailView(DetailView):
 
 class PricelistCreateView(CreateWithInlinesView):
     model = Pricelist
-    inlines = [PricelistEntryInlineFormSet,]
+    form_class = PricelistForm
+    inlines = [PricelistEntryInlineFormSet]
 
 class PricelistUpdateView(UpdateWithInlinesView):
     model = Pricelist
-    inlines = [PricelistEntryInlineFormSet,]
+    form_class = PricelistForm
+    inlines = [PricelistEntryInlineFormSet]
 
 
 class WarehouseListView(ListView):

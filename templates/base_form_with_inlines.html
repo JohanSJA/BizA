@@ -29,18 +29,18 @@
       {{ formset.management_form }}
 
       <table class="uk-table uk-table-hover uk-table-striped">
-        {% for form in formset %}
-          {% if forloop.counter == 1 %}
-            <thead>
-              <tr>
-                {% for field in form.visible_fields %}
-                  <td>{{ field.label }}</td>
-                {% endfor %}
-              </tr>
-            </thead>
-          {% endif %}
-          {% include "fields_table_snippet.html" %}
-        {% endfor %}
+        <thead>
+          <tr>
+            {% for field in formset.0.visible_fields %}
+              <td>{{ field.label }}</td>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for form in formset %}
+            {% include "fields_table_snippet.html" %}
+          {% endfor %}
+        </tbody>
       </table>
     {% endfor %}
 
