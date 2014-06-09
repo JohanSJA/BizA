@@ -22,7 +22,7 @@
     <tbody>
       {% for entry in pricelistentry_list %}
         <tr>
-          <td><a href="{% url 'products_pricelist_detail' entry.pricelist.pk %}">{{ entry.pricelist }}</a></td>
+          <td>{{ entry.pricelist }}</td>
           <td class="uk-text-right">{{ entry.price|floatformat:"2" }}</td>
         </tr>
       {% empty %}

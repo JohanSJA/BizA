@@ -10,6 +10,8 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 import os
 
+import django.conf.global_settings as DEFAULT_SETTINGS
+
 import dj_database_url
 
 
@@ -115,3 +117,7 @@ TEMPLATE_DIRS = (
 # User authentication related
 LOGIN_URL = "/login"
 LOGIN_REDIRECT_URL = "/"
+
+TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
+    "django.core.context_processors.request",
+)

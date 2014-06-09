@@ -61,9 +61,6 @@ class Pricelist(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse("products_pricelist_detail", kwargs={"pk": self.pk})
-
     def clean(self):
         if self.base == self:
             raise ValidationError("Base couldn't be itself.")

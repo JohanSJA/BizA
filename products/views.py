@@ -1,7 +1,9 @@
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse_lazy
 
-from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet, SearchableListMixin
 
 from .models import (
     Category, Uom, Product, Pricelist, PricelistEntry, Warehouse,
@@ -52,20 +54,10 @@ class PricelistEntryInlineFormSet(InlineFormSet):
     model = PricelistEntry
 
 
-class ProductListView(ListView):
-    def get_queryset(self):
-        product_list = Product.objects.all()
-        if self.request.GET:
-            if "search" in self.request.GET:
-                product_list = product_list.filter(model__icontains=self.request.GET["search"])
-        return product_list
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.GET:
-            if "search" in self.request.GET:
-                context["search_term"] = self.request.GET["search"]
-        return context
+class ProductListView(SearchableListMixin, ListView):
+    model = Product
+    paginate_by = 50
+    search_fields = ["model", "description"]
 
 class ProductDetailView(DetailView):
     model = Product
@@ -85,27 +77,55 @@ class ProductUpdateView(UpdateWithInlinesView):
     inlines = [PricelistEntryInlineFormSet]
 
 
-class PricelistListView(ListView):
-    model = Pricelist
+class PricelistListView(SearchableListMixin, ListView):
+    model = Product
+    template_name = "products/pricelist_list.html"
+    paginate_by = 50
+    search_fields = ["model", "description"]
 
-class PricelistDetailView(DetailView):
-    model = Pricelist
+    def get_queryset(self):
+        pricelist_entries = PricelistEntry.objects.all().values("product")
+        products = Product.objects.filter(pk__in=pricelist_entries)
+        return products
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pricelist = self.get_object()
-        context["pricelistentry_list"] = pricelist.pricelistentry_set.all()
+        product_list = self.get_queryset()
+        pricelist_list = Pricelist.objects.all()
+        for product in product_list:
+            product.prices = []
+            for pricelist in pricelist_list:
+                price = [None, None]
+                try:
+                    price_entry = PricelistEntry.objects.get(pricelist=pricelist, product=product)
+                    price = [price_entry.price, "actual"]
+                except ObjectDoesNotExist:
+                    if pricelist.base:
+                        try:
+                            price_entry = PricelistEntry.objects.get(pricelist=pricelist.base, product=product)
+                            price = price_entry.price * pricelist.base_derivation / 100
+                            price = [price, "derived"]
+                        except ObjectDoesNotExist:
+                            pass
+                product.prices.append(price)
+        context["product_list"] = product_list
+        context["pricelist_list"] = pricelist_list
         return context
+
+class PricelistCompleteListView(PricelistListView):
+    def get_queryset(self):
+        products = Product.objects.all()
+        return products
 
 class PricelistCreateView(CreateWithInlinesView):
     model = Pricelist
     form_class = PricelistForm
-    inlines = [PricelistEntryInlineFormSet]
+    success_url = reverse_lazy("products_pricelist_list")
 
 class PricelistUpdateView(UpdateWithInlinesView):
     model = Pricelist
     form_class = PricelistForm
-    inlines = [PricelistEntryInlineFormSet]
+    success_url = reverse_lazy("products_pricelist_list")
 
 
 class WarehouseListView(ListView):

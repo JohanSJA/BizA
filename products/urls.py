@@ -5,7 +5,7 @@ from .views import (
     CategoryListView, CategoryDetailView, CategoryCreateView, CategoryUpdateView,
     UomListView, UomDetailView, UomCreateView, UomUpdateView,
     ProductListView, ProductDetailView, ProductCreateView, ProductUpdateView,
-    PricelistListView, PricelistDetailView, PricelistCreateView, PricelistUpdateView,
+    PricelistListView, PricelistCompleteListView, PricelistCreateView, PricelistUpdateView,
     WarehouseListView, WarehouseDetailView, WarehouseCreateView, WarehouseUpdateView,
     BalanceLogListView, BalanceLogDetailView, BalanceLogCreateView, BalanceLogUpdateView,
 )
@@ -30,7 +30,7 @@ urlpatterns = patterns('',
     url(r"^product/(?P<pk>\d+)/edit/$", ProductUpdateView.as_view(), name="products_product_update"),
 
     url(r"^pricelist/$", PricelistListView.as_view(), name="products_pricelist_list"),
-    url(r"^pricelist/(?P<pk>\d+)/$", PricelistDetailView.as_view(), name="products_pricelist_detail"),
+    url(r"^pricelist/all/$", PricelistCompleteListView.as_view(), name="products_pricelist_complete_list"),
     url(r"^pricelist/new/$", PricelistCreateView.as_view(), name="products_pricelist_create"),
     url(r"^pricelist/(?P<pk>\d+)/edit/$", PricelistUpdateView.as_view(), name="products_pricelist_update"),
 

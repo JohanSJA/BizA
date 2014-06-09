@@ -1,15 +1,49 @@
 {% extends "base_list.html" %}
 
-{% block object_list_title %}Pricelists{% endblock %}
+{% block object_list_title %}Pricelist{% endblock %}
 
-{% block object_list_head %}
-  <th>Name</th>
-  <th>Base</th>
-  <th class="uk-text-right">Base Derivation</th>
+{% block object_list %}
+  <ul class="uk-subnav uk-subnav-line">
+    <li><a href="{% url 'products_pricelist_list' %}">Partial</a></li>
+    <li><a href="{% url 'products_pricelist_complete_list' %}">All</a></li>
+  </ul>
+
+  <table class="uk-table uk-table-hover uk-table-striped">
+    <thead>
+      <tr>
+        <th>Product</th>
+        {% for pricelist in pricelist_list %}
+          <th class="uk-text-right">
+            {% if pricelist.base %}
+              <span data-uk-tooltip title="Based on {{ pricelist.base }} by {{ pricelist.base_derivation }}%">
+                <a href="{% url 'products_pricelist_update' pricelist.pk %}">{{ pricelist.name }}</a>
+              </span>
+            {% else %}
+              <a href="{% url 'products_pricelist_update' pricelist.pk %}">{{ pricelist.name }}</a>
+            {% endif %}
+          </th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in product_list %}
+        <tr>
+          <td><a href="{% url 'products_product_update' product.pk %}">{{ product.model }}</a></td>
+          {% for price, method in product.prices %}
+            <td class="uk-text-right">
+              {% if method == "derived" %}
+                <span class="uk-badge">Derived</span>
+              {% endif %}
+              {{ price|floatformat:"2"|default:"N/A" }}
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}
 
-{% block object_list_body %}
-  <td><a href="{% url 'products_pricelist_detail' object.pk %}">{{ object.name }}</a></td>
-  <td>{{ object.base|default:"-" }}</td>
-  <td class="uk-text-right">{{ object.base_derivation|default:"-" }}</td>
+{% block body_extra %}
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.6.0/js/addons/autocomplete.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.6.0/js/addons/search.min.js"></script>
 {% endblock %}
