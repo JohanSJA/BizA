@@ -5,4 +5,21 @@
     <dt>Address</dt>
     <dd>{{ warehouse.address|linebreaksbr }}</dd>
   </dl>
+
+  <table class="uk-table uk-table-hover uk-table-striped">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th class="uk-text-right">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for log in balancelog_list %}
+        <tr>
+          <td>{{ log.product }}</td>
+          <td class="uk-text-right">{{ log.total_amount }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

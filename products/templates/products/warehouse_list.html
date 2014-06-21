@@ -5,9 +5,11 @@
 {% block object_list_head %}
   <th>Name</th>
   <th>Address</th>
+  <th class="uk-text-right">Balance</th>
 {% endblock %}
 
 {% block object_list_body %}
   <td><a href="{{ object.pk }}/">{{ object.name }}</a></td>
   <td>{{ object.address|linebreaksbr }}</td>
+  <td class="uk-text-right">{{ object.balance }}</td>
 {% endblock %}

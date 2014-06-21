@@ -6,9 +6,11 @@
 
   <div class="uk-grid">
     <div class="uk-width-2-3">
-      <a href="new/" class="uk-button">
-        <i class="uk-icon-plus"></i> New
-      </a>
+      {% block buttons %}
+        <a href="new/" class="uk-button">
+          <i class="uk-icon-plus"></i> New
+        </a>
+      {% endblock %}
     </div>
 
     <div class="uk-width-1-3">

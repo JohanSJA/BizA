@@ -50,7 +50,10 @@ class Product(models.Model):
 
     def balance(self):
         summary = BalanceLogEntry.objects.filter(balance_log__product=self).aggregate(Sum("amount"))
-        return summary["amount__sum"]
+        if summary["amount__sum"]:
+            return summary["amount__sum"]
+        else:
+            return 0
 
 
 class Pricelist(models.Model):
@@ -109,7 +112,10 @@ class Warehouse(models.Model):
 
     def balance(self):
         summary = BalanceLogEntry.objects.filter(balance_log__warehouse=self).aggregate(Sum("amount"))
-        return summary["amount__sum"]
+        if summary["amount__sum"]:
+            return summary["amount__sum"]
+        else:
+            return 0
 
 
 class BalanceLog(models.Model):

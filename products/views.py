@@ -83,14 +83,9 @@ class PricelistListView(SearchableListMixin, ListView):
     paginate_by = 50
     search_fields = ["model", "description"]
 
-    def get_queryset(self):
-        pricelist_entries = PricelistEntry.objects.all().values("product")
-        products = Product.objects.filter(pk__in=pricelist_entries)
-        return products
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        product_list = self.get_queryset()
+        _, _, product_list, _ = self.paginate_queryset(self.get_queryset(), self.paginate_by)
         pricelist_list = Pricelist.objects.all()
         for product in product_list:
             product.prices = []
@@ -112,9 +107,11 @@ class PricelistListView(SearchableListMixin, ListView):
         context["pricelist_list"] = pricelist_list
         return context
 
-class PricelistCompleteListView(PricelistListView):
+class PricelistPartialListView(PricelistListView):
     def get_queryset(self):
-        products = Product.objects.all()
+        products = super().get_queryset()
+        pricelist_entries = PricelistEntry.objects.all().values("product")
+        products = products.filter(pk__in=pricelist_entries)
         return products
 
 class PricelistCreateView(CreateWithInlinesView):
@@ -134,11 +131,34 @@ class WarehouseListView(ListView):
 class WarehouseDetailView(DetailView):
     model = Warehouse
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        warehouse = self.get_object()
+        context["balancelog_list"] = warehouse.balancelog_set.all()
+        return context
+
 class WarehouseCreateView(CreateView):
     model = Warehouse
 
 class WarehouseUpdateView(UpdateView):
     model = Warehouse
+
+
+class BalanceListView(SearchableListMixin, ListView):
+    model = Product
+    template_name = "products/balance_list.html"
+    paginate_by = 50
+    search_fields = ["model", "description"]
+
+
+class BalanceInStockListView(BalanceListView):
+    def get_queryset(self):
+        product_list = super().get_queryset().all()
+        new_product_list = []
+        for product in product_list:
+            if product.balance() > 0:
+                new_product_list.append(product)
+        return new_product_list
 
 
 class BalanceLogEntryInlineFormSet(InlineFormSet):

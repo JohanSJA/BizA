@@ -18,7 +18,7 @@
   </head>
 
   <body>
-    <nav class="uk-navbar">
+    <nav class="uk-navbar" data-uk-sticky>
       <a href="{% url 'home' %}" class="uk-navbar-brand"><img src="{% static 'ico/logo-24.png' %}" alt="BizA"></a>
       {% if user.is_authenticated %}
         <div class="uk-navbar-flip">
@@ -38,6 +38,7 @@
               <li class="uk-nav-header">Products</li>
               <li><a href="{% url 'products_product_list' %}">Products</a></li>
               <li><a href="{% url 'products_pricelist_list' %}">Pricelists</a></li>
+              <li><a href="{% url 'products_balance_list' %}">Balances</a></li>
               <li><a href="{% url 'products_balancelog_list' %}">Balance Logs</a></li>
               <li><a href="{% url 'products_category_list' %}">Categories</a></li>
               <li><a href="{% url 'products_warehouse_list' %}">Warehouses</a></li>
@@ -68,6 +69,7 @@
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.6.0/js/uikit.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.6.0/js/addons/sticky.min.js"></script>
 
     {% block body_extra %}{% endblock %}
   </body>
