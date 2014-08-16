@@ -8,6 +8,8 @@
   <ul class="uk-subnav uk-subnav-pill">
     {% url 'products_balance_list' as balance_list_url %}
     <li{% ifequal request.path balance_list_url %} class="uk-active"{% endifequal %}><a href="{{ balance_list_url }}">In Stock</a></li>
+    {% url 'products_balance_out_of_stock_list' as balance_out_of_stock_list_url %}
+    <li{% ifequal request.path balance_out_of_stock_list_url %} class="uk-active"{% endifequal %}><a href="{{ balance_out_of_stock_list_url }}">Out Of Stock</a></li>
     {% url 'products_balance_all_list' as balance_all_list_url %}
     <li{% ifequal request.path balance_all_list_url %} class="uk-active"{% endifequal %}><a href="{{ balance_all_list_url }}">All</a></li>
   </ul>

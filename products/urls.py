@@ -7,7 +7,7 @@ from .views import (
     ProductListView, ProductDetailView, ProductCreateView, ProductUpdateView,
     PricelistListView, PricelistPartialListView, PricelistCreateView, PricelistUpdateView,
     WarehouseListView, WarehouseDetailView, WarehouseCreateView, WarehouseUpdateView,
-    BalanceListView, BalanceInStockListView,
+    BalanceListView, BalanceInStockListView, BalanceOutOfStockListView,
     BalanceLogListView, BalanceLogDetailView, BalanceLogCreateView, BalanceLogUpdateView,
 )
 
@@ -41,6 +41,7 @@ urlpatterns = patterns('',
     url(r"^warehouse/(?P<pk>\d+)/edit/$", WarehouseUpdateView.as_view(), name="products_warehouse_update"),
 
     url(r"^balance/$", BalanceInStockListView.as_view(), name="products_balance_list"),
+    url(r"^balance/out/$", BalanceOutOfStockListView.as_view(), name="products_balance_out_of_stock_list"),
     url(r"^balance/all/$", BalanceListView.as_view(), name="products_balance_all_list"),
 
     url(r"^balancelog/$", BalanceLogListView.as_view(), name="products_balancelog_list"),

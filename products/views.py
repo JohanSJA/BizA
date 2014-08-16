@@ -161,6 +161,16 @@ class BalanceInStockListView(BalanceListView):
         return new_product_list
 
 
+class BalanceOutOfStockListView(BalanceListView):
+    def get_queryset(self):
+        product_list = super().get_queryset().all()
+        new_product_list = []
+        for product in product_list:
+            if product.balance() <= 0:
+                new_product_list.append(product)
+        return new_product_list
+
+
 class BalanceLogEntryInlineFormSet(InlineFormSet):
     model = BalanceLogEntry
 
