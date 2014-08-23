@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r"^logout/$", "django.contrib.auth.views.logout_then_login", name="logout"),
 
     url(r"^products/", include("products.urls")),
+    url(r"^prices/", include("prices.urls")),
 
     url(r'^admin/', include(admin.site.urls)),
 )

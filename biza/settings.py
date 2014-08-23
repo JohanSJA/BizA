@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     # Own apps
     "utils",
     "products",
+    "prices",
     #"purchases",
     #"wholesales",
     #"retails",

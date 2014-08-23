@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (
-    Category, Uom, Product, Pricelist, PricelistEntry,
+    Category, Uom, Product,
     Warehouse, BalanceLog, BalanceLogEntry
 )
 
@@ -17,15 +17,6 @@ class BalanceLogInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ["model", "category"]
     list_filter = ["category"]
-
-
-class PricelistEntryInline(admin.TabularInline):
-    model = PricelistEntry
-
-
-class PricelistAdmin(admin.ModelAdmin):
-    list_display = ["name", "base"]
-    inlines = [PricelistEntryInline]
 
 
 class WarehouseAdmin(admin.ModelAdmin):
@@ -46,6 +37,5 @@ class BalanceLogAdmin(admin.ModelAdmin):
 admin.site.register(Category)
 admin.site.register(Uom, UomAdmin)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Pricelist, PricelistAdmin)
 admin.site.register(Warehouse, WarehouseAdmin)
 admin.site.register(BalanceLog, BalanceLogAdmin)
