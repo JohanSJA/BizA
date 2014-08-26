@@ -1,15 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>{% block object_title %}{{ object }}{% endblock %}</h1>
-  <hr>
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{% block object_title %}{{ object }}{% endblock %}</h1>
+      <hr>
 
-  <div class="uk-button-group">
-    <a href=".." class="uk-button"><i class="uk-icon-arrow-left"></i> Back</a>
-    <a href="edit/" class="uk-button"><i class="uk-icon-pencil"></i> Edit</a>
+      <div class="btn-group">
+        <a href=".." class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
+        <a href="edit/" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+      </div>
+
+      {% block object %}
+        <h2>{{ object }}</h2>
+      {% endblock %}
+    </div>
   </div>
-
-  {% block object %}
-    <h2>{{ object }}</h2>
-  {% endblock %}
 {% endblock %}

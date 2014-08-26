@@ -5,27 +5,27 @@
 {% block buttons %}&nbsp;{% endblock %}
 
 {% block object_list %}
-  <ul class="uk-subnav uk-subnav-pill">
+  <ul class="nav nav-pills">
     {% url 'products_balance_list' as balance_list_url %}
-    <li{% ifequal request.path balance_list_url %} class="uk-active"{% endifequal %}><a href="{{ balance_list_url }}">In Stock</a></li>
+    <li{% ifequal request.path balance_list_url %} class="active"{% endifequal %}><a href="{{ balance_list_url }}">In Stock</a></li>
     {% url 'products_balance_out_of_stock_list' as balance_out_of_stock_list_url %}
-    <li{% ifequal request.path balance_out_of_stock_list_url %} class="uk-active"{% endifequal %}><a href="{{ balance_out_of_stock_list_url }}">Out Of Stock</a></li>
+    <li{% ifequal request.path balance_out_of_stock_list_url %} class="active"{% endifequal %}><a href="{{ balance_out_of_stock_list_url }}">Out Of Stock</a></li>
     {% url 'products_balance_all_list' as balance_all_list_url %}
-    <li{% ifequal request.path balance_all_list_url %} class="uk-active"{% endifequal %}><a href="{{ balance_all_list_url }}">All</a></li>
+    <li{% ifequal request.path balance_all_list_url %} class="active"{% endifequal %}><a href="{{ balance_all_list_url }}">All</a></li>
   </ul>
 
-  <table class="uk-table uk-table-hover uk-table-striped">
+  <table class="table table-striped table-hover">
     <thead>
       <tr>
         <th>Product</th>
-        <th class="uk-text-right">Balance</th>
+        <th class="text-right">Balance</th>
       </tr>
     </thead>
     <tbody>
       {% for object in object_list %}
         <tr>
           <td>{{ object.model }}</td>
-          <td class="uk-text-right">{{ object.balance }}</td>
+          <td class="text-right">{{ object.balance }}</td>
         </tr>
       {% endfor %}
     </tbody>

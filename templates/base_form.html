@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
   <h1>
     {% if form.instance.pk %}
@@ -12,21 +14,11 @@
   </h1>
   <hr>
 
-  <div class="uk-margin-bottom">
-    <a href=".." class="uk-button">
-      <i class="uk-icon-arrow-left"></i> Back
+  <div class="btn-group">
+    <a href=".." class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i> Back
     </a>
   </div>
 
-  <form class="uk-form uk-form-horizontal" method="post">
-    {% csrf_token %}
-
-    {% include "fields_horizontal_snippet.html" %}
-
-    <div class="uk-form-row">
-      <div class="uk-form-controls">
-        <input type="submit" value="Save" class="uk-button uk-button-primary uk-button-large">
-      </div>
-    </div>
-  </form>
+  {% crispy form %}
 {% endblock %}

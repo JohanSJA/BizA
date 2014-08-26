@@ -1,25 +1,31 @@
 {% extends "base_detail.html" %}
 
 {% block object %}
-  <dl class="uk-description-list uk-description-list-horizontal">
-    <dt>Address</dt>
-    <dd>{{ warehouse.address|linebreaksbr }}</dd>
-  </dl>
+  <div class="row">
+    <div class="col-md-2">
+      <dl>
+        <dt>Address</dt>
+        <dd>{{ warehouse.address|linebreaksbr }}</dd>
+      </dl>
+    </div>
 
-  <table class="uk-table uk-table-hover uk-table-striped">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th class="uk-text-right">Amount</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for log in balancelog_list %}
-        <tr>
-          <td>{{ log.product }}</td>
-          <td class="uk-text-right">{{ log.total_amount }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <div class="col-md-10">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th class="text-right">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in balancelog_list %}
+            <tr>
+              <td>{{ log.product }}</td>
+              <td class="text-right">{{ log.total_amount }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 {% endblock %}

@@ -3,7 +3,9 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-from biza.views import Home
+from .forms import BizaAuthForm
+from .views import Home
+
 
 urlpatterns = patterns('',
     # Examples:
@@ -12,7 +14,7 @@ urlpatterns = patterns('',
 
     url(r"^$", Home.as_view(), name="home"),
 
-    url(r"^login/$", "django.contrib.auth.views.login", name="login"),
+    url(r"^login/$", "django.contrib.auth.views.login", {"authentication_form": BizaAuthForm}, name="login"),
     url(r"^logout/$", "django.contrib.auth.views.logout_then_login", name="logout"),
 
     url(r"^products/", include("products.urls")),

@@ -1,35 +1,41 @@
 {% extends "base_detail.html" %}
 
 {% block object %}
-  <dl class="uk-description-list uk-description-list-horizontal">
-    <dt>Product</dt>
-    <dd><a href="{% url 'products_product_detail' balancelog.product.pk %}">{{ balancelog.product }}</a></dd>
-    <dt>Warehouse</dt>
-    <dd><a href="{% url 'products_warehouse_detail' balancelog.warehouse.pk %}">{{ balancelog.warehouse }}</a></dd>
-  </dl>
+  <div class="row">
+    <div class="col-md-2">
+      <dl>
+        <dt>Product</dt>
+        <dd><a href="{% url 'products_product_detail' balancelog.product.pk %}">{{ balancelog.product }}</a></dd>
+        <dt>Warehouse</dt>
+        <dd><a href="{% url 'products_warehouse_detail' balancelog.warehouse.pk %}">{{ balancelog.warehouse }}</a></dd>
+      </dl>
+    </div>
 
-  <table class="uk-table uk-table-hover uk-table-striped">
-    <thead>
-      <tr>
-        <th>Timestamp</th>
-        <th>Description</th>
-        <th class="uk-text-right">Amount</th>
-      </tr>
-    </thead>
-    <tfoot>
-      <tr>
-        <td colspan="2">Total</td>
-        <td class="uk-text-right">{{ balancelog.total_amount|default:"0" }}</td>
-      </tr>
-    </tfoot>
-    <tbody>
-      {% for entry in balancelogentry_list %}
-        <tr>
-          <td>{{ entry.timestamp }}</td>
-          <td>{{ entry.description }}</td>
-          <td class="uk-text-right">{{ entry.amount }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <div class="col-md-10">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Description</th>
+            <th class="text-right">Amount</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan="2">Total</td>
+            <td class="text-right">{{ balancelog.total_amount|default:"0" }}</td>
+          </tr>
+        </tfoot>
+        <tbody>
+          {% for entry in balancelogentry_list %}
+            <tr>
+              <td>{{ entry.timestamp }}</td>
+              <td>{{ entry.description }}</td>
+              <td class="text-right">{{ entry.amount }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 {% endblock %}

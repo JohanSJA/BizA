@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet, SearchableListMixin
 
+from .forms import CategoryForm, ProductForm
 from .models import (
     Category, Uom, Product, Warehouse,
     BalanceLog, BalanceLogEntry
@@ -28,9 +29,11 @@ class CategoryDetailView(DetailView):
 
 class CategoryCreateView(CreateView):
     model = Category
+    form_class = CategoryForm
 
 class CategoryUpdateView(UpdateView):
     model = Category
+    form_class = CategoryForm
 
 
 class UomListView(ListView):
@@ -64,9 +67,11 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(CreateWithInlinesView):
     model = Product
+    form_class = ProductForm
 
 class ProductUpdateView(UpdateWithInlinesView):
     model = Product
+    form_class = ProductForm
 
 
 class WarehouseListView(ListView):

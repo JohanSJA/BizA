@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     # Third party apps
     "south",
     "widget_tweaks",
+    "crispy_forms",
     # Own apps
     "utils",
     "products",
@@ -115,6 +116,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates"),
 )
 
+
 # User authentication related
 LOGIN_URL = "/login"
 LOGIN_REDIRECT_URL = "/"
@@ -122,3 +124,7 @@ LOGIN_REDIRECT_URL = "/"
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
     "django.core.context_processors.request",
 )
+
+
+# Crispy form related
+CRISPY_TEMPLATE_PACK = "bootstrap3"
