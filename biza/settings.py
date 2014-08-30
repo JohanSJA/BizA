@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     "utils",
     "products",
     "prices",
+    "balances",
     #"purchases",
     #"wholesales",
     #"retails",

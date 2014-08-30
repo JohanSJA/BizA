@@ -5,10 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet, SearchableListMixin
 
 from .forms import CategoryForm, ProductForm
-from .models import (
-    Category, Uom, Product, Warehouse,
-    BalanceLog, BalanceLogEntry
-)
+from .models import Category, Uom, Product
 
 
 class ProductHomeView(TemplateView):
@@ -72,74 +69,3 @@ class ProductCreateView(CreateWithInlinesView):
 class ProductUpdateView(UpdateWithInlinesView):
     model = Product
     form_class = ProductForm
-
-
-class WarehouseListView(ListView):
-    model = Warehouse
-
-class WarehouseDetailView(DetailView):
-    model = Warehouse
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        warehouse = self.get_object()
-        context["balancelog_list"] = warehouse.balancelog_set.all()
-        return context
-
-class WarehouseCreateView(CreateView):
-    model = Warehouse
-
-class WarehouseUpdateView(UpdateView):
-    model = Warehouse
-
-
-class BalanceListView(SearchableListMixin, ListView):
-    model = Product
-    template_name = "products/balance_list.html"
-    paginate_by = 50
-    search_fields = ["model", "description"]
-
-
-class BalanceInStockListView(BalanceListView):
-    def get_queryset(self):
-        product_list = super().get_queryset().all()
-        new_product_list = []
-        for product in product_list:
-            if product.balance() > 0:
-                new_product_list.append(product)
-        return new_product_list
-
-
-class BalanceOutOfStockListView(BalanceListView):
-    def get_queryset(self):
-        product_list = super().get_queryset().all()
-        new_product_list = []
-        for product in product_list:
-            if product.balance() <= 0:
-                new_product_list.append(product)
-        return new_product_list
-
-
-class BalanceLogEntryInlineFormSet(InlineFormSet):
-    model = BalanceLogEntry
-
-
-class BalanceLogListView(ListView):
-    model = BalanceLog
-
-class BalanceLogDetailView(DetailView):
-    model = BalanceLog
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        balancelog = self.get_object()
-        context["balancelogentry_list"] = balancelog.balancelogentry_set.all()
-        return context
-
-class BalanceLogCreateView(CreateWithInlinesView):
-    model = BalanceLog
-    inlines = [BalanceLogEntryInlineFormSet]
-    template_name = "products/balancelog_form_with_inlines.html"
-
-class BalanceLogUpdateView(UpdateView):
-    model = BalanceLog
