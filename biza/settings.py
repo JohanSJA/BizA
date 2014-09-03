@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Third party apps
-    "south",
+    #"south",
     "widget_tweaks",
     "crispy_forms",
     # Own apps
